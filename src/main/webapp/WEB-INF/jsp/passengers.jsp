@@ -22,6 +22,8 @@
     <div>
         <ul>
             <%
+                if (passengers.size() == 0)
+                    out.print("<p>" + "There is no passengers yet" + "</p>");
                 for (Passenger pas : passengers){
                     out.print("<li>" + pas.getName() + " " + pas.getSurname() + " "
                             + "<i>" + pas.getEmail() + "</i>" + "</li>");
