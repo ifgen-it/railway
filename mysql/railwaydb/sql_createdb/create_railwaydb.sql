@@ -184,7 +184,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `railwaydb`.`User` (
   `user_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `role_id` INT UNSIGNED NOT NULL,
-  `firstName` VARCHAR(60) NOT NULL,
+  `first_name` VARCHAR(60) NOT NULL,
   `last_name` VARCHAR(60) NOT NULL,
   `birthday` DATE NOT NULL,
   `email` VARCHAR(80) NOT NULL,
