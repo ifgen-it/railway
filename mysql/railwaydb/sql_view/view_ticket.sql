@@ -16,7 +16,7 @@ select
  tc.carriage_number "№_ВАГОНА",
  carriagetype.carriage_type "ТИП_ВАГОНА",
  se.seat "МЕСТО",
- concat(concat(u.first_name, ' '), u.last_name) "ПАССАЖИР",
+ concat(concat(u.firstName, ' '), u.last_name) "ПАССАЖИР",
  t.fix_price "ЦЕНА"
 
 from ticket t

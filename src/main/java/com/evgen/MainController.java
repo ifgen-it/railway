@@ -1,26 +1,31 @@
 package com.evgen;
 
-import com.evgen.model.Passenger;
+import com.evgen.dao.UserDAO;
+import com.evgen.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.w3c.dom.UserDataHandler;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 @Controller
 public class MainController {
 
-    List<Passenger> passengers = new ArrayList<>();
+    @Autowired
+    private UserDAO userDAO;
+
+    //private static List<User> users = new ArrayList<>();
 
 
     @GetMapping("/view/{name}")
     public String view(@PathVariable("name") String name,
             Model model){
         model.addAttribute("title",
-                "Passenger railway traffic information system");
+                "User railway traffic information system");
         model.addAttribute("msg", "Hello, " + name + "! Wanna buy ticket?");
         return "index";
     }
@@ -28,33 +33,33 @@ public class MainController {
     @GetMapping("/raw")
     @ResponseBody
     public String raw(){
-        String str = "title:Passenger railway traffic information system";
+        String str = "title: Passenger railway traffic information system";
         return str;
     }
 
-    @GetMapping("/passengers")
-    public String getPassengers(Model model){
+    @GetMapping("/users")
+    public String getUsers(Model model) throws SQLException {
 
-        model.addAttribute("passengers", passengers);
+        model.addAttribute("users", userDAO.getAll());
 
-        return "passengers";
+        return "/users";
     }
 
-    @GetMapping("/passengers/new")
+    @GetMapping("/users/new")
     public String getSignUp(){
-        return "sign_up";
+        return "/sign_up";
     }
 
-    @PostMapping("/passengers/new")
-    public String SignUp(@ModelAttribute Passenger passenger, Model model){
+    @PostMapping("/users/new")
+    public String SignUp(@ModelAttribute User user, Model model){
         String nameError = "";
         String surnameError = "";
         String emailError = "";
         boolean error = false;
 
-        String name = passenger.getName().trim();
-        String surname = passenger.getSurname().trim();
-        String email = passenger.getEmail().trim();
+        String name = user.getFirstName().trim();
+        String surname = user.getLastName().trim();
+        String email = user.getEmail().trim();
 
         if (email.equals("")){
             emailError = "Email is required";
@@ -77,7 +82,7 @@ public class MainController {
             return "/sign_up";
         }
 
-        passengers.add(passenger);
-        return "redirect:/passengers";
+        //users.add(user);
+        return "redirect:/users";
     }
 }
