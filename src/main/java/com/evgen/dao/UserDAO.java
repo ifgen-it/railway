@@ -3,6 +3,7 @@ package com.evgen.dao;
 import com.evgen.model.User;
 import org.springframework.stereotype.Component;
 
+import javax.jws.soap.SOAPBinding;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
@@ -51,7 +52,7 @@ public class UserDAO {
         PreparedStatement ps = conn.prepareStatement("select * from user");
         ResultSet rs = ps.executeQuery();
 
-        while (rs.next()){
+        while (rs.next()) {
             User user = new User();
             user.setFirstName(rs.getString("first_name"));
             user.setLastName(rs.getString("last_name"));
@@ -59,5 +60,37 @@ public class UserDAO {
             users.add(user);
         }
         return users;
+    }
+
+    public User getOne(String email) {
+        try {
+            PreparedStatement ps = conn.prepareStatement(
+                    "select * from user where email = ?");
+
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                User user = new User();
+                user.setFirstName(rs.getString("first_name"));
+                user.setLastName(rs.getString("last_name"));
+                user.setEmail(rs.getString("email"));
+                return user;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void add(User user) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement(
+                "insert into user(role_id, first_name, last_name, birthday, email, password)\n" +
+                        "values (2, ?, ?, '2000-02-02', ?, '12345')"
+        );
+        ps.setString(1, user.getFirstName());
+        ps.setString(2,user.getLastName());
+        ps.setString(3,user.getEmail());
+        ps.execute();
+
     }
 }

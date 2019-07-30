@@ -2,9 +2,11 @@ package com.evgen;
 
 import com.evgen.dao.UserDAO;
 import com.evgen.model.User;
+import com.evgen.util.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.w3c.dom.UserDataHandler;
 
@@ -18,7 +20,8 @@ public class MainController {
     @Autowired
     private UserDAO userDAO;
 
-    //private static List<User> users = new ArrayList<>();
+    @Autowired
+    private UserValidator userValidator;
 
 
     @GetMapping("/view/{name}")
@@ -51,7 +54,7 @@ public class MainController {
     }
 
     @PostMapping("/users/new")
-    public String SignUp(@ModelAttribute User user, Model model){
+    public String SignUp(@ModelAttribute User user, Model model) throws SQLException {
         String nameError = "";
         String surnameError = "";
         String emailError = "";
@@ -82,7 +85,15 @@ public class MainController {
             return "/sign_up";
         }
 
-        //users.add(user);
+        // CHECK THE SAME EMAIL EXISTENCE IN DB
+        emailError =  userValidator.checkEmailExistence(user);
+
+        if (!emailError.equals("")){
+            model.addAttribute("emailError", emailError);
+            return "/sign_up";
+        }
+        userDAO.add(user);
+
         return "redirect:/users";
     }
 }
