@@ -21,6 +21,11 @@ public class MainController {
     @Autowired
     private UserValidator userValidator;
 
+    @GetMapping("/")
+    public String getIndex(Model model){
+
+        return "index";
+    }
 
     @GetMapping("/view/{name}")
     public String view(@PathVariable("name") String name,

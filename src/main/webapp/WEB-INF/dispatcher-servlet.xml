@@ -7,6 +7,8 @@
 
     <mvc:annotation-driven/>
     <context:component-scan base-package="com.evgen"/>
+    
+    <mvc:resources mapping="/resources/**" location="/resources/"/>
 
     <import resource="persistence-config.xml"/>
 
@@ -14,4 +16,5 @@
         <property name="prefix" value="/WEB-INF/jsp/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
+
 </beans>

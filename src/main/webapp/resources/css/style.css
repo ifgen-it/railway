@@ -1,0 +1,56 @@
+html,body{
+    padding: 0;
+    margin: 0;
+    height: 100%;
+}
+
+header{
+    height: 80px;
+    background-color: dimgray;
+    font-size: 32pt;
+    color: chocolate;
+    text-align: center;
+    padding-top: 20px;
+}
+
+nav{
+    height: 50px;
+    background-color: slategrey;
+}
+
+footer{
+    height: 60px;
+    background-color: slategrey;
+
+    text-align: center;
+    padding-top: 20px;
+
+}
+
+#wrapper{
+    background-color: gray;
+    height: 100%;
+    font-size: medium;
+    color: indigo;
+}
+
+#page-content{
+    float: right;
+
+    width: 80%;
+    min-height: 400px;
+    background: dimgray;
+    padding: 10px;
+
+
+}
+
+aside{
+    float: left;
+    width: 15%;
+    min-height: 400px;
+    background: dimgray;
+    color: indigo;
+    padding: 10px;
+    font-size: larger;
+}

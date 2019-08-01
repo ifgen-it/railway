@@ -12,18 +12,15 @@
 
 <html>
 <head>
-    <title>${title}</title>
+    <meta charset="utf-8">
+    <title>Users</title>
+    <link type="text/css" rel="stylesheet"
+          href="${pageContext.request.contextPath}/resources/css/style.css">
 </head>
 <body>
-<h1>${title}</h1>
-<p>Today <%=new java.util.Date()%>
-</p>
+<div id="wrapper">
 
-<h2><%=header%>
-</h2>
-
-<div>
-    <table border="1" bgcolor="#7fffd4">
+    <table border="1" bgcolor="#add8e6">
         <tr>
             <th>Id</th>
             <th>Role Id</th>
@@ -57,6 +54,10 @@
     %>
     </table>
 </div>
+
+<footer>
+    T&R 2019
+</footer>
 
 </body>
 </html>
