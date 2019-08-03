@@ -17,7 +17,7 @@
           href="${pageContext.request.contextPath}/resources/css/style.css">
 </head>
 <body>
-<div class="wrapper">
+<div class="long-wrapper">
     <nav class="menu">
         <ul>
             <li><a href="/">Home</a></li>

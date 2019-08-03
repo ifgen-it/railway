@@ -11,6 +11,12 @@ html,body{
     color: indigo;
 }
 
+.long-wrapper{
+    background-color: darkslateblue;
+    font-size: medium;
+    color: indigo;
+}
+
 header{
     height: 80px;
     background-color: dimgray;
@@ -69,23 +75,24 @@ footer{
     color: indigo;
 }
 
-/*USERS*/
+/*======================= USERS ============================*/
 
 #content-table-users{
-    padding-top: 30px;
-    padding-left: 30px;
-
+    padding: 30px;
 }
+
+#table-users{
+    background: #add8e6;
+}
+
+/*======================= ADD USER ============================*/
+
 #content-add-user{
     padding:20px 50px;
     background: dodgerblue;
 }
 #content-add-user p{
     font-size: 18px;
-}
-
-#table-users{
-    background: #add8e6;
 }
 
 .form-element{
