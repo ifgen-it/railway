@@ -7,32 +7,43 @@
     <link type="text/css" rel="stylesheet" href="/resources/css/style.css">
 </head>
 <body>
-    <div class="wrapper">
-        <header>Trains and Rails</header>
+<div class="wrapper">
+    <header>Trains and Rails</header>
+    <nav class="menu">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/">Users</a>
+                <ul>
+                    <li><a href="/users">All users</a></li>
+                    <li><a href="/users/new">Add new user</a></li>
+                </ul>
+            </li>
 
-        <nav>
-            <a href="/">HOME</a> |
-            <a href="/users">USERS</a> |
-            <a href="/users/new">ADD NEW USER</a> |
-            <a href="">STATIONS</a> |
-            <a href="">ROUTES</a> |
-            <a href="">TIMELINE</a>
-        </nav>
-        <section id="content" class="clearfix">
-            <section id="page-content">
-                <div>
-                    Page content
-                </div>
-            </section>
-            <aside>
-                Side menu
-            </aside>
+            <li><a href="/">Trains</a>
+                <ul>
+                    <li><a href="">Stations</a></li>
+                    <li><a href="">Routes</a></li>
+                    <li><a href="">Timeline</a></li>
+                </ul>
+            </li>
+            <li><a href="/">Contact</a></li>
+        </ul>
+    </nav>
+    <section id="content" class="clearfix">
+        <section id="page-content">
+            <div>
+                Page content
+            </div>
         </section>
-<%--        <div id="empty-div"></div>--%>
-    </div>
-    <footer>
-        T&R 2019
-    </footer>
+        <aside>
+            Side menu
+        </aside>
+    </section>
+    <%--        <div id="empty-div"></div>--%>
+</div>
+<footer>
+    T&R 2019
+</footer>
 
 </body>
 </html>

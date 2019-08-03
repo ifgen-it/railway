@@ -15,18 +15,12 @@ header{
     height: 80px;
     background-color: dimgray;
     font-size: 32pt;
-    color: chocolate;
+    color: #f63;
     text-align: center;
     padding-top: 20px;
 }
 
-nav{
-    height: 40px;
-    background-color: slategrey;
-    font-size: 14pt;
-    padding-top: 13px;
-    padding-left: 10px;
-}
+
 
 #content{
     margin-left: 2%;
@@ -83,8 +77,11 @@ footer{
 
 }
 #content-add-user{
-    padding:50px;
+    padding:20px 50px;
     background: dodgerblue;
+}
+#content-add-user p{
+    font-size: 18px;
 }
 
 #table-users{
@@ -92,7 +89,7 @@ footer{
 }
 
 .form-element{
-    margin: 10px 0;
+    margin: 12px 0;
 }
 
 .form-element input{
@@ -121,4 +118,50 @@ input[type="submit"]{
 input[type="submit"]:hover{
     cursor:pointer;
     border: 2px dashed indigo;
+}
+
+/*===============  NAV MENU  ==================*/
+nav{
+    background-color: #f63;
+    font-size: 14pt;
+}
+
+.menu ul li{
+    padding: 10px;
+}
+.menu ul > li:hover{
+    background-color: #f96;
+}
+.menu ul ul > li:hover{
+    background-color: #69e;
+}
+.menu ul li, .menu ul{
+    display:inline-block;
+}
+.menu ul{
+    position: relative;
+    margin: 0;
+    padding: 0;
+    background-color: #f63;
+}
+.menu ul ul{
+    display: none;
+    position: absolute;
+    background-color: #369;
+    margin-top: 10px;
+    margin-left: -10px;
+}
+.menu ul a{
+    color: #fff;
+    text-decoration: none;
+}
+.menu ul ul a{
+    color: #fff;
+    text-decoration: none;
+}
+.menu li:hover ul{
+    display: block;
+}
+.menu li:hover li{
+    display:block;
 }

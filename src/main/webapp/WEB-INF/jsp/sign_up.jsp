@@ -8,15 +8,29 @@
 </head>
 <body>
 <div class="wrapper">
-    <nav>
-        <a href="/">HOME</a> |
-        <a href="/users">USERS</a> |
-        <a href="/users/new">ADD NEW USER</a> |
-        <a href="">STATIONS</a> |
-        <a href="">ROUTES</a> |
-        <a href="">TIMELINE</a>
+    <nav class="menu">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/">Users</a>
+                <ul>
+                    <li><a href="/users">All users</a></li>
+                    <li><a href="/users/new">Add new user</a></li>
+                </ul>
+            </li>
+
+            <li><a href="/">Trains</a>
+                <ul>
+                    <li><a href="">Stations</a></li>
+                    <li><a href="">Routes</a></li>
+                    <li><a href="">Timeline</a></li>
+                </ul>
+            </li>
+            <li><a href="/">Contact</a></li>
+        </ul>
     </nav>
+
     <div id="content-add-user">
+        <p>Fill inputs to add new user:</p>
         <form action="/users/new" method="post">
             <div class="form-element">
                 <input id="firstName" name="firstName" type="text" placeholder="First name">
