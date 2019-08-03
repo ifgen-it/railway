@@ -4,6 +4,13 @@ html,body{
     height: 100%;
 }
 
+.wrapper{
+    background-color: darkslateblue;
+    height: 100%;
+    font-size: medium;
+    color: indigo;
+}
+
 header{
     height: 80px;
     background-color: dimgray;
@@ -14,43 +21,104 @@ header{
 }
 
 nav{
-    height: 50px;
+    height: 40px;
     background-color: slategrey;
+    font-size: 14pt;
+    padding-top: 13px;
+    padding-left: 10px;
 }
 
-footer{
-    height: 60px;
-    background-color: slategrey;
-
-    text-align: center;
-    padding-top: 20px;
-
-}
-
-#wrapper{
-    background-color: gray;
-    height: 100%;
-    font-size: medium;
-    color: indigo;
+#content{
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-top: 2%;
 }
 
 #page-content{
     float: right;
-
-    width: 80%;
-    min-height: 400px;
+    width: 78%;
+    min-height: 300px;
     background: dimgray;
     padding: 10px;
-
-
+    font-size: larger;
 }
 
 aside{
     float: left;
-    width: 15%;
-    min-height: 400px;
+    width: 16%;
+    min-height: 300px;
     background: dimgray;
-    color: indigo;
     padding: 10px;
     font-size: larger;
+}
+
+.clearfix:after{
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+/*end #content*/
+
+#empty-div{
+    height: 70px;
+    clear: both;
+}
+/*end #wrapper*/
+
+footer{
+    height: 60px;
+    background-color: slategrey;
+    text-align: center;
+    padding-top: 33px;
+    color: indigo;
+}
+
+/*USERS*/
+
+#content-table-users{
+    padding-top: 30px;
+    padding-left: 30px;
+
+}
+#content-add-user{
+    padding:50px;
+    background: dodgerblue;
+}
+
+#table-users{
+    background: #add8e6;
+}
+
+.form-element{
+    margin: 10px 0;
+}
+
+.form-element input{
+    font-size: 10pt;
+    color: indigo;
+
+}
+.form-element input:focus{
+    color: red;
+    font-size: 11pt;
+}
+
+.form-element .error-message{
+    color: brown;
+    font-size: 12pt;
+}
+
+input[type="submit"]{
+    background: cornflowerblue;
+    color: indigo;
+    border: 2px solid indigo;
+    padding: 5px 12px;
+    margin-top: 10px;
+    font-size: 12pt;
+}
+input[type="submit"]:hover{
+    cursor:pointer;
+    border: 2px dashed indigo;
 }

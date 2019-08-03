@@ -7,24 +7,45 @@
           href="${pageContext.request.contextPath}/resources/css/style.css">
 </head>
 <body>
-<div id="wrapper">
-    <form action="/users/new" method="post">
-        <input name="firstName" type="text" placeholder="first name">
-        <label style="color: red; margin-left: 10px">${firstNameError}</label><br>
+<div class="wrapper">
+    <nav>
+        <a href="/">HOME</a> |
+        <a href="/users">USERS</a> |
+        <a href="/users/new">ADD NEW USER</a> |
+        <a href="">STATIONS</a> |
+        <a href="">ROUTES</a> |
+        <a href="">TIMELINE</a>
+    </nav>
+    <div id="content-add-user">
+        <form action="/users/new" method="post">
+            <div class="form-element">
+                <input id="firstName" name="firstName" type="text" placeholder="First name">
+                <label class="error-message">${firstNameError}</label>
+            </div>
 
-        <input name="lastName" type="text" placeholder="last name">
-        <label style="color: red; margin-left: 10px">${lastNameError}</label><br>
+            <div class="form-element">
+                <input id="lastName" name="lastName" type="text" placeholder="Last name">
+                <label class="error-message">${lastNameError}</label>
+            </div>
 
-        <input name="birthday" type="text" placeholder="birthday">
-        <label style="color: red; margin-left: 10px">${birthdayError}</label><br>
+            <div class="form-element">
+                <input id="birthday" name="birthday" type="text" placeholder="Birthday">
+                <label class="error-message">${birthdayError}</label>
+            </div>
 
-        <input name="email" type="text" placeholder="email">
-        <label style="color: red; margin-left: 10px">${emailError}</label><br>
+            <div class="form-element">
+                <input id="email" name="email" type="text" placeholder="Email">
+                <label class="error-message">${emailError}</label>
+            </div>
 
-        <input name="password" type="text" placeholder="password">
-        <label style="color: red; margin-left: 10px">${passwordError}</label><br>
-        <input type="submit">
-    </form>
+            <div class="form-element">
+                <input id="password" name="password" type="text" placeholder="Password">
+                <label class="error-message">${passwordError}</label>
+            </div>
+
+            <input type="submit" value="Submit">
+        </form>
+    </div>
 </div>
 
 <footer>
