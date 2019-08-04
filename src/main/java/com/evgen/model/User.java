@@ -1,17 +1,38 @@
 package com.evgen.model;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
 
-public class User {
+@Entity
+@Table(name = "user")
+public class User implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private int userId;
+
+    @Column(name = "role_id")
     private int roleId;
+
+    @Column(name = "first_name")
     private String firstName;
+
+    @Column(name = "last_name")
     private String lastName;
+
+    @Column(name = "birthday")
     private Date birthday;
+
+    @Column(name = "email")
     private String email;
+
+    @Column(name = "password")
     private String password;
+
+    @Column(name = "created")
     private Timestamp created;
 
     public User(String firstName, String lastName, Date birthday, String email, String password) {

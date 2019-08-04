@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class UserValidator {
 
     @Autowired
-    @Qualifier("jdbcTemplateUserDAO")
+    @Qualifier("jpaUserDAO")
     private UserDAO userDAO;
 
     public boolean checkEmailExistence(User user) {

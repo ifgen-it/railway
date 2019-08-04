@@ -17,7 +17,7 @@ import java.util.Date;
 public class MainController {
 
     @Autowired
-    @Qualifier("jdbcTemplateUserDAO")
+    @Qualifier("jpaUserDAO")
     private UserDAO userDAO;
 
     @Autowired
