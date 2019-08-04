@@ -18,8 +18,8 @@ html,body{
 }
 
 header{
-    height: 80px;
-    background-color: dimgray;
+    height: 84px;
+    background-color: slategrey;
     font-size: 32pt;
     color: #f63;
     text-align: center;
@@ -34,11 +34,14 @@ header{
     margin-top: 2%;
 }
 
+.picture{
+    text-align: center;
+}
+
 #page-content{
     float: right;
     width: 78%;
     min-height: 300px;
-    background: dimgray;
     padding: 10px;
     font-size: larger;
 }
@@ -46,10 +49,30 @@ header{
 aside{
     float: left;
     width: 16%;
-    min-height: 300px;
-    background: dimgray;
+    min-height: 60%;
+    background: slategrey;
     padding: 10px;
     font-size: larger;
+}
+
+aside a{
+    color: #f63;
+    text-decoration: none;
+}
+aside a:hover{
+    color: chartreuse;
+    text-decoration: none;
+}
+
+
+.a-big {
+    font-size: 40px;
+}
+.a-normal {
+    font-size: 30px;
+}
+.a-small {
+    font-size: 20px;
 }
 
 .clearfix:after{
@@ -130,7 +153,7 @@ input[type="submit"]:hover{
 /*===============  NAV MENU  ==================*/
 nav{
     background-color: #f63;
-    font-size: 14pt;
+    font-size: 16pt;
 }
 
 .menu ul li{

@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Component
@@ -34,11 +35,17 @@ public class JdbcTemplateUserDAO implements UserDAO {
     @Override
     public void add(User user) {
 
+        // THIS DATE CONVERSION WORKS GOOD
+        java.util.Date utilDate = user.getBirthday();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-dd-MM");
+        String strDate = formatter.format(utilDate);
+        System.out.println("------> strDate = " + strDate);
+
         jdbcTemplate.update(
                 "insert into user(role_id, first_name, last_name, birthday, email, password)" +
-                " values (?, ?, ?, ?, ?, ?)",
+                " values (?, ?, ?, str_to_date(?, '%Y-%m-%d'), ?, ?)",
                 user.getRoleId(), user.getFirstName(), user.getLastName(),
-                user.getBirthday(), user.getEmail(), user.getPassword()
+                strDate, user.getEmail(), user.getPassword()
         );
 
     }

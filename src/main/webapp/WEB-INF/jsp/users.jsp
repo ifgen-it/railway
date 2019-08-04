@@ -15,6 +15,7 @@
     <title>Users</title>
     <link type="text/css" rel="stylesheet"
           href="${pageContext.request.contextPath}/resources/css/style.css">
+    <link rel="shortcut icon" type="image/x-icon" href="/resources/img/favicon.ico">
 </head>
 <body>
 <div class="long-wrapper">

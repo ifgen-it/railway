@@ -4,6 +4,7 @@ import com.evgen.dao.UserDAO;
 import com.evgen.model.User;
 import com.evgen.util.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ import java.util.Date;
 public class MainController {
 
     @Autowired
+    @Qualifier("jdbcTemplateUserDAO")
     private UserDAO userDAO;
 
     @Autowired

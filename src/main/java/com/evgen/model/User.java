@@ -90,4 +90,18 @@ public class User {
     public String getEmail() {
         return email;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ",\n roleId=" + roleId +
+                ",\n firstName='" + firstName + '\'' +
+                ",\n lastName='" + lastName + '\'' +
+                ",\n birthday=" + birthday +
+                ",\n email='" + email + '\'' +
+                ",\n password='" + password + '\'' +
+                ",\n created=" + created +
+                '}';
+    }
 }

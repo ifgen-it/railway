@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <title>Trains and Rails</title>
     <link type="text/css" rel="stylesheet" href="/resources/css/style.css">
+    <link rel="shortcut icon" type="image/x-icon" href="/resources/img/favicon.ico">
 </head>
 <body>
 <div class="wrapper">
@@ -31,12 +32,16 @@
     </nav>
     <section id="content" class="clearfix">
         <section id="page-content">
-            <div>
-                Page content
+            <div class="picture">
+                <img height=60%" src="/resources/img/train_pic_1.png" alt="Train picture">
             </div>
         </section>
         <aside>
-            Side menu
+
+            <a class="a-small" href="">Stations</a><br>
+            <a class="a-big" href="/users">Users</a><br>
+            <a class="a-normal" href="/users/new">Add new user</a><br>
+
         </aside>
     </section>
     <%--        <div id="empty-div"></div>--%>
