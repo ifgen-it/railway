@@ -2,7 +2,6 @@ package com.evgen.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
@@ -32,8 +31,6 @@ public class User implements Serializable {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "created")
-    private Timestamp created;
 
     public User(String firstName, String lastName, Date birthday, String email, String password) {
         this.roleId = 2;
@@ -60,10 +57,6 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public void setCreated(Timestamp created) {
-        this.created = created;
-    }
-
     public int getUserId() {
         return userId;
     }
@@ -78,10 +71,6 @@ public class User implements Serializable {
 
     public String getPassword() {
         return password;
-    }
-
-    public Timestamp getCreated() {
-        return created;
     }
 
     public void setFirstName(String firstName) {
@@ -122,7 +111,6 @@ public class User implements Serializable {
                 ",\n birthday=" + birthday +
                 ",\n email='" + email + '\'' +
                 ",\n password='" + password + '\'' +
-                ",\n created=" + created +
                 '}';
     }
 }

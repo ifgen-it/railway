@@ -1,10 +1,10 @@
-select * from locomotive;
+
 select * from train;
 
-insert into train(locomotive_id) values(1);
-insert into train(locomotive_id) values(2);
-insert into train(locomotive_id) values(3);
-insert into train(locomotive_id) values(4);
-insert into train(locomotive_id) values(5);
+insert into train(train_name) values('Т1000');
+insert into train(train_name) values('Т1001');
+insert into train(train_name) values('Т1002');
+insert into train(train_name) values('Т1003');
+insert into train(train_name) values('Т1004');
  
  commit;

@@ -1,7 +1,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.evgen.model.User" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.TimeZone" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
@@ -49,13 +48,10 @@
                 <th>Birthday</th>
                 <th>Email</th>
                 <th>Password</th>
-                <th>Created</th>
 
             </tr>
 
             <%
-                SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-                formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
 
                 if (users.size() == 0)
                     out.print("<p>" + "There is no users yet" + "</p>");
@@ -68,7 +64,6 @@
                             + "<td>" + new SimpleDateFormat("dd-MM-yyyy").format(user.getBirthday()) + "</td>"
                             + "<td>" + user.getEmail() + "</td>"
                             + "<td>" + user.getPassword() + "</td>"
-                            + "<td>" + formatter.format(user.getCreated()) + "</td>"
                             + "</tr>");
                 }
             %>

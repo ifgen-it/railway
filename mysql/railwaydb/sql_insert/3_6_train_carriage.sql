@@ -1,4 +1,4 @@
-select * from locomotive;
+
 select * from train;
 select * from carriage;
 select * from carriagetype;

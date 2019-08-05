@@ -1,10 +1,9 @@
-package com.evgen;
+package com.evgen.controller;
 
-import com.evgen.dao.UserDAO;
 import com.evgen.model.User;
+import com.evgen.service.UserService;
 import com.evgen.util.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +16,7 @@ import java.util.Date;
 public class MainController {
 
     @Autowired
-    @Qualifier("jpaUserDAO")
-    private UserDAO userDAO;
+    private UserService userService;
 
     @Autowired
     private UserValidator userValidator;
@@ -48,7 +46,7 @@ public class MainController {
     @GetMapping("/users")
     public String getUsers(Model model) {
 
-        model.addAttribute("users", userDAO.getAll());
+        model.addAttribute("users", userService.getAll());
 
         return "/users";
     }
@@ -114,7 +112,7 @@ public class MainController {
         }
 
         // CHECK THE SAME EMAIL EXISTENCE IN DB
-        boolean emailExist =  userValidator.checkEmailExistence(user);
+        boolean emailExist =  userValidator.checkEmailExistence(email);
 
         if (emailExist){
             model.addAttribute("emailError", "This email already in use");
@@ -127,7 +125,7 @@ public class MainController {
         user.setEmail(email);
         user.setPassword(password);
 
-        userDAO.add(user);
+        userService.add(user);
 
         return "redirect:/users";
     }

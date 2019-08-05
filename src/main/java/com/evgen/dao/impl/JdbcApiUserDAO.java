@@ -5,7 +5,6 @@ import com.evgen.dao.UserDAO;
 import com.evgen.model.User;
 import org.springframework.stereotype.Component;
 
-import javax.jws.soap.SOAPBinding;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
@@ -136,7 +135,6 @@ public class JdbcApiUserDAO implements UserDAO {
         user.setBirthday(rs.getDate("birthday"));
         user.setEmail(rs.getString("email"));
         user.setPassword(rs.getString("password"));
-        user.setCreated(rs.getTimestamp("created"));
 
         return user;
     }

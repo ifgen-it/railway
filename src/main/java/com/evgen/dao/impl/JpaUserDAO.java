@@ -26,10 +26,15 @@ public class JpaUserDAO implements UserDAO {
 
     @Override
     public User getOne(String email) {
-        String queryString = "select u from User u where email = :email";
+
+        System.out.println("---> email:" + email + "$");
+
+        String queryString = "select u from User u where u.email = :email";
         Query query = entityManager.createQuery(queryString);
         query.setParameter("email", email);
-        List<User> users = query.getResultList();
+        List<User> users = (List<User>) query.getResultList();
+
+        System.out.println("---> Users: " + users);
 
         if (users.size() == 0)
             return null;
@@ -42,7 +47,7 @@ public class JpaUserDAO implements UserDAO {
     public void add(User user) {
 
         // DON'T WORK -- MAY BY 'DATE' FORMAT JPA CANNOT CONVERT TO SQL.DATE
-        // entityManager.persist(user);
+        //entityManager.persist(user);
 
         java.util.Date utilDate = user.getBirthday();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-dd-MM");
