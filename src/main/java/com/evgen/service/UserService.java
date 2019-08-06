@@ -1,14 +1,14 @@
 package com.evgen.service;
 
-import com.evgen.model.User;
+import com.evgen.dto.user.UserDTO;
 
 import java.util.List;
 
 public interface UserService {
 
-    List<User> getAll();
+    List<UserDTO> getAll();
 
-    User getOne(String email);
+    UserDTO getOne(String email);
 
-    void add(User user);
+    void add(UserDTO user);
 }

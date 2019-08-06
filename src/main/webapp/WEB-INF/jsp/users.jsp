@@ -1,10 +1,12 @@
 <%@ page import="java.util.List" %>
-<%@ page import="com.evgen.model.User" %>
+<%@ page import="com.evgen.entity.user.UserEntity" %>
 <%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="com.evgen.dto.user.UserDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%
-    List<User> users = (List<User>) request.getAttribute("users");
+    List<UserDTO> users = (List<UserDTO>) request.getAttribute("users");
 %>
 
 
@@ -18,26 +20,8 @@
 </head>
 <body>
 <div class="long-wrapper">
-    <nav class="menu">
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/">Users</a>
-                <ul>
-                    <li><a href="/users">All users</a></li>
-                    <li><a href="/users/new">Add new user</a></li>
-                </ul>
-            </li>
+    <c:import url="nav.jsp"/>
 
-            <li><a href="/">Trains</a>
-                <ul>
-                    <li><a href="">Stations</a></li>
-                    <li><a href="">Routes</a></li>
-                    <li><a href="">Timeline</a></li>
-                </ul>
-            </li>
-            <li><a href="/">Contact</a></li>
-        </ul>
-    </nav>
     <div id="content-table-users">
         <table id="table-users" border="2">
             <tr>
@@ -55,7 +39,7 @@
 
                 if (users.size() == 0)
                     out.print("<p>" + "There is no users yet" + "</p>");
-                for (User user : users) {
+                for (UserDTO user : users) {
                     out.print("<tr>"
                             + "<td>" + user.getUserId() + "</td>"
                             + "<td>" + user.getRoleId() + "</td>"
@@ -71,9 +55,7 @@
     </div>
 </div>
 
-<footer>
-    T&R 2019
-</footer>
+<c:import url="footer.jsp"/>
 
 </body>
 </html>

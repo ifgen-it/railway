@@ -1,38 +1,37 @@
-package com.evgen.model;
+package com.evgen.entity.user;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name = "user")
-public class User implements Serializable {
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @Column(name = "user_id", nullable = false)
     private int userId;
 
-    @Column(name = "role_id")
+    @Column(name = "role_id", nullable = false)
     private int roleId;
 
-    @Column(name = "first_name")
+    @Column(name = "first_name", length = 60, nullable = false)
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name", length = 60, nullable = false)
     private String lastName;
 
-    @Column(name = "birthday")
+    @Column(name = "birthday", nullable = false)
     private Date birthday;
 
-    @Column(name = "email")
+    @Column(name = "email", length = 80, nullable = false)
     private String email;
 
-    @Column(name = "password")
+    @Column(name = "password", length = 80, nullable = false)
     private String password;
 
 
-    public User(String firstName, String lastName, Date birthday, String email, String password) {
+    public UserEntity(String firstName, String lastName, Date birthday, String email, String password) {
         this.roleId = 2;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -85,7 +84,7 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public User() {
+    public UserEntity() {
         this.roleId = 2;
     }
 
@@ -103,7 +102,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "UserEntity{" +
                 "userId=" + userId +
                 ",\n roleId=" + roleId +
                 ",\n firstName='" + firstName + '\'' +

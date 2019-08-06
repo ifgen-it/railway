@@ -99,12 +99,16 @@ footer{
 }
 
 /*======================= USERS ============================*/
-
 #content-table-users{
     padding: 30px;
 }
-
 #table-users{
+    background: #add8e6;
+}
+#content-table-stations{
+    padding: 30px;
+}
+#table-stations{
     background: #add8e6;
 }
 

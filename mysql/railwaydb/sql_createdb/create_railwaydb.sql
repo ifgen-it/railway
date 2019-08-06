@@ -143,7 +143,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `railwaydb`.`User`
+-- Table `railwaydb`.`UserEntity`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `railwaydb`.`User` (
   `user_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,

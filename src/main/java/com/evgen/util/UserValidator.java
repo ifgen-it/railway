@@ -1,6 +1,5 @@
 package com.evgen.util;
 
-import com.evgen.model.User;
 import com.evgen.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

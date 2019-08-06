@@ -1,7 +1,7 @@
 package com.evgen.dao.impl;
 
 import com.evgen.dao.UserDAO;
-import com.evgen.model.User;
+import com.evgen.entity.user.UserEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,28 +11,28 @@ import java.util.List;
 
 @Component
 @Transactional(readOnly = true)
-public class JpaUserDAO implements UserDAO {
+public class UserDAOImpl implements UserDAO {
 
     @PersistenceContext(unitName = "emf")
-    private EntityManager entityManager;
+    private EntityManager em;
 
     @Override
-    public List<User> getAll() {
-        String queryString = "select u from User u";
-        Query query = entityManager.createQuery(queryString);
+    public List<UserEntity> getAll() {
+        String queryString = "select u from UserEntity u";
+        Query query = em.createQuery(queryString);
         return query.getResultList();
 
     }
 
     @Override
-    public User getOne(String email) {
+    public UserEntity getOne(String email) {
 
         System.out.println("---> email:" + email + "$");
 
-        String queryString = "select u from User u where u.email = :email";
-        Query query = entityManager.createQuery(queryString);
+        String queryString = "select u from UserEntity u where u.email = :email";
+        Query query = em.createQuery(queryString);
         query.setParameter("email", email);
-        List<User> users = (List<User>) query.getResultList();
+        List<UserEntity> users = (List<UserEntity>) query.getResultList();
 
         System.out.println("---> Users: " + users);
 
@@ -44,17 +44,18 @@ public class JpaUserDAO implements UserDAO {
 
     @Override
     @Transactional
-    public void add(User user) {
+    public void add(UserEntity user) {
 
         // DON'T WORK -- MAY BY 'DATE' FORMAT JPA CANNOT CONVERT TO SQL.DATE
-        //entityManager.persist(user);
+        /*System.out.println("user: " + user);
+        em.persist(user);*/
 
         java.util.Date utilDate = user.getBirthday();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-dd-MM");
         String strDate = formatter.format(utilDate);
         System.out.println("------> strDate = " + strDate);
 
-        Query query = entityManager.createNativeQuery(
+        Query query = em.createNativeQuery(
                 "insert into user(role_id, first_name, last_name, birthday, email, password)" +
                         " values (?, ?, ?, str_to_date(?, '%Y-%m-%d'), ?, ?)");
         query.setParameter(1, user.getRoleId());

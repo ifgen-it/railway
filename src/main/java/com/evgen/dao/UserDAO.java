@@ -1,14 +1,14 @@
 package com.evgen.dao;
 
-import com.evgen.model.User;
+import com.evgen.entity.user.UserEntity;
 
 import java.util.List;
 
 public interface UserDAO {
 
-    List<User> getAll();
+    List<UserEntity> getAll();
 
-    User getOne(String email);
+    UserEntity getOne(String email);
 
-    void add(User user);
+    void add(UserEntity user);
 }
