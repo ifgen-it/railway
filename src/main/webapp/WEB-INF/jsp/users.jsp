@@ -1,5 +1,4 @@
 <%@ page import="java.util.List" %>
-<%@ page import="com.evgen.entity.user.UserEntity" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="com.evgen.dto.user.UserDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -42,7 +41,7 @@
                 for (UserDTO user : users) {
                     out.print("<tr>"
                             + "<td>" + user.getUserId() + "</td>"
-                            + "<td>" + user.getRoleId() + "</td>"
+                            + "<td>" + user.getRole().getRoleId() + "</td>"
                             + "<td>" + user.getFirstName() + "</td>"
                             + "<td>" + user.getLastName() + "</td>"
                             + "<td>" + new SimpleDateFormat("dd-MM-yyyy").format(user.getBirthday()) + "</td>"

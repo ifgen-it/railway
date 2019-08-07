@@ -1,7 +1,6 @@
 package com.evgen.controller;
 
 import com.evgen.dto.user.UserDTO;
-import com.evgen.entity.user.UserEntity;
 import com.evgen.service.UserService;
 import com.evgen.util.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,7 @@ public class UserController {
     @GetMapping("/users")
     public String getUsers(Model model) {
 
-        model.addAttribute("users", userService.getAll());
+        model.addAttribute("users", userService.getAllUsers());
 
         return "/users";
     }

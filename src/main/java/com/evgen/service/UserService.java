@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface UserService {
 
-    List<UserDTO> getAll();
+    List<UserDTO> getAllUsers();
 
-    UserDTO getOne(String email);
+    UserDTO findByEmail(String email);
 
     void add(UserDTO user);
 }

@@ -58,7 +58,7 @@ public class UserDAOImpl implements UserDAO {
         Query query = em.createNativeQuery(
                 "insert into user(role_id, first_name, last_name, birthday, email, password)" +
                         " values (?, ?, ?, str_to_date(?, '%Y-%m-%d'), ?, ?)");
-        query.setParameter(1, user.getRoleId());
+        query.setParameter(1, user.getRole().getRoleId());
         query.setParameter(2, user.getFirstName());
         query.setParameter(3, user.getLastName());
         query.setParameter(4, strDate);

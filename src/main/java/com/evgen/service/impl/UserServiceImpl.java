@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
     private UserDAO userDAO;
 
     @Override
-    public List<UserDTO> getAll() {
+    public List<UserDTO> getAllUsers() {
 
         List<UserEntity> daos = userDAO.getAll();
 
@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO getOne(String email) {
+    public UserDTO findByEmail(String email) {
 
         UserEntity userEntity =  userDAO.getOne(email);
         ModelMapper modelMapper = new ModelMapper();
@@ -53,6 +53,8 @@ public class UserServiceImpl implements UserService {
 
         ModelMapper modelMapper = new ModelMapper();
         UserEntity userEntity = modelMapper.map(user, UserEntity.class);
+
+        System.out.println("----in add, userEntity: " + userEntity);
         userDAO.add(userEntity);
     }
 }

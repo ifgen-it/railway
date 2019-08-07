@@ -1,6 +1,8 @@
 package com.evgen.dto.user;
 
 
+import com.evgen.entity.user.RoleEntity;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -8,7 +10,7 @@ public class UserDTO implements Serializable {
 
     private int userId;
 
-    private int roleId;
+    private RoleDTO role;
 
     private String firstName;
 
@@ -20,9 +22,9 @@ public class UserDTO implements Serializable {
 
     private String password;
 
-    public UserDTO(int userId, int roleId, String firstName, String lastName, Date birthday, String email, String password) {
+    public UserDTO(int userId, RoleDTO role, String firstName, String lastName, Date birthday, String email, String password) {
         this.userId = userId;
-        this.roleId = roleId;
+        this.role = role;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthday = birthday;
@@ -31,7 +33,7 @@ public class UserDTO implements Serializable {
     }
 
     public UserDTO() {
-        roleId = 2;
+        this.role = new RoleDTO();
     }
 
     public int getUserId() {
@@ -42,12 +44,12 @@ public class UserDTO implements Serializable {
         this.userId = userId;
     }
 
-    public int getRoleId() {
-        return roleId;
+    public RoleDTO getRole() {
+        return role;
     }
 
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
+    public void setRole(RoleDTO role) {
+        this.role = role;
     }
 
     public String getFirstName() {
@@ -88,18 +90,5 @@ public class UserDTO implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "UserDTO{" +
-                "userId=" + userId +
-                ", roleId=" + roleId +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", birthday=" + birthday +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
     }
 }

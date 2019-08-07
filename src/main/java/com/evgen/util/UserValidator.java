@@ -13,7 +13,7 @@ public class UserValidator {
     public boolean checkEmailExistence(String email) {
 
         System.out.println("in Validator - user mail:" + email + "$");
-        if (userService.getOne(email) != null) {
+        if (userService.findByEmail(email) != null) {
             return true;
         }
         return false;

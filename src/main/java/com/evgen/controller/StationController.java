@@ -10,7 +10,7 @@ public class StationController {
     @GetMapping("/stations")
     public String getStations(Model model) {
 
-//        model.addAttribute("stations", userService.getAll());
+//        model.addAttribute("stations", userService.getAllUsers());
 
         return "/stations";
     }
