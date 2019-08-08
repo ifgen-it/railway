@@ -25,7 +25,7 @@
         <table id="table-users" border="2">
             <tr>
                 <th>Id</th>
-                <th>Role Id</th>
+                <th>Role</th>
                 <th>First name</th>
                 <th>Last name</th>
                 <th>Birthday</th>
@@ -41,7 +41,7 @@
                 for (UserDTO user : users) {
                     out.print("<tr>"
                             + "<td>" + user.getUserId() + "</td>"
-                            + "<td>" + user.getRole().getRoleId() + "</td>"
+                            + "<td>" + user.getRole().getRoleName() + "</td>"
                             + "<td>" + user.getFirstName() + "</td>"
                             + "<td>" + user.getLastName() + "</td>"
                             + "<td>" + new SimpleDateFormat("dd-MM-yyyy").format(user.getBirthday()) + "</td>"

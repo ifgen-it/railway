@@ -15,7 +15,7 @@ public class RoleDTO implements Serializable {
 
     public RoleDTO() {
         roleId = 2;
-        roleName = "client";
+        roleName = "ROLE_USER";
     }
 
 

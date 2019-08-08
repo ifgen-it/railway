@@ -1,5 +1,5 @@
 
-insert into role(role) values('admin');
-insert into role(role) values('client');
+insert into role(role) values('ROLE_ADMIN');
+insert into role(role) values('ROLE_USER');
 
  

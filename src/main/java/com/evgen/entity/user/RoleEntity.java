@@ -53,7 +53,6 @@ public class RoleEntity implements Serializable {
         return "RoleEntity{" +
                 "roleId=" + roleId +
                 ", roleName='" + roleName + '\'' +
-                ", users=" + users +
                 '}';
     }
 }

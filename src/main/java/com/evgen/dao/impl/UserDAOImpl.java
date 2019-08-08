@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Component
@@ -47,10 +46,10 @@ public class UserDAOImpl implements UserDAO {
     public void add(UserEntity user) {
 
         // DON'T WORK -- MAY BY 'DATE' FORMAT JPA CANNOT CONVERT TO SQL.DATE
-        /*System.out.println("user: " + user);
-        em.persist(user);*/
+        System.out.println("user: " + user);
+        em.persist(user);
 
-        java.util.Date utilDate = user.getBirthday();
+        /*java.util.Date utilDate = user.getBirthday();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-dd-MM");
         String strDate = formatter.format(utilDate);
         System.out.println("------> strDate = " + strDate);
@@ -65,7 +64,7 @@ public class UserDAOImpl implements UserDAO {
         query.setParameter(5, user.getEmail());
         query.setParameter(6, user.getPassword());
 
-        query.executeUpdate();
+        query.executeUpdate();*/
     }
 
 }
