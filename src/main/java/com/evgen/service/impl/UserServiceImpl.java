@@ -14,7 +14,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -48,7 +48,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
     public void add(UserDTO user) {
 
         ModelMapper modelMapper = new ModelMapper();
@@ -56,5 +55,10 @@ public class UserServiceImpl implements UserService {
 
         System.out.println("----in add, userEntity: " + userEntity);
         userDAO.add(userEntity);
+    }
+
+    @Override
+    public void removeWith(int id) {
+        userDAO.removeWith(id);
     }
 }

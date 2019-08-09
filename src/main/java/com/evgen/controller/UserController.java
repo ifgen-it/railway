@@ -31,6 +31,25 @@ public class UserController {
         return "/users";
     }
 
+    @PostMapping("/users")
+    public String removeUsers(@RequestParam(value = "delete-user", required = false) String[] delUsers,
+                              Model model) {
+
+        System.out.println("---> in the Users POST");
+        System.out.println("del Users: " + delUsers);
+        if (delUsers == null)
+            return "redirect:/users";
+
+        for (int i = 0; i < delUsers.length; i++){
+            int userDelId = Integer.parseInt(delUsers[i]);
+            System.out.println("wanna delete user with id: " + userDelId );
+
+            userService.removeWith(userDelId);
+        }
+
+        return "redirect:/users";
+    }
+
     @GetMapping("/users/new")
     public String getSignUp(){
         return "/sign_up";
@@ -45,7 +64,7 @@ public class UserController {
                          Model model) {
 
         System.out.println("---> in the SignUp");
-
+        System.out.println("Date = " + strBirthday);
         UserDTO user = new UserDTO();
 
         String firstNameError = "";
@@ -56,12 +75,12 @@ public class UserController {
         boolean error = false;
 
         try {
-            Date birthday = new SimpleDateFormat("dd.MM.yyyy").parse(strBirthday);
+            Date birthday = new SimpleDateFormat("yyyy-MM-dd").parse(strBirthday);
             user.setBirthday(birthday);
         } catch (ParseException e) {
             System.out.println("---> Birthday error");
             error = true;
-            birthdayError = "Required format: DD.MM.YYYY";
+            birthdayError = "Date is required"; //"Required format: DD.MM.YYYY";
         }
 
         if (email.equals("")){

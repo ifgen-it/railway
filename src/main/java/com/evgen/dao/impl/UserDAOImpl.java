@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Component
-@Transactional(readOnly = true)
+@Transactional
 public class UserDAOImpl implements UserDAO {
 
     @PersistenceContext(unitName = "emf")
@@ -42,12 +42,12 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    @Transactional
-    public void add(UserEntity user) {
+    public int add(UserEntity user) {
 
         // DON'T WORK -- MAY BY 'DATE' FORMAT JPA CANNOT CONVERT TO SQL.DATE
         System.out.println("user: " + user);
         em.persist(user);
+        return  user.getUserId();
 
         /*java.util.Date utilDate = user.getBirthday();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-dd-MM");
@@ -66,5 +66,31 @@ public class UserDAOImpl implements UserDAO {
 
         query.executeUpdate();*/
     }
+
+    @Override
+    public UserEntity update(UserEntity user) {
+        return em.merge(user);
+    }
+
+    @Override
+    public void remove(UserEntity user) {
+        if (!em.contains(user))
+            user = em.merge(user);
+        em.remove(user);
+    }
+
+    @Override
+    public void removeWith(int id) {
+
+        String queryString = "delete from UserEntity u where u.userId = " + id;
+        Query query = em.createQuery(queryString);
+        query.executeUpdate();
+    }
+
+    @Override
+    public UserEntity get(int id) {
+        return em.find(UserEntity.class, id);
+    }
+
 
 }

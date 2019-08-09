@@ -22,35 +22,56 @@
     <c:import url="nav.jsp"/>
 
     <div id="content-table-users">
-        <table id="table-users" border="2">
-            <tr>
-                <th>Id</th>
-                <th>Role</th>
-                <th>First name</th>
-                <th>Last name</th>
-                <th>Birthday</th>
-                <th>Email</th>
-                <th>Password</th>
+        <form action="/users" method="post">
+            <table id="table-users" border="2">
+                <tr>
+                    <th>Id</th>
+                    <th>Role</th>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>Birthday</th>
+                    <th>Email</th>
+                    <th>Password</th>
+                    <th>Delete user</th>
 
-            </tr>
+                </tr>
 
-            <%
+                <c:forEach var="user" items="${users}">
+                    <tr>
+                        <td>${user.userId}</td>
+                        <td>${user.role.roleName}</td>
+                        <td>${user.firstName}</td>
+                        <td>${user.lastName}</td>
+                        <td>${user.birthday}</td>
+                        <td>${user.email}</td>
+                        <td>${user.password}</td>
+                        <td align="center">
+                            <input type="checkbox" name="delete-user" value=${user.userId}>
+                        </td>
 
-                if (users.size() == 0)
-                    out.print("<p>" + "There is no users yet" + "</p>");
-                for (UserDTO user : users) {
-                    out.print("<tr>"
-                            + "<td>" + user.getUserId() + "</td>"
-                            + "<td>" + user.getRole().getRoleName() + "</td>"
-                            + "<td>" + user.getFirstName() + "</td>"
-                            + "<td>" + user.getLastName() + "</td>"
-                            + "<td>" + new SimpleDateFormat("dd-MM-yyyy").format(user.getBirthday()) + "</td>"
-                            + "<td>" + user.getEmail() + "</td>"
-                            + "<td>" + user.getPassword() + "</td>"
-                            + "</tr>");
-                }
-            %>
-        </table>
+                    </tr>
+                </c:forEach>
+
+                <%--            <%--%>
+
+                <%--                if (users.size() == 0)--%>
+                <%--                    out.print("<p>" + "There is no users yet" + "</p>");--%>
+                <%--                for (UserDTO user : users) {--%>
+                <%--                    out.print("<tr>"--%>
+                <%--                            + "<td>" + user.getUserId() + "</td>"--%>
+                <%--                            + "<td>" + user.getRole().getRoleName() + "</td>"--%>
+                <%--                            + "<td>" + user.getFirstName() + "</td>"--%>
+                <%--                            + "<td>" + user.getLastName() + "</td>"--%>
+                <%--                            + "<td>" + new SimpleDateFormat("dd-MM-yyyy").format(user.getBirthday()) + "</td>"--%>
+                <%--                            + "<td>" + user.getEmail() + "</td>"--%>
+                <%--                            + "<td>" + user.getPassword() + "</td>"--%>
+                <%--                            --%>
+                <%--                            + "</tr>");--%>
+                <%--                }--%>
+                <%--            %>--%>
+            </table>
+            <input type="submit" value="Delete users">
+        </form>
     </div>
 </div>
 

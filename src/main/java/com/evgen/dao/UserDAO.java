@@ -10,5 +10,17 @@ public interface UserDAO {
 
     UserEntity getOne(String email);
 
-    void add(UserEntity user);
+    int add(UserEntity user);
+
+    UserEntity update(UserEntity user);
+
+    void remove(UserEntity user);
+
+    void removeWith(int id);
+
+    UserEntity get(int id);
+
+
+
+
 }

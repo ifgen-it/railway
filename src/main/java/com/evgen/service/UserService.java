@@ -11,4 +11,8 @@ public interface UserService {
     UserDTO findByEmail(String email);
 
     void add(UserDTO user);
+
+    void removeWith(int id);
+
+
 }
