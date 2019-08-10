@@ -52,7 +52,9 @@ public class UserController {
     }
 
     @GetMapping("/users/new")
-    public String getSignUp(){
+    public String getSignUp(Model model){
+
+        model.addAttribute("roles", userService.getAllRoles());
         return "/sign_up";
     }
 
@@ -62,15 +64,15 @@ public class UserController {
                          @RequestParam("birthday") String strBirthday,
                          @RequestParam("email") String email,
                          @RequestParam("password") String password,
-                         @RequestParam("userRole") String userRole,
+                         @RequestParam("userRoleId") String userRoleId,
                          Model model) {
 
         System.out.println("---> in the SignUp");
         System.out.println("Date = " + strBirthday);
         UserDTO user = new UserDTO();
 
-        RoleDTO roleDTO = new RoleDTO();
-        roleDTO.setRoleName(userRole);
+
+        RoleDTO roleDTO = userService.getRole(Integer.parseInt(userRoleId));
         user.setRole(roleDTO);
 
         String firstNameError = "";
@@ -130,7 +132,7 @@ public class UserController {
         user.setEmail(email);
         user.setPassword(password);
 
-        userService.add(user);
+        userService.addUser(user);
 
         return "redirect:/users";
     }

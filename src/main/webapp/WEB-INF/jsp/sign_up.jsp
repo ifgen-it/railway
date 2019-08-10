@@ -14,7 +14,7 @@
     <c:import url="nav.jsp"/>
 
     <div id="content-add-user">
-        <p>Fill inputs to add new user:</p>
+        <p class="dark-text">Fill inputs to add new user:</p>
         <form action="/users/new" method="post">
             <div class="form-element">
                 <input id="firstName" name="firstName" type="text" placeholder="First name" required>
@@ -27,9 +27,10 @@
             </div>
 
             <div class="form-element">
-                <select name="userRole">
-                    <option value="ROLE_ADMIN">ROLE_ADMIN</option>
-                    <option value="ROLE_USER" selected>ROLE_USER</option>
+                <select name="userRoleId">
+                    <c:forEach var="role" items="${roles}">
+                        <option value="${role.roleId}">${role.roleName}</option>
+                    </c:forEach>
                 </select>
             </div>
 

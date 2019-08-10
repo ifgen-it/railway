@@ -77,4 +77,12 @@ public class RouteEntity implements Serializable {
     public void setRouteTickets(List<TicketEntity> routeTickets) {
         this.routeTickets = routeTickets;
     }
+
+    @Override
+    public String toString() {
+        return "RouteEntity{" +
+                "routeId=" + routeId +
+                ", routeName='" + routeName + '\'' +
+                '}';
+    }
 }

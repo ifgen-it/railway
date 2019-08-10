@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.List;
 
 @Component
 @Transactional
@@ -23,16 +24,20 @@ public class RoleDAOImpl implements RoleDAO {
 
     @Override
     public RoleEntity getRoleByName(String roleName) {
-        /*String queryString = "select u from UserEntity u where u.email = :email";
-        Query query = em.createQuery(queryString);
-        query.setParameter("email", email);
-        List<UserEntity> users = (List<UserEntity>) query.getResultList();*/
 
         String queryString = "select r from RoleEntity r where r.roleName = :roleName";
         Query query = em.createQuery(queryString);
         query.setParameter("roleName", roleName);
-        RoleEntity role = (RoleEntity)query.getSingleResult();
+        RoleEntity role = (RoleEntity) query.getSingleResult();
 
         return role;
+    }
+
+    @Override
+    public List<RoleEntity> getAll() {
+
+        String queryString = "select r from RoleEntity r";
+        Query query = em.createQuery(queryString);
+        return query.getResultList();
     }
 }

@@ -74,8 +74,9 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void remove(UserEntity user) {
-        if (!em.contains(user))
+        if (!em.contains(user)){
             user = em.merge(user);
+        }
         em.remove(user);
     }
 

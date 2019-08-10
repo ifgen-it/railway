@@ -76,4 +76,15 @@ public class RoutePathEntity implements Serializable {
     public void setArc(ArcEntity arc) {
         this.arc = arc;
     }
+
+    @Override
+    public String toString() {
+        return "RoutePathEntity{" +
+                "routePathId=" + routePathId +
+                ", departureTime=" + departureTime +
+                ", arrivalTime=" + arrivalTime +
+                ", route=" + route +
+                ", arc=" + arc +
+                '}';
+    }
 }

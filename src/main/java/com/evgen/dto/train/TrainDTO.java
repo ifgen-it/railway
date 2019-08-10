@@ -18,8 +18,8 @@ public class TrainDTO implements Serializable {
     public TrainDTO() {
     }
 
-    public TrainDTO(int trainId, String trainName, int seatsAmount) {
-        this.trainId = trainId;
+    public TrainDTO(String trainName, int seatsAmount) {
+
         this.trainName = trainName;
         this.seatsAmount = seatsAmount;
     }

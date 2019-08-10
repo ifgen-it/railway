@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Stations</title>
+    <title>Routes</title>
     <link type="text/css" rel="stylesheet"
           href="${pageContext.request.contextPath}/resources/css/style.css">
     <link rel="shortcut icon" type="image/x-icon" href="/resources/img/favicon.ico">
@@ -15,18 +15,22 @@
 <div class="wrapper">
     <c:import url="nav.jsp"/>
 
-    <div id="content-table-stations">
-        <table id="table-stations" border="2">
+    <div id="content-table-routes">
+        <table id="table-routes" border="2">
             <tr>
                 <th>Id</th>
-                <th>Station name</th>
+                <th>Route name</th>
+                <th>Train name</th>
+                <th>Seats amount</th>
 
             </tr>
 
-            <c:forEach var="station" items="${stations}">
+            <c:forEach var="route" items="${routes}">
                 <tr>
-                    <td>${station.stationId}</td>
-                    <td>${station.stationName}</td>
+                    <td>${route.routeId}</td>
+                    <td>${route.routeName}</td>
+                    <td>${route.train.trainName}</td>
+                    <td>${route.train.seatsAmount}</td>
 
                 </tr>
             </c:forEach>

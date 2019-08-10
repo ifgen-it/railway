@@ -26,7 +26,15 @@ header{
     padding-top: 20px;
 }
 
+.light-text{
+    color: azure;
+    font-size: 18pt;
+}
 
+.dark-text{
+    color: darkslateblue;
+    font-size: 20pt;
+}
 
 #content{
     margin-left: 2%;
@@ -109,6 +117,23 @@ footer{
     padding: 30px;
 }
 #table-stations{
+    background: #add8e6;
+}
+
+#content-table-routes{
+    padding: 30px;
+}
+#table-routes{
+    background: #add8e6;
+}
+
+#content-table-timetable{
+    padding: 30px;
+}
+#table-timetable-departure{
+    background: #add8e6;
+}
+#table-timetable-arrival{
     background: #add8e6;
 }
 

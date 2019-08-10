@@ -18,7 +18,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="/resources/img/favicon.ico">
 </head>
 <body>
-<div class="long-wrapper">
+<div class="wrapper">
     <c:import url="nav.jsp"/>
 
     <div id="content-table-users">
