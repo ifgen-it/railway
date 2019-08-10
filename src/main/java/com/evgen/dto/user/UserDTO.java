@@ -1,10 +1,11 @@
 package com.evgen.dto.user;
 
 
-import com.evgen.entity.user.RoleEntity;
+import com.evgen.dto.ticket.TicketDTO;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class UserDTO implements Serializable {
 
@@ -22,6 +23,8 @@ public class UserDTO implements Serializable {
 
     private String password;
 
+    private List<TicketDTO> tickets;
+
     public UserDTO(int userId, RoleDTO role, String firstName, String lastName, Date birthday, String email, String password) {
         this.userId = userId;
         this.role = role;
@@ -33,7 +36,7 @@ public class UserDTO implements Serializable {
     }
 
     public UserDTO() {
-        this.role = new RoleDTO();
+
     }
 
     public int getUserId() {
@@ -90,5 +93,18 @@ public class UserDTO implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "userId=" + userId +
+                ", role=" + role.getRoleName() +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", birthday=" + birthday +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

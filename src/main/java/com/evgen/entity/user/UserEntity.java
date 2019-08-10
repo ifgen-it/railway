@@ -1,9 +1,13 @@
 package com.evgen.entity.user;
 
 
+import com.evgen.entity.ticket.TicketEntity;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -32,6 +36,9 @@ public class UserEntity implements Serializable {
 
     @Column(name = "password", length = 80, nullable = false)
     private String password;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<TicketEntity> tickets = new ArrayList<>();
 
     public UserEntity() {
     }

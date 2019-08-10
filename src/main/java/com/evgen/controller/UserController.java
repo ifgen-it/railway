@@ -1,5 +1,6 @@
 package com.evgen.controller;
 
+import com.evgen.dto.user.RoleDTO;
 import com.evgen.dto.user.UserDTO;
 import com.evgen.service.UserService;
 import com.evgen.util.UserValidator;
@@ -61,11 +62,16 @@ public class UserController {
                          @RequestParam("birthday") String strBirthday,
                          @RequestParam("email") String email,
                          @RequestParam("password") String password,
+                         @RequestParam("userRole") String userRole,
                          Model model) {
 
         System.out.println("---> in the SignUp");
         System.out.println("Date = " + strBirthday);
         UserDTO user = new UserDTO();
+
+        RoleDTO roleDTO = new RoleDTO();
+        roleDTO.setRoleName(userRole);
+        user.setRole(roleDTO);
 
         String firstNameError = "";
         String lastNameError = "";

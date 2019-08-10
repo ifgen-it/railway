@@ -14,8 +14,7 @@ public class RoleDTO implements Serializable {
     private List<UserDTO> users;
 
     public RoleDTO() {
-        roleId = 2;
-        roleName = "ROLE_USER";
+
     }
 
 
@@ -48,7 +47,6 @@ public class RoleDTO implements Serializable {
         return "RoleDTO{" +
                 "roleId=" + roleId +
                 ", roleName='" + roleName + '\'' +
-                ", users=" + users +
                 '}';
     }
 }

@@ -27,6 +27,13 @@
             </div>
 
             <div class="form-element">
+                <select name="userRole">
+                    <option value="ROLE_ADMIN">ROLE_ADMIN</option>
+                    <option value="ROLE_USER" selected>ROLE_USER</option>
+                </select>
+            </div>
+
+            <div class="form-element">
                 <input id="birthday" name="birthday" type="date" placeholder="Birthday" required>
                 <label class="error-message">${birthdayError}</label>
             </div>
