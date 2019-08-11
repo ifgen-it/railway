@@ -21,4 +21,9 @@ public interface RoutePathDAO {
     List<RoutePathEntity> getArrivals(int stationId);
 
     List<RoutePathEntity> getDepartures(int stationId);
+
+    RoutePathEntity getFirstArc(int routeId);
+
+    RoutePathEntity getLastArc(int routeId);
+
 }

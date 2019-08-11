@@ -4,10 +4,7 @@ import com.evgen.dao.ArcDAO;
 import com.evgen.dao.RouteDAO;
 import com.evgen.dao.RoutePathDAO;
 import com.evgen.dao.StationDAO;
-import com.evgen.dto.station.ArcDTO;
-import com.evgen.dto.station.RouteDTO;
-import com.evgen.dto.station.RoutePathDTO;
-import com.evgen.dto.station.StationDTO;
+import com.evgen.dto.station.*;
 import com.evgen.entity.station.ArcEntity;
 import com.evgen.entity.station.RouteEntity;
 import com.evgen.entity.station.RoutePathEntity;
@@ -171,5 +168,63 @@ public class StationServiceImpl implements StationService {
 
         ArcDTO arcDTO = modelMapper.map(arcEntity, ArcDTO.class);
         return arcDTO;
+    }
+
+    @Override
+    public RoutePathDTO getFirstArc(int routeId) {
+
+        RoutePathEntity entity =  routePathDAO.getFirstArc(routeId);
+        ModelMapper modelMapper = new ModelMapper();
+
+        if (entity == null)
+            return null;
+
+        RoutePathDTO dto = modelMapper.map(entity, RoutePathDTO.class);
+        return dto;
+    }
+
+    @Override
+    public RoutePathDTO getLastArc(int routeId) {
+
+        RoutePathEntity entity =  routePathDAO.getLastArc(routeId);
+        ModelMapper modelMapper = new ModelMapper();
+
+        if (entity == null)
+            return null;
+
+        RoutePathDTO dto = modelMapper.map(entity, RoutePathDTO.class);
+        return dto;
+    }
+
+    @Override
+    public List<RouteExtDTO> getAllRoutesExt() {
+
+        List<RouteExtDTO> dtosExt = new ArrayList<>();
+        ModelMapper modelMapper = new ModelMapper();
+
+
+        routeDAO.getAll().forEach(item -> {
+
+            RouteDTO routeDTO = modelMapper.map(item, RouteDTO.class);
+            RouteExtDTO routeExtDTO = new RouteExtDTO();
+
+            routeExtDTO.setRouteDTO(routeDTO);
+
+            RoutePathEntity firstArcEntity = routePathDAO.getFirstArc(routeDTO.getRouteId());
+            RoutePathEntity lastArcEntity = routePathDAO.getLastArc(routeDTO.getRouteId());
+            RoutePathDTO firstArc = modelMapper.map(firstArcEntity, RoutePathDTO.class);
+            RoutePathDTO lastArc = modelMapper.map(lastArcEntity, RoutePathDTO.class);
+
+            routeExtDTO.setRouteDepartureTime(firstArc.getDepartureTime());
+            routeExtDTO.setRouteArrivalTime(lastArc.getArrivalTime());
+
+            routeExtDTO.setRouteBeginStation(firstArc.getArc().getBeginStation());
+            routeExtDTO.setRouteEndStation(lastArc.getArc().getEndStation());
+
+            dtosExt.add(routeExtDTO);
+
+        });
+
+        return dtosExt;
     }
 }

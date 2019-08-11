@@ -1,6 +1,7 @@
 package com.evgen.controller;
 
 import com.evgen.dto.station.ArcDTO;
+import com.evgen.dto.station.RoutePathDTO;
 import com.evgen.dto.station.StationDTO;
 import com.evgen.service.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -141,7 +142,14 @@ public class StationController {
     @GetMapping("/routes")
     public String getRoutes(Model model) {
 
-        model.addAttribute("routes", stationService.getAllRoutes());
+       // model.addAttribute("routes", stationService.getAllRoutes());
+
+        model.addAttribute("routes", stationService.getAllRoutesExt());
+
+
+        System.out.println("====== > GETTING route Path with routeId : 2 ");
+        RoutePathDTO rPath = stationService.getFirstArc(2);
+        System.out.println("====== > route Path with routeId : 2 = " + rPath);
         return "/routes";
     }
 

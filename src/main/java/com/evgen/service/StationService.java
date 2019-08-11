@@ -1,9 +1,6 @@
 package com.evgen.service;
 
-import com.evgen.dto.station.ArcDTO;
-import com.evgen.dto.station.RouteDTO;
-import com.evgen.dto.station.RoutePathDTO;
-import com.evgen.dto.station.StationDTO;
+import com.evgen.dto.station.*;
 
 import java.util.List;
 
@@ -36,5 +33,11 @@ public interface StationService {
     StationDTO getByName(String stationName);
 
     ArcDTO getArcByStations(int beginStationId, int endStationId);
+
+    RoutePathDTO getFirstArc(int routeId);
+
+    RoutePathDTO getLastArc(int routeId);
+
+    List<RouteExtDTO> getAllRoutesExt();
 
 }

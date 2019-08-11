@@ -16,21 +16,30 @@
     <c:import url="nav.jsp"/>
 
     <div id="content-table-routes">
+        <div class="dark-text">Routes</div>
         <table id="table-routes" border="2">
             <tr>
                 <th>Id</th>
                 <th>Route name</th>
                 <th>Train name</th>
                 <th>Seats amount</th>
+                <th>Begin station</th>
+                <th>Departure time</th>
+                <th>End station</th>
+                <th>Arrival time</th>
 
             </tr>
 
             <c:forEach var="route" items="${routes}">
                 <tr>
-                    <td>${route.routeId}</td>
-                    <td>${route.routeName}</td>
-                    <td>${route.train.trainName}</td>
-                    <td>${route.train.seatsAmount}</td>
+                    <td>${route.routeDTO.routeId}</td>
+                    <td>${route.routeDTO.routeName}</td>
+                    <td>${route.routeDTO.train.trainName}</td>
+                    <td>${route.routeDTO.train.seatsAmount}</td>
+                    <td>${route.routeBeginStation.stationName}</td>
+                    <td>${route.routeDepartureTime}</td>
+                    <td>${route.routeEndStation.stationName}</td>
+                    <td>${route.routeArrivalTime}</td>
 
                 </tr>
             </c:forEach>

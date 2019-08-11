@@ -86,4 +86,38 @@ public class RoutePathDAOImpl implements RoutePathDAO {
 
         return results;
     }
+
+    @Override
+    public RoutePathEntity getFirstArc(int routeId) {
+
+        String subQueryString = "select min(r.departureTime) from RoutePathEntity r " +
+                "where r.route.routeId = :routeId";
+
+        String queryString = "select r from RoutePathEntity r " +
+                "where r.route.routeId = :routeId and r.departureTime = ( "+ subQueryString +" )";
+
+        TypedQuery<RoutePathEntity> query = em.createQuery(queryString, RoutePathEntity.class);
+        query.setParameter("routeId", routeId);
+
+        RoutePathEntity result = query.getSingleResult();
+
+        return result;
+    }
+
+    @Override
+    public RoutePathEntity getLastArc(int routeId) {
+
+        String subQueryString = "select max (r.arrivalTime) from RoutePathEntity r " +
+                "where r.route.routeId = :routeId";
+
+        String queryString = "select r from RoutePathEntity r " +
+                "where r.route.routeId = :routeId and r.arrivalTime = ( "+ subQueryString +" )";
+
+        TypedQuery<RoutePathEntity> query = em.createQuery(queryString, RoutePathEntity.class);
+        query.setParameter("routeId", routeId);
+
+        RoutePathEntity result = query.getSingleResult();
+
+        return result;
+    }
 }
