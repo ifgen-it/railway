@@ -14,7 +14,7 @@
     <c:import url="nav.jsp"/>
 
     <div id="content-add-user">
-        <p class="dark-text">Fill inputs to add new user:</p>
+        <div class="dark-text">Fill inputs to add new USER:</div>
         <form action="/users/new" method="post">
             <div class="form-element">
                 <input id="firstName" name="firstName" type="text" placeholder="First name" required>
@@ -49,7 +49,7 @@
                 <label class="error-message">${passwordError}</label>
             </div>
 
-            <input type="submit" value="Submit">
+            <input type="submit" value="Add user">
         </form>
     </div>
 </div>

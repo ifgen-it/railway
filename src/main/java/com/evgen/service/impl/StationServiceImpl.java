@@ -146,4 +146,30 @@ public class StationServiceImpl implements StationService {
 
         return dtos;
     }
+
+    @Override
+    public StationDTO getByName(String stationName) {
+
+        StationEntity stationEntity =  stationDAO.getByName(stationName);
+        ModelMapper modelMapper = new ModelMapper();
+
+        if (stationEntity == null)
+            return  null;
+
+        StationDTO stationDTO = modelMapper.map(stationEntity, StationDTO.class);
+        return stationDTO;
+    }
+
+    @Override
+    public ArcDTO getArcByStations(int beginStationId, int endStationId) {
+
+        ArcEntity arcEntity =  arcDAO.getByStations(beginStationId, endStationId);
+        ModelMapper modelMapper = new ModelMapper();
+
+        if (arcEntity == null)
+            return  null;
+
+        ArcDTO arcDTO = modelMapper.map(arcEntity, ArcDTO.class);
+        return arcDTO;
+    }
 }

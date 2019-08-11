@@ -33,4 +33,8 @@ public interface StationService {
 
     List<RoutePathDTO> getDepartures(int stationId);
 
+    StationDTO getByName(String stationName);
+
+    ArcDTO getArcByStations(int beginStationId, int endStationId);
+
 }

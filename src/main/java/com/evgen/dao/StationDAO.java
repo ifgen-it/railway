@@ -17,4 +17,6 @@ public interface StationDAO {
     void removeWith(int id);
 
     StationEntity update(StationEntity station);
+
+    StationEntity getByName(String stationName);
 }

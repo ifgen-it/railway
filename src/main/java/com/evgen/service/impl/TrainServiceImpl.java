@@ -44,4 +44,16 @@ public class TrainServiceImpl implements TrainService {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(trainDAO.get(trainId), TrainDTO.class);
     }
+
+    @Override
+    public TrainDTO getByName(String trainName) {
+        TrainEntity trainEntity =  trainDAO.getByName(trainName);
+        ModelMapper modelMapper = new ModelMapper();
+
+        if (trainEntity == null)
+            return  null;
+
+        TrainDTO trainDTO = modelMapper.map(trainEntity, TrainDTO.class);
+        return trainDTO;
+    }
 }

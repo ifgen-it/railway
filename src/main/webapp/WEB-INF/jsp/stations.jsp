@@ -16,6 +16,20 @@
     <c:import url="nav.jsp"/>
 
     <div id="content-table-stations">
+
+        <%--        ADD NEW STATION --%>
+        <div class="dark-text">Fill input to add new station:</div>
+        <form action="/stations" method="post">
+            <div class="form-element">
+                <input id="stationName" name="stationName" type="text" placeholder="Station name" required>
+                <label class="error-message">${stationNameError}</label>
+            </div>
+
+            <input type="submit" value="Add station">
+        </form>
+
+
+        <%--            SHOW STATIONS --%>
         <table id="table-stations" border="2">
             <tr>
                 <th>Id</th>

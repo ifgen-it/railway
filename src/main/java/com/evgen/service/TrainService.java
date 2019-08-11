@@ -12,5 +12,7 @@ public interface TrainService {
 
     TrainDTO getTrain(int trainId);
 
+    TrainDTO getByName(String trainName);
+
 
 }

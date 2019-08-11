@@ -28,12 +28,19 @@ header{
 
 .light-text{
     color: azure;
-    font-size: 16pt;
+    font-size: 18pt;
+    padding-bottom: 8px;
 }
 
 .dark-text{
     color: indigo;
     font-size: 18pt;
+    padding-bottom: 8px;
+}
+
+.dark-text-small{
+    color: indigo;
+    font-size: 13pt
 }
 
 #content{
@@ -109,24 +116,72 @@ footer{
 /*======================= USERS ============================*/
 #content-table-users{
     padding: 30px;
+    background: dodgerblue;
 }
 #table-users{
     background: #add8e6;
 }
+#table-users th{
+    color: indigo;
+    font-size: 13pt;
+    padding: 4px;
+}
+/*============ STATIONS ============*/
 #content-table-stations{
     padding: 30px;
+    background: dodgerblue;
 }
 #table-stations{
     background: #add8e6;
 }
+#table-stations th{
+    color: indigo;
+    font-size: 13pt;
+    padding: 4px;
+}
 
+/*============ ARCS ============*/
+#content-table-arcs{
+    padding: 30px;
+    background: dodgerblue;
+}
+#table-arcs{
+    background: #add8e6;
+}
+
+#table-arcs th{
+    color: indigo;
+    font-size: 13pt;
+    padding: 4px;
+}
+
+/* ======= ROUTES ===============*/
 #content-table-routes{
     padding: 30px;
+    background: dodgerblue;
 }
 #table-routes{
     background: #add8e6;
 }
-
+#table-routes th{
+    color: indigo;
+    font-size: 13pt;
+    padding: 4px;
+}
+/*========  TRAINS ===============*/
+#content-table-trains{
+    padding: 30px;
+    background: dodgerblue;
+}
+#table-trains{
+    background: #add8e6;
+}
+#table-trains th{
+    color: indigo;
+    font-size: 13pt;
+    padding: 4px;
+}
+/* =====  TIME TABLE ===============*/
 #content-table-timetable{
     padding: 30px;
     background: dodgerblue;
@@ -172,9 +227,6 @@ footer{
     padding:20px 50px;
     background: dodgerblue;
 }
-#content-add-user p{
-    font-size: 18px;
-}
 
 .form-element{
     margin: 12px 0;
@@ -191,8 +243,9 @@ footer{
 }
 
 .form-element .error-message{
-    color: brown;
-    font-size: 12pt;
+    color: darkred;
+    font-size: 13pt;
+
 }
 
 input[type="submit"]{

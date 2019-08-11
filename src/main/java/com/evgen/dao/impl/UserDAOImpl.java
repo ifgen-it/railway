@@ -24,7 +24,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public UserEntity getOne(String email) {
+    public UserEntity getByEmail(String email) {
 
         System.out.println("---> email:" + email + "$");
 

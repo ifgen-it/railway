@@ -55,4 +55,18 @@ public class TrainDAOImpl implements TrainDAO {
     public TrainEntity update(TrainEntity train) {
         return em.merge(train);
     }
+
+    @Override
+    public TrainEntity getByName(String trainName) {
+
+        String queryString = "select t from TrainEntity t where t.trainName = :trainName";
+        Query query = em.createQuery(queryString);
+        query.setParameter("trainName", trainName);
+        List<TrainEntity> trains = (List<TrainEntity>) query.getResultList();
+
+        if (trains.size() == 0)
+            return null;
+        else
+            return trains.get(0);
+    }
 }

@@ -17,4 +17,6 @@ public interface TrainDAO {
     void removeWith(int id);
 
     TrainEntity update(TrainEntity train);
+
+    TrainEntity getByName(String trainName);
 }

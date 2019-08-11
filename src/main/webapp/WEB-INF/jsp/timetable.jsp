@@ -15,8 +15,8 @@
 
 
     <div id="content-table-timetable">
+        <div class="dark-text">Choose station:</div>
         <form action="/timetable" method="post">
-            <p class="dark-text">Choose station:</p>
             <div class="form-element">
                 <select name="stationId" class="form-element">
                     <c:forEach var="station" items="${stations}">

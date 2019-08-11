@@ -9,7 +9,7 @@ public interface UserService {
 
     List<UserDTO> getAllUsers();
 
-    UserDTO findByEmail(String email);
+    UserDTO getByEmail(String email);
 
     int addUser(UserDTO user);
 

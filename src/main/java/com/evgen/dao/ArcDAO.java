@@ -17,4 +17,6 @@ public interface ArcDAO {
     void removeWith(int id);
 
     ArcEntity update(ArcEntity arc);
+
+    ArcEntity getByStations(int beginStationId, int endStationId);
 }

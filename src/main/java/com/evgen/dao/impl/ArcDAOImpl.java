@@ -58,4 +58,23 @@ public class ArcDAOImpl implements ArcDAO {
 
         return em.merge(arc);
     }
+
+    @Override
+    public ArcEntity getByStations(int beginStationId, int endStationId) {
+
+        String queryString = "select a from ArcEntity a " +
+                "where a.beginStation.stationId = :beginStationId and " +
+                "a.endStation.stationId = :endStationId";
+
+        Query query = em.createQuery(queryString);
+        query.setParameter("beginStationId", beginStationId);
+        query.setParameter("endStationId", endStationId);
+
+        List<ArcEntity> arcs = (List<ArcEntity>) query.getResultList();
+
+        if (arcs.size() == 0)
+            return null;
+        else
+            return arcs.get(0);
+    }
 }

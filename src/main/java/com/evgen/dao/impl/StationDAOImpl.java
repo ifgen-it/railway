@@ -56,4 +56,18 @@ public class StationDAOImpl implements StationDAO {
     public StationEntity update(StationEntity station) {
         return em.merge(station);
     }
+
+    @Override
+    public StationEntity getByName(String stationName) {
+
+        String queryString = "select s from StationEntity s where s.stationName = :stationName";
+        Query query = em.createQuery(queryString);
+        query.setParameter("stationName", stationName);
+        List<StationEntity> stations = (List<StationEntity>) query.getResultList();
+
+        if (stations.size() == 0)
+            return null;
+        else
+            return stations.get(0);
+    }
 }

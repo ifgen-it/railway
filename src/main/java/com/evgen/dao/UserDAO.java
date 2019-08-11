@@ -8,7 +8,7 @@ public interface UserDAO {
 
     List<UserEntity> getAll();
 
-    UserEntity getOne(String email);
+    UserEntity getByEmail(String email);
 
     int add(UserEntity user);
 

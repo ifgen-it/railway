@@ -41,9 +41,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO findByEmail(String email) {
+    public UserDTO getByEmail(String email) {
 
-        UserEntity userEntity =  userDAO.getOne(email);
+        UserEntity userEntity =  userDAO.getByEmail(email);
         ModelMapper modelMapper = new ModelMapper();
 
         if (userEntity == null)
