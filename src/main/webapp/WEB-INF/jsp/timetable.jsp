@@ -28,7 +28,7 @@
         </form>
 
         <c:if test="${stationName != null}">
-            <p class="dark-text">Timetable : ${stationName}</p>
+            <div class="dark-text">Timetable : ${stationName}</div>
             <table id="table-timetable-arr-dep">
 
                 <tr>

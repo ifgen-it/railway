@@ -83,7 +83,7 @@ public class StationServiceImpl implements StationService {
 
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(routeDAO.get(routeId), RouteDTO.class);
-}
+    }
 
     @Override
     public int addStation(StationDTO station) {
@@ -128,7 +128,7 @@ public class StationServiceImpl implements StationService {
         List<RoutePathDTO> dtos = new ArrayList<>();
 
         List<RoutePathEntity> entities = routePathDAO.getArrivals(stationId);
-        entities.forEach(item ->dtos.add(modelMapper.map(item, RoutePathDTO.class)));
+        entities.forEach(item -> dtos.add(modelMapper.map(item, RoutePathDTO.class)));
 
         return dtos;
     }
@@ -139,7 +139,7 @@ public class StationServiceImpl implements StationService {
         List<RoutePathDTO> dtos = new ArrayList<>();
 
         List<RoutePathEntity> entities = routePathDAO.getDepartures(stationId);
-        entities.forEach(item ->dtos.add(modelMapper.map(item, RoutePathDTO.class)));
+        entities.forEach(item -> dtos.add(modelMapper.map(item, RoutePathDTO.class)));
 
         return dtos;
     }
@@ -147,11 +147,11 @@ public class StationServiceImpl implements StationService {
     @Override
     public StationDTO getByName(String stationName) {
 
-        StationEntity stationEntity =  stationDAO.getByName(stationName);
+        StationEntity stationEntity = stationDAO.getByName(stationName);
         ModelMapper modelMapper = new ModelMapper();
 
         if (stationEntity == null)
-            return  null;
+            return null;
 
         StationDTO stationDTO = modelMapper.map(stationEntity, StationDTO.class);
         return stationDTO;
@@ -160,11 +160,11 @@ public class StationServiceImpl implements StationService {
     @Override
     public ArcDTO getArcByStations(int beginStationId, int endStationId) {
 
-        ArcEntity arcEntity =  arcDAO.getByStations(beginStationId, endStationId);
+        ArcEntity arcEntity = arcDAO.getByStations(beginStationId, endStationId);
         ModelMapper modelMapper = new ModelMapper();
 
         if (arcEntity == null)
-            return  null;
+            return null;
 
         ArcDTO arcDTO = modelMapper.map(arcEntity, ArcDTO.class);
         return arcDTO;
@@ -173,7 +173,7 @@ public class StationServiceImpl implements StationService {
     @Override
     public RoutePathDTO getFirstArc(int routeId) {
 
-        RoutePathEntity entity =  routePathDAO.getFirstArc(routeId);
+        RoutePathEntity entity = routePathDAO.getFirstArc(routeId);
         ModelMapper modelMapper = new ModelMapper();
 
         if (entity == null)
@@ -186,7 +186,7 @@ public class StationServiceImpl implements StationService {
     @Override
     public RoutePathDTO getLastArc(int routeId) {
 
-        RoutePathEntity entity =  routePathDAO.getLastArc(routeId);
+        RoutePathEntity entity = routePathDAO.getLastArc(routeId);
         ModelMapper modelMapper = new ModelMapper();
 
         if (entity == null)
@@ -226,5 +226,41 @@ public class StationServiceImpl implements StationService {
         });
 
         return dtosExt;
+    }
+
+    @Override
+    public List<Integer> getCommonRoutes(int startStationId, int finishStationId) {
+
+        List<Integer> routes = routePathDAO.getCommonRoutes(startStationId, finishStationId);
+
+        return routes;
+    }
+
+    @Override
+    public RouteExtDTO getRouteExt(int routeId) {
+
+        ModelMapper modelMapper = new ModelMapper();
+
+        RouteExtDTO routeExtDTO = new RouteExtDTO();
+        routeExtDTO.setRouteDTO(getRoute(routeId));
+
+        routeExtDTO.setRouteDepartureTime(routePathDAO.getFirstArc(routeId).getDepartureTime());
+        routeExtDTO.setRouteArrivalTime(routePathDAO.getLastArc(routeId).getArrivalTime());
+
+        routeExtDTO.setRouteBeginStation(
+                modelMapper.map(
+                        routePathDAO.getFirstArc(routeId).getArc().getBeginStation(),
+                        StationDTO.class
+                )
+        );
+
+        routeExtDTO.setRouteEndStation(
+                modelMapper.map(
+                        routePathDAO.getLastArc(routeId).getArc().getEndStation(),
+                        StationDTO.class
+                )
+        );
+
+        return routeExtDTO;
     }
 }

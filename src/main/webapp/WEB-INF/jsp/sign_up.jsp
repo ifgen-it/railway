@@ -14,7 +14,7 @@
     <c:import url="nav.jsp"/>
 
     <div id="content-add-user">
-        <div class="dark-text">Fill inputs to add new USER:</div>
+        <div class="dark-text">Fill inputs to add new user:</div>
         <form action="/users/new" method="post">
             <div class="form-element">
                 <input id="firstName" name="firstName" type="text" placeholder="First name" required>

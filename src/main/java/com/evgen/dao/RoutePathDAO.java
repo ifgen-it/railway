@@ -1,5 +1,6 @@
 package com.evgen.dao;
 
+import com.evgen.entity.station.RouteEntity;
 import com.evgen.entity.station.RoutePathEntity;
 
 import java.util.List;
@@ -25,5 +26,7 @@ public interface RoutePathDAO {
     RoutePathEntity getFirstArc(int routeId);
 
     RoutePathEntity getLastArc(int routeId);
+
+    List<Integer> getCommonRoutes(int startStationId, int finishStationId);
 
 }

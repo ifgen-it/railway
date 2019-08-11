@@ -12,9 +12,13 @@ public class MainController {
 
 
     @GetMapping("/")
-    public String getIndex(Model model){
+    public String getIndex(){
+        return "/index";
+    }
 
-        return "index";
+    @GetMapping("/info")
+    public String getInfo(){
+        return "/info";
     }
 
     @GetMapping("/view/{name}")

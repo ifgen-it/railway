@@ -40,4 +40,8 @@ public interface StationService {
 
     List<RouteExtDTO> getAllRoutesExt();
 
+    List<Integer> getCommonRoutes(int startStationId, int finishStationId);
+
+    RouteExtDTO getRouteExt(int routeId);
+
 }

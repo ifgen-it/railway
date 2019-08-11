@@ -38,6 +38,20 @@ header{
     padding-bottom: 8px;
 }
 
+.text-good-news{
+    color: indigo;
+    font-size: 16pt;
+    padding-bottom: 5px;
+    padding-left: 2px;
+}
+
+.text-bad-news{
+    color: darkred;
+    font-size: 16pt;
+    padding-bottom: 5px;
+    padding-left: 2px;
+}
+
 .dark-text-small{
     color: indigo;
     font-size: 13pt
@@ -177,6 +191,20 @@ footer{
     background: #add8e6;
 }
 #table-trains th{
+    color: indigo;
+    font-size: 13pt;
+    padding: 4px;
+}
+
+/*==========  JOURNEY ===============*/
+#content-table-journey{
+    padding: 30px;
+    background: dodgerblue;
+}
+#table-journey{
+    background: #add8e6;
+}
+#table-journey th{
     color: indigo;
     font-size: 13pt;
     padding: 4px;

@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "route")
@@ -84,5 +85,20 @@ public class RouteEntity implements Serializable {
                 "routeId=" + routeId +
                 ", routeName='" + routeName + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof RouteEntity)) return false;
+        RouteEntity that = (RouteEntity) o;
+        return getRouteId() == that.getRouteId() &&
+                getRouteName().equals(that.getRouteName()) &&
+                getTrain().equals(that.getTrain());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getRouteId(), getRouteName(), getTrain());
     }
 }

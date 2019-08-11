@@ -46,7 +46,7 @@ public class StationController {
         }
 
         if (beginStationId == endStationId) {
-            endStationError = "Begin and end stations cannot be equals";
+            endStationError = "Begin and end stations must be different";
             error = true;
         }
 

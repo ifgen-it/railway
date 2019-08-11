@@ -1,6 +1,7 @@
 package com.evgen.dao.impl;
 
 import com.evgen.dao.RoutePathDAO;
+import com.evgen.entity.station.RouteEntity;
 import com.evgen.entity.station.RoutePathEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -117,6 +118,29 @@ public class RoutePathDAOImpl implements RoutePathDAO {
         query.setParameter("routeId", routeId);
 
         RoutePathEntity result = query.getSingleResult();
+
+        return result;
+    }
+
+    @Override
+    public List<Integer> getCommonRoutes(int startStationId, int finishStationId) {
+
+        String queryStringStartRoutes = "select r.route.routeId from RoutePathEntity r " +
+                "join r.arc a " +
+                "where a.beginStation.stationId = :startStationId ";
+
+        String queryStringFinishRoutes = "select r.route.routeId from RoutePathEntity r " +
+                "join r.arc a " +
+                "where a.endStation.stationId = :finishStationId ";
+
+        String queryStringIntersect = queryStringStartRoutes +
+                " and r.route.routeId in ( " + queryStringFinishRoutes + " )";
+
+        TypedQuery<Integer> query = em.createQuery(queryStringIntersect, Integer.class);
+        query.setParameter("startStationId", startStationId);
+        query.setParameter("finishStationId", finishStationId);
+
+        List<Integer> result =  query.getResultList();
 
         return result;
     }

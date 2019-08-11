@@ -25,6 +25,7 @@
             <a class="a-normal" href="/users/new">Add new user</a><br>
             <a class="a-big" href="/timetable">Timetable</a><br>
             <a class="a-small" href="/arcs">Arcs</a><br>
+            <a class="a-normal" href="/journey">Journey</a><br>
 
         </aside>
     </section>
