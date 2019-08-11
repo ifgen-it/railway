@@ -19,4 +19,6 @@ public interface RoutePathDAO {
     RoutePathEntity update(RoutePathEntity routePath);
 
     List<RoutePathEntity> getArrivals(int stationId);
+
+    List<RoutePathEntity> getDepartures(int stationId);
 }

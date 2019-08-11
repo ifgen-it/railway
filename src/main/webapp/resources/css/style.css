@@ -28,12 +28,12 @@ header{
 
 .light-text{
     color: azure;
-    font-size: 18pt;
+    font-size: 16pt;
 }
 
 .dark-text{
-    color: darkslateblue;
-    font-size: 20pt;
+    color: indigo;
+    font-size: 18pt;
 }
 
 #content{
@@ -129,12 +129,41 @@ footer{
 
 #content-table-timetable{
     padding: 30px;
+    background: dodgerblue;
 }
 #table-timetable-departure{
     background: #add8e6;
 }
+#table-timetable-departure th{
+    padding: 2px;
+    color: green;
+    font-size: 13pt;
+}
+#table-timetable-departure td{
+    padding: 5px;
+}
 #table-timetable-arrival{
     background: #add8e6;
+}
+#table-timetable-arrival th{
+    padding: 3px;
+    color: green;
+    font-size: 13pt;
+}
+#table-timetable-arrival td{
+    padding: 5px;
+}
+
+#table-timetable-arr-dep{
+
+}
+#table-timetable-arr-dep th{
+    color: indigo;
+    font-size: 13pt;
+    padding: 4px;
+}
+#table-timetable-arr-dep td{
+    vertical-align: top;
 }
 
 /*======================= ADD USER ============================*/

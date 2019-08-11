@@ -60,14 +60,29 @@ public class RoutePathDAOImpl implements RoutePathDAO {
     @Override
     public List<RoutePathEntity> getArrivals(int stationId) {
 
-        String queryString = "select r from RoutePathEntity r join r.arc a";
+        String queryString = "select r from RoutePathEntity r join r.arc a " +
+                "where a.endStation.stationId = :stationId order by r.arrivalTime asc";
+
         TypedQuery<RoutePathEntity> query = em.createQuery(queryString, RoutePathEntity.class);
+        query.setParameter("stationId", stationId);
 
         List<RoutePathEntity> results = query.getResultList();
 
         for (RoutePathEntity item : results){
             System.out.println("--> item: " + item);
         }
+
+        return results;
+    }
+
+    @Override
+    public List<RoutePathEntity> getDepartures(int stationId) {
+        String queryString = "select r from RoutePathEntity r join r.arc a " +
+                "where a.beginStation.stationId = :stationId order by r.departureTime asc";
+
+        TypedQuery<RoutePathEntity> query = em.createQuery(queryString, RoutePathEntity.class);
+        query.setParameter("stationId", stationId);
+        List<RoutePathEntity> results = query.getResultList();
 
         return results;
     }

@@ -31,4 +31,6 @@ public interface StationService {
 
     List<RoutePathDTO> getArrivals(int stationId);
 
+    List<RoutePathDTO> getDepartures(int stationId);
+
 }

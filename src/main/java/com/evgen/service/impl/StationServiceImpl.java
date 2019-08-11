@@ -135,4 +135,15 @@ public class StationServiceImpl implements StationService {
 
         return dtos;
     }
+
+    @Override
+    public List<RoutePathDTO> getDepartures(int stationId) {
+        ModelMapper modelMapper = new ModelMapper();
+        List<RoutePathDTO> dtos = new ArrayList<>();
+
+        List<RoutePathEntity> entities = routePathDAO.getDepartures(stationId);
+        entities.forEach(item ->dtos.add(modelMapper.map(item, RoutePathDTO.class)));
+
+        return dtos;
+    }
 }
