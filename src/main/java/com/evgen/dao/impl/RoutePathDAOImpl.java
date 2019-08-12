@@ -10,6 +10,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -123,11 +126,19 @@ public class RoutePathDAOImpl implements RoutePathDAO {
     }
 
     @Override
-    public List<Integer> getCommonRoutes(int startStationId, int finishStationId) {
+    public List<Integer> getCommonRoutes(int startStationId, int finishStationId,
+                                         Date dateFrom, Date dateTo) {
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String strDateFrom = formatter.format(dateFrom);
+        String strDateTo = formatter.format(dateTo);
+
 
         String queryStringStartRoutes = "select r.route.routeId from RoutePathEntity r " +
                 "join r.arc a " +
-                "where a.beginStation.stationId = :startStationId ";
+                "where a.beginStation.stationId = :startStationId " +
+                "and departure_time > (str_to_date( :strDateFrom , '%Y-%m-%d')) " +
+                "and departure_time < (str_to_date( :strDateTo , '%Y-%m-%d')) ";
 
         String queryStringFinishRoutes = "select r.route.routeId from RoutePathEntity r " +
                 "join r.arc a " +
@@ -139,9 +150,65 @@ public class RoutePathDAOImpl implements RoutePathDAO {
         TypedQuery<Integer> query = em.createQuery(queryStringIntersect, Integer.class);
         query.setParameter("startStationId", startStationId);
         query.setParameter("finishStationId", finishStationId);
+        query.setParameter("strDateFrom", strDateFrom);
+        query.setParameter("strDateTo", strDateTo);
 
         List<Integer> result =  query.getResultList();
 
         return result;
+    }
+
+    @Override
+    public LocalDateTime getRouteStartTime(int routeId, int startStationId) {
+
+        String queryString = "select r.departureTime from RoutePathEntity r " +
+                "join r.arc a " +
+                "where r.route.routeId = :routeId " +
+                "and a.beginStation.stationId = :startStationId";
+
+        TypedQuery<LocalDateTime> query = em.createQuery(queryString, LocalDateTime.class);
+        query.setParameter("routeId", routeId);
+        query.setParameter("startStationId", startStationId);
+
+        LocalDateTime result = query.getSingleResult();
+
+        System.out.println("====> getRouteStartTime = " + result + ", routeId = " + routeId + ", startStationId = " + startStationId);
+        return result;
+    }
+
+    @Override
+    public LocalDateTime getRouteFinishTime(int routeId, int finishStationId) {
+
+        String queryString = "select r.arrivalTime from RoutePathEntity r " +
+                "join r.arc a " +
+                "where r.route.routeId = :routeId " +
+                "and a.endStation.stationId = :finishStationId";
+
+        TypedQuery<LocalDateTime> query = em.createQuery(queryString, LocalDateTime.class);
+        query.setParameter("routeId", routeId);
+        query.setParameter("finishStationId", finishStationId);
+
+        LocalDateTime result = query.getSingleResult();
+        System.out.println("====> getRouteFinishTime = " + result + ", routeId = " + routeId + ", finishStationId = " + finishStationId);
+        return result;
+    }
+
+    @Override
+    public Integer getRouteLength(int routeId, LocalDateTime startTime, LocalDateTime finishTime) {
+
+        String queryString = "select sum(a.length) from RoutePathEntity r " +
+                "join r.arc a " +
+                "where r.route.routeId = :routeId " +
+                "and r.departureTime >= :startTime " +
+                "and r.arrivalTime <= :finishTime";
+
+        TypedQuery<Long> query = em.createQuery(queryString, Long.class);
+        query.setParameter("routeId", routeId);
+        query.setParameter("startTime", startTime);
+        query.setParameter("finishTime", finishTime);
+
+        Long result = query.getSingleResult();
+
+        return result.intValue();
     }
 }

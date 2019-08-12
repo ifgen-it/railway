@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
 <html>
@@ -18,7 +19,7 @@
 
         <%--        SEARCH FORM  --%>
 
-        <div class="dark-text">Select stations for journey:</div>
+        <div class="dark-text">Select stations for journey and departure date range:</div>
 
         <form action="/journey" method="post">
             <div class="form-element">
@@ -43,33 +44,48 @@
                 <label class="error-message">${endStationError}</label>
             </div>
 
+            <div class="form-element">
+                <div class="dark-text-small">Date From</div>
+                <input id="dateFrom" name="dateFrom" type="date" required>
+                <label class="error-message">${dateFromError}</label>
+            </div>
+
+            <div class="form-element">
+                <div class="dark-text-small">Date To</div>
+                <input id="dateTo" name="dateTo" type="date" required>
+                <label class="error-message">${dateToError}</label>
+            </div>
+
             <input type="submit" value="Find routes">
         </form>
 
         <%--            FOUND ROUTES --%>
         <c:if test="${directRoutes != null}">
-            <div class="dark-text">
-                    ${beginStationName} >> ${endStationName}
-            </div>
+            <div class="dark-text">${beginStationName} - ${endStationName}</div>
+            <div class="dark-text-small">Departure from ${dateFrom} to ${dateTo}</div>
+
             <c:if test="${directRoutesNum == 0}">
                 <div class="text-bad-news">
                     There is no routes yet
                 </div>
             </c:if>
             <c:if test="${directRoutesNum > 0}">
-                <div class="text-good-news">
-                        ${directRoutesNum} direct routes:
-                </div>
 
                 <table id="table-journey" border="2">
                     <tr>
 
                         <th>Route name</th>
                         <th>Train name</th>
+
                         <th>Begin station</th>
                         <th>Departure time</th>
                         <th>End station</th>
                         <th>Arrival time</th>
+
+                        <th>Length</th>
+                        <th>Price</th>
+
+                        <th>Ticket</th>
                     </tr>
 
                     <c:forEach var="route" items="${directRoutes}">
@@ -77,10 +93,17 @@
 
                             <td>${route.routeDTO.routeName}</td>
                             <td>${route.routeDTO.train.trainName}</td>
+
                             <td>${route.routeBeginStation.stationName}</td>
                             <td>${route.routeDepartureTime}</td>
                             <td>${route.routeEndStation.stationName}</td>
                             <td>${route.routeArrivalTime}</td>
+
+                            <td align="center">${route.routeLength}</td>
+                            <td align="center">${route.routePrice}</td>
+
+                            <td align="center"><a href="/index?routeId=${route.routeDTO.routeId}&startStationId=${route.routeBeginStation.stationId}&finishStationId=${route.routeEndStation.stationId}">Buy</a></td>
+
 
                         </tr>
                     </c:forEach>

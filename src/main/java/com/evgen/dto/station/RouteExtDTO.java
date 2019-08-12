@@ -15,15 +15,20 @@ public class RouteExtDTO implements Serializable{
 
     private StationDTO routeEndStation;
 
+    private int routeLength;
+
+    private float routePrice;
+
     public RouteExtDTO() {
     }
 
-    public RouteExtDTO(RouteDTO routeDTO, LocalDateTime routeDepartureTime, LocalDateTime routeArrivalTime, StationDTO routeBeginStation, StationDTO routeEndStation) {
+    public RouteExtDTO(RouteDTO routeDTO, LocalDateTime routeDepartureTime, LocalDateTime routeArrivalTime, StationDTO routeBeginStation, StationDTO routeEndStation, int routeLength) {
         this.routeDTO = routeDTO;
         this.routeDepartureTime = routeDepartureTime;
         this.routeArrivalTime = routeArrivalTime;
         this.routeBeginStation = routeBeginStation;
         this.routeEndStation = routeEndStation;
+        this.routeLength = routeLength;
     }
 
     public RouteDTO getRouteDTO() {
@@ -64,5 +69,33 @@ public class RouteExtDTO implements Serializable{
 
     public void setRouteEndStation(StationDTO routeEndStation) {
         this.routeEndStation = routeEndStation;
+    }
+
+    @Override
+    public String toString() {
+        return "RouteExtDTO{" +
+                "routeDTO=" + routeDTO.getRouteName() +
+                ", routeDepartureTime=" + routeDepartureTime +
+                ", routeArrivalTime=" + routeArrivalTime +
+                ", routeBeginStation=" + routeBeginStation.getStationName() +
+                ", routeEndStation=" + routeEndStation.getStationName() +
+                ", routeLength=" + routeLength +
+                '}';
+    }
+
+    public int getRouteLength() {
+        return routeLength;
+    }
+
+    public void setRouteLength(int routeLength) {
+        this.routeLength = routeLength;
+    }
+
+    public float getRoutePrice() {
+        return routePrice;
+    }
+
+    public void setRoutePrice(float routePrice) {
+        this.routePrice = routePrice;
     }
 }

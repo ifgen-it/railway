@@ -1,8 +1,9 @@
 package com.evgen.dao;
 
-import com.evgen.entity.station.RouteEntity;
 import com.evgen.entity.station.RoutePathEntity;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 public interface RoutePathDAO {
@@ -27,6 +28,12 @@ public interface RoutePathDAO {
 
     RoutePathEntity getLastArc(int routeId);
 
-    List<Integer> getCommonRoutes(int startStationId, int finishStationId);
+    List<Integer> getCommonRoutes(int startStationId, int finishStationId, Date dateFrom, Date dateTo);
+
+    LocalDateTime getRouteStartTime(int routeId, int startStationId);
+
+    LocalDateTime getRouteFinishTime(int routeId, int finishStationId);
+
+    Integer getRouteLength(int routeId, LocalDateTime startTime, LocalDateTime finishTime);
 
 }

@@ -2,6 +2,8 @@ package com.evgen.service;
 
 import com.evgen.dto.station.*;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 public interface StationService {
@@ -40,8 +42,14 @@ public interface StationService {
 
     List<RouteExtDTO> getAllRoutesExt();
 
-    List<Integer> getCommonRoutes(int startStationId, int finishStationId);
+    List<Integer> getCommonRoutes(int startStationId, int finishStationId, Date dateFrom, Date dateTo);
 
     RouteExtDTO getRouteExt(int routeId);
+
+    LocalDateTime getRouteStartTime(int routeId, int startStationId);
+
+    LocalDateTime getRouteFinishTime(int routeId, int finishStationId);
+
+    Integer getRouteLength(int routeId, LocalDateTime startTime, LocalDateTime finishTime);
 
 }

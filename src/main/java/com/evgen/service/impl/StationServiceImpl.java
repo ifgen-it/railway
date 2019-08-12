@@ -15,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -229,9 +231,9 @@ public class StationServiceImpl implements StationService {
     }
 
     @Override
-    public List<Integer> getCommonRoutes(int startStationId, int finishStationId) {
+    public List<Integer> getCommonRoutes(int startStationId, int finishStationId, Date dateFrom, Date dateTo) {
 
-        List<Integer> routes = routePathDAO.getCommonRoutes(startStationId, finishStationId);
+        List<Integer> routes = routePathDAO.getCommonRoutes(startStationId, finishStationId, dateFrom, dateTo);
 
         return routes;
     }
@@ -262,5 +264,20 @@ public class StationServiceImpl implements StationService {
         );
 
         return routeExtDTO;
+    }
+
+    @Override
+    public LocalDateTime getRouteStartTime(int routeId, int startStationId) {
+        return routePathDAO.getRouteStartTime(routeId, startStationId);
+    }
+
+    @Override
+    public LocalDateTime getRouteFinishTime(int routeId, int finishStationId) {
+        return routePathDAO.getRouteFinishTime(routeId, finishStationId);
+    }
+
+    @Override
+    public Integer getRouteLength(int routeId, LocalDateTime startTime, LocalDateTime finishTime) {
+        return routePathDAO.getRouteLength(routeId, startTime, finishTime);
     }
 }
