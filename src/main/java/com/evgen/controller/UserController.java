@@ -24,6 +24,12 @@ public class UserController {
     @Autowired
     private UserValidator userValidator;
 
+    @GetMapping("/account")
+    public String getAccount(Model model){
+
+        return "/account";
+    }
+
     @GetMapping("/users")
     public String getUsers(Model model) {
 

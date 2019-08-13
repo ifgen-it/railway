@@ -102,7 +102,7 @@
                             <td align="center">${route.routeLength}</td>
                             <td align="center">${route.routePrice}</td>
 
-                            <td align="center"><a href="/index?routeId=${route.routeDTO.routeId}&startStationId=${route.routeBeginStation.stationId}&finishStationId=${route.routeEndStation.stationId}">Buy</a></td>
+                            <td align="center"><a href="/tickets/buy?routeId=${route.routeDTO.routeId}&startStationId=${route.routeBeginStation.stationId}&finishStationId=${route.routeEndStation.stationId}">Buy</a></td>
 
 
                         </tr>

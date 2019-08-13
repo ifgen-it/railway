@@ -210,6 +210,36 @@ footer{
     font-size: 13pt;
     padding: 4px;
 }
+
+/*==========  BUY TICKET ===============*/
+#content-buy-ticket{
+    padding: 30px;
+    background: dodgerblue;
+}
+#table-buy-ticket{
+    background: #add8e6;
+    margin-top: 10px;
+}
+#table-buy-ticket th{
+    color: indigo;
+    font-size: 13pt;
+    padding: 4px;
+}
+
+/*==========  ACCOUNT ===============*/
+#content-account{
+    padding: 30px;
+    background: dodgerblue;
+}
+#table-account{
+    background: #add8e6;
+    margin-top: 10px;
+}
+#table-account th{
+    color: indigo;
+    font-size: 13pt;
+    padding: 4px;
+}
 /* =====  TIME TABLE ===============*/
 #content-table-timetable{
     padding: 30px;

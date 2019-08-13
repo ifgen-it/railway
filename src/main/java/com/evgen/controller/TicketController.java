@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,6 +25,118 @@ public class TicketController {
 
     @Autowired
     private TicketService ticketService;
+
+
+    @GetMapping("/tickets/buy")
+    public String getBuyTicket(@RequestParam(name = "routeId", required = false) String strRouteId,
+                               @RequestParam(name = "startStationId", required = false) String strStartStationId,
+                               @RequestParam(name = "finishStationId", required = false) String strFinishStationId,
+                               Model model, HttpSession session) {
+
+
+        // CHECKING ERRORS
+        boolean errorParse = false;
+        boolean errorGotNull = false;
+
+        System.out.println("===== in the BUY TICKET GET =======");
+        System.out.println("----- RouteId = " + strRouteId);
+        System.out.println("----- startStationId = " + strStartStationId);
+        System.out.println("----- finishStationId = " + strFinishStationId);
+
+        if (strRouteId == null || strStartStationId == null || strFinishStationId == null) {
+            errorGotNull = true;
+            System.out.println("===> Got nulls");
+            model.addAttribute("errorGotNull", errorGotNull);
+            return "/buy_ticket";
+        }
+
+        int routeId = 0;
+        int startStationId = 0;
+        int finishStationId = 0;
+
+        try {
+            routeId = Integer.parseInt(strRouteId);
+            startStationId = Integer.parseInt(strStartStationId);
+            finishStationId = Integer.parseInt(strFinishStationId);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            errorParse = true;
+        }
+
+        if (routeId <= 0 || startStationId <= 0 || finishStationId <= 0) {
+            errorParse = true;
+        }
+
+        if (errorParse == true) {
+            System.out.println("===> Error parse");
+            model.addAttribute("errorParse", errorParse);
+            return "/buy_ticket";
+        }
+
+        // ALL RIGHT - CONTINUE TO BUY TICKET
+
+
+        try {
+            RouteExtDTO userRoute = new RouteExtDTO();
+            userRoute.setRouteDTO(stationService.getRoute(routeId));
+            userRoute.setRouteDepartureTime(
+                    stationService.getRouteStartTime(routeId, startStationId));
+            userRoute.setRouteArrivalTime(
+                    stationService.getRouteFinishTime(routeId, finishStationId));
+
+            userRoute.setRouteBeginStation(stationService.getStation(startStationId));
+            userRoute.setRouteEndStation(stationService.getStation(finishStationId));
+
+            userRoute.setRouteLength(
+                    stationService.getRouteLength(
+                            routeId, userRoute.getRouteDepartureTime(), userRoute.getRouteArrivalTime()
+                    )
+            );
+            userRoute.setRoutePrice(RouteExtDTO.makePrice(userRoute.getRouteLength()));
+
+            //model.addAttribute("userRoute", userRoute);
+            session.setAttribute("ticketDetails", userRoute);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            errorParse = true;
+            session.removeAttribute("ticketDetails");
+        }
+
+        model.addAttribute("errorParse", errorParse);
+        model.addAttribute("errorGotNull", errorGotNull);
+
+        return "/buy_ticket";
+    }
+
+
+    @PostMapping("/tickets/buy")
+    public String buyTicket(Model model, HttpSession session) {
+
+
+        System.out.println("============== Ticket buy in the POST ==============");
+        // CHECKING ERRORS
+        boolean errorParse = false;
+        boolean errorGotNull = false;
+
+        RouteExtDTO userRoute = (RouteExtDTO) session.getAttribute("ticketDetails");
+        model.addAttribute("userRoute", userRoute);
+
+        model.addAttribute("errorParse", errorParse);
+        model.addAttribute("errorGotNull", errorGotNull);
+
+        //TICKET BUYING:
+
+
+
+
+
+        // HERE TICKET MUST BE BOUGHT SO TICKET DETAILS CAN BE REMOVED FROM SESSION
+        session.removeAttribute("ticketDetails");
+        model.addAttribute("ticketBought", true);
+
+        return "/buy_ticket";
+    }
 
     @GetMapping("/journey")
     public String getJourney(Model model) {
@@ -71,7 +184,7 @@ public class TicketController {
             dateToError = "Date To is required";
         }
 
-        if (error == false && ( dateTo.before(dateFrom) || dateTo.equals(dateFrom))){
+        if (error == false && (dateTo.before(dateFrom) || dateTo.equals(dateFrom))) {
             error = true;
             dateToError = "Date To must be after Date From";
         }
@@ -79,11 +192,11 @@ public class TicketController {
         // CHECK STATIONS
         if (beginStationId == 0 || endStationId == 0) {
 
-            if (beginStationId == 0){
+            if (beginStationId == 0) {
                 beginStationError = "Select begin station";
                 error = true;
             }
-            if (endStationId == 0){
+            if (endStationId == 0) {
                 endStationError = "Select end station";
                 error = true;
             }
@@ -114,7 +227,7 @@ public class TicketController {
 
         // LIST OF ROUTES WITH START-END STATIONS : USERS START-END STATIONS
         List<RouteExtDTO> userRoutes = new ArrayList<>();
-        for ( Integer routeId : routesId ) {
+        for (Integer routeId : routesId) {
 
             RouteExtDTO userRoute = new RouteExtDTO();
             userRoute.setRouteDTO(stationService.getRoute(routeId));
@@ -131,7 +244,7 @@ public class TicketController {
                             routeId, userRoute.getRouteDepartureTime(), userRoute.getRouteArrivalTime()
                     )
             );
-            userRoute.setRoutePrice(userRoute.getRouteLength() * 5);
+            userRoute.setRoutePrice(RouteExtDTO.makePrice(userRoute.getRouteLength()));
 
 
             System.out.println("---------> User route: " + userRoute);

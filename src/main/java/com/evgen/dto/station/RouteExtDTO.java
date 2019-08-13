@@ -1,9 +1,14 @@
 package com.evgen.dto.station;
 
+import com.evgen.service.StationService;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class RouteExtDTO implements Serializable{
+
+    public static float PRICE_FACTOR = 5;
 
     private RouteDTO routeDTO;
 
@@ -94,6 +99,11 @@ public class RouteExtDTO implements Serializable{
     public float getRoutePrice() {
         return routePrice;
     }
+
+    public static float makePrice(int length){
+        return length * PRICE_FACTOR;
+    }
+
 
     public void setRoutePrice(float routePrice) {
         this.routePrice = routePrice;

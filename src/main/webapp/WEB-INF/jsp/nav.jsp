@@ -1,6 +1,7 @@
 <nav class="menu">
     <ul>
         <li><a href="/">Home</a></li>
+
         <li><a href="/users">Users</a>
             <ul>
                 <li><a href="/users">All users</a></li>
@@ -11,6 +12,7 @@
         <li><a href="/journey">Journey</a>
             <ul>
                 <li><a href="/journey">Find route</a></li>
+                <li><a href="/tickets/buy">Buy ticket</a></li>
             </ul>
         </li>
 
@@ -24,5 +26,6 @@
             </ul>
         </li>
         <li><a href="/info">Info</a></li>
+        <li><a href="/account">My account</a></li>
     </ul>
 </nav>
