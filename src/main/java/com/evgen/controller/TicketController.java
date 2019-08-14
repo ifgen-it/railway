@@ -3,6 +3,7 @@ package com.evgen.controller;
 import com.evgen.dto.station.RouteExtDTO;
 import com.evgen.service.StationService;
 import com.evgen.service.TicketService;
+import com.evgen.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +26,9 @@ public class TicketController {
 
     @Autowired
     private TicketService ticketService;
+
+    @Autowired
+    private UserService userService;
 
 
     @GetMapping("/tickets/buy")
@@ -97,6 +101,40 @@ public class TicketController {
             //model.addAttribute("userRoute", userRoute);
             session.setAttribute("ticketDetails", userRoute);
 
+
+            // GET BUSY SEATS IN TRAIN
+            System.out.println("=====> want to get Busy seats =====");
+            List<Integer> busySeats = ticketService.getBusySeats(
+                    userRoute.getRouteDTO().getRouteId(),
+                    userRoute.getRouteDepartureTime(),
+                    userRoute.getRouteArrivalTime());
+
+            int seatsAmount = userRoute.getRouteDTO().getTrain().getSeatsAmount();
+            System.out.println("======> Busy seats in RouteId " + routeId + " : " + busySeats +
+                    " of " + seatsAmount);
+
+            // GET FREE SEATS IN TRAIN
+
+            boolean[] freeSeatsArr = new boolean[seatsAmount];
+            for (int i = 0; i < freeSeatsArr.length; i++) {
+                freeSeatsArr[i] = true;
+            }
+            for (Integer busySeat : busySeats) {
+                freeSeatsArr[busySeat - 1] = false;
+            }
+
+            List<Integer> freeSeats = new ArrayList<>();
+            for (int i = 0; i < freeSeatsArr.length; i++) {
+                if (freeSeatsArr[i] == true) {
+                    freeSeats.add(i + 1);
+                }
+            }
+            session.setAttribute("freeSeats", freeSeats);
+            session.setAttribute("freeSeatsAmount", freeSeats.size());
+
+            // GET ALL USERS
+            session.setAttribute("allUsers", userService.getAllUsers());
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
             errorParse = true;
@@ -111,29 +149,54 @@ public class TicketController {
 
 
     @PostMapping("/tickets/buy")
-    public String buyTicket(Model model, HttpSession session) {
+    public String buyTicket(@RequestParam(name = "userId") int userId,
+                            @RequestParam(name = "seatNumber") int seatNumber,
+                            Model model, HttpSession session) {
 
 
         System.out.println("============== Ticket buy in the POST ==============");
+        System.out.println("---- seat number = " + seatNumber);
+        System.out.println("---- user id = " + userId);
+
         // CHECKING ERRORS
         boolean errorParse = false;
         boolean errorGotNull = false;
 
+        model.addAttribute("errorParse", errorParse);
+
+        if(session.getAttribute("ticketDetails") == null){
+            errorGotNull = true;
+            model.addAttribute("errorGotNull", errorGotNull);
+
+            return "/buy_ticket";
+        }
+
+        model.addAttribute("errorGotNull", errorGotNull);
+
         RouteExtDTO userRoute = (RouteExtDTO) session.getAttribute("ticketDetails");
         model.addAttribute("userRoute", userRoute);
 
-        model.addAttribute("errorParse", errorParse);
-        model.addAttribute("errorGotNull", errorGotNull);
 
         //TICKET BUYING:
 
+        boolean buyResult = ticketService.buyTicket(userRoute, seatNumber, userId);
+
+        if (buyResult == true){
+
+            // HERE TICKET MUST BE BOUGHT SO TICKET DETAILS CAN BE REMOVED FROM SESSION
+            session.removeAttribute("ticketDetails");
+            session.removeAttribute("freeSeats");
+            session.removeAttribute("freeSeatsAmount");
+            session.removeAttribute("allUsers");
+
+            model.addAttribute("ticketBought", true);
+        } else {
+
+            // SOMETHING WENT WRONG
+            model.addAttribute("ticketBought", false);
+        }
 
 
-
-
-        // HERE TICKET MUST BE BOUGHT SO TICKET DETAILS CAN BE REMOVED FROM SESSION
-        session.removeAttribute("ticketDetails");
-        model.addAttribute("ticketBought", true);
 
         return "/buy_ticket";
     }

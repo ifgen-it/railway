@@ -36,7 +36,20 @@
 
             <c:if test="${ticketBought == true}">
                 <div class="dark-text">Thank you for purchase!</div>
-                <div class="dark-text">Discover another <a href="/journey">journey</a> or see your purchase in your <a href="/account">account page</a></div>
+                <div class="dark-text">Discover another <a href="/journey">journey</a> or see your purchase in your <a
+                        href="/account">account page</a></div>
+            </c:if>
+
+            <c:if test="${ticketBought == false}">
+                <div class="dark-text">Purchasing was not successful!</div>
+                <div class="dark-text-small">
+                    Possible problems:
+                    <ul>
+                        <li>This seat number already was purchased</li>
+                        <li>You have not enough money on your account</li>
+                    </ul>
+
+                </div>
             </c:if>
 
             <c:if test="${ticketBought == null}">
@@ -78,9 +91,45 @@
                     </tr>
                 </table>
 
-                <form action="/tickets/buy" method="post">
-                    <input type="submit" value="Buy ticket">
-                </form>
+                <%--                IF THERE IS NO AVALIABLE SEATS --%>
+                <c:if test="${sessionScope.freeSeatsAmount == 0}">
+                    <div class="text-bad-news">
+                        <br>
+                        There is no available seats for purchase on this route!
+                    </div>
+                </c:if>
+
+                <%--                IF THERE ARE AVALIABLE SEATS --%>
+                <c:if test="${sessionScope.freeSeatsAmount > 0}">
+
+                    <form action="/tickets/buy" method="post">
+
+                        <div class="form-element">
+                            <div class="dark-text-small">Select seat number</div>
+                            <select name="seatNumber" required>
+                                <c:forEach var="seat" items="${sessionScope.freeSeats}">
+                                    <option value="${seat}">${seat}</option>
+                                </c:forEach>
+                            </select>
+                            <label class="error-message">${seatNumberError}</label>
+                        </div>
+
+                        <div class="form-element">
+                            <div class="dark-text-small">Select user</div>
+                            <select name="userId" required>
+                                <c:forEach var="user" items="${sessionScope.allUsers}">
+                                    <option value="${user.userId}">${user.email} ${user.firstName} ${user.lastName} </option>
+                                </c:forEach>
+                            </select>
+                            <label class="error-message">${seatNumberError}</label>
+                        </div>
+
+                        <input type="submit" value="Buy ticket">
+                    </form>
+
+                </c:if>
+
+
             </c:if>
 
         </c:if>
