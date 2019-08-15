@@ -1,9 +1,12 @@
 package com.evgen.controller;
 
+import com.evgen.dao.impl.BusySeatPurchaseException;
 import com.evgen.dto.station.RouteExtDTO;
 import com.evgen.service.StationService;
 import com.evgen.service.TicketService;
 import com.evgen.service.UserService;
+import com.evgen.service.impl.TimeLimitPurchaseException;
+import com.evgen.service.impl.TwinUserPurchaseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -178,10 +181,32 @@ public class TicketController {
 
 
         //TICKET BUYING:
+        int ticketId = 0;
+        boolean buyError = false;
+        String ticketBuyError = "";
 
-        boolean buyResult = ticketService.buyTicket(userRoute, seatNumber, userId);
+        try {
+            ticketId = ticketService.buyTicket(userRoute, seatNumber, userId);
 
-        if (buyResult == true){
+        } catch (TimeLimitPurchaseException e) {
+            e.printStackTrace();
+            buyError = true;
+            ticketBuyError = e.getMessage();
+
+        } catch (TwinUserPurchaseException e) {
+            e.printStackTrace();
+            buyError = true;
+            ticketBuyError = e.getMessage();
+
+        } catch (BusySeatPurchaseException e) {
+            e.printStackTrace();
+            buyError = true;
+            ticketBuyError = e.getMessage();
+        }
+
+        if (buyError == false){
+
+            model.addAttribute("ticketId", ticketId);
 
             // HERE TICKET MUST BE BOUGHT SO TICKET DETAILS CAN BE REMOVED FROM SESSION
             session.removeAttribute("ticketDetails");
@@ -194,6 +219,7 @@ public class TicketController {
 
             // SOMETHING WENT WRONG
             model.addAttribute("ticketBought", false);
+            model.addAttribute("ticketBuyError", ticketBuyError);
         }
 
 

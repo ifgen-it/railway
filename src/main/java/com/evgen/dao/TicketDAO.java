@@ -1,5 +1,6 @@
 package com.evgen.dao;
 
+import com.evgen.dao.impl.BusySeatPurchaseException;
 import com.evgen.entity.station.RouteEntity;
 import com.evgen.entity.station.StationEntity;
 import com.evgen.entity.ticket.TicketEntity;
@@ -24,10 +25,12 @@ public interface TicketDAO {
 
     List<Integer> getBusySeats(int routeId, LocalDateTime startTime, LocalDateTime finishTime);
 
-    boolean buyTicket(RouteEntity ticketRoute,
+    int buyTicket(RouteEntity ticketRoute,
                       StationEntity startStation, StationEntity finishStation,
                       LocalDateTime startTime, LocalDateTime finishTime,
-                      int seatNumber, UserEntity user, float price);
+                      int seatNumber, UserEntity user, float price) throws BusySeatPurchaseException;
+
+    TicketEntity getTicket(RouteEntity route, UserEntity user);
 
 
 }

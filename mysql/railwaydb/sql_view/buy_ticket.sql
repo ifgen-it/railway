@@ -1,4 +1,7 @@
-select * from ticket;
+select * from ticket
+where route_id = 2;
+
+truncate ticket;
 
 
 select t.route_id, t.start_station, t.finish_station, t.start_time, t.finish_time, t.seat_number
@@ -20,3 +23,14 @@ and (
     update train
     set seats_amount = 2
     where train_id = 5;
+    
+    
+    -- ========================
+    --  TWIN USER ON THE TRAIN
+    
+    select *
+    from ticket
+    where route_id = 1 and user_id = 1;
+    
+ delete from ticket
+ where ticket_id = 1;

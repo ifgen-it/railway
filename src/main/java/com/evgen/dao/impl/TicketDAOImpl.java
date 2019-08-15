@@ -85,7 +85,11 @@ public class TicketDAOImpl implements TicketDAO {
     }
 
     @Override
-    public boolean buyTicket(RouteEntity ticketRoute, StationEntity startStation, StationEntity finishStation, LocalDateTime startTime, LocalDateTime finishTime, int seatNumber, UserEntity user, float price) {
+    public int buyTicket(RouteEntity ticketRoute,
+                             StationEntity startStation, StationEntity finishStation,
+                             LocalDateTime startTime, LocalDateTime finishTime,
+                             int seatNumber, UserEntity user,
+                             float price) throws BusySeatPurchaseException {
 
         // NEED TO CHECK IF SEAT NUMBER ALREADY PURCHASED
 
@@ -100,7 +104,7 @@ public class TicketDAOImpl implements TicketDAO {
 
         // WILL BE BETTER THROW EXCEPTION WITH PROBLEM DESCRIPTION
         if (busySeatError == true){
-            return false;
+            throw new BusySeatPurchaseException("Seat number " + seatNumber + " was purchased recently. Select another one");
         }
 
         // MAKE TICKET
@@ -111,6 +115,27 @@ public class TicketDAOImpl implements TicketDAO {
 
         System.out.println("----> Ticket was saved, ticketId = " + ticketId);
 
-        return true;
+        return ticketId;
+    }
+
+    @Override
+    public TicketEntity getTicket(RouteEntity route, UserEntity user) {
+
+        String queryString = "select t from TicketEntity t " +
+                "where t.ticketRoute = :route " +
+                "and t.user = :user ";
+
+        TypedQuery<TicketEntity> query = em.createQuery(queryString, TicketEntity.class);
+        query.setParameter("route", route);
+        query.setParameter("user", user);
+
+        List<TicketEntity> tickets = query.getResultList();
+        System.out.println("======> get Ticket : " + tickets);
+        if(tickets.size() == 0){
+            return null;
+        }
+        else {
+            return tickets.get(0);
+        }
     }
 }

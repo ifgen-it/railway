@@ -35,20 +35,15 @@
         <c:if test="${ (errorGotNull == false && errorParse == false) || (errorGotNull == true && sessionScope.ticketDetails != null)}">
 
             <c:if test="${ticketBought == true}">
-                <div class="dark-text">Thank you for purchase!</div>
+                <div class="dark-text">Thank you for purchase! Your ticket number is ${ticketId}</div>
                 <div class="dark-text">Discover another <a href="/journey">journey</a> or see your purchase in your <a
                         href="/account">account page</a></div>
             </c:if>
 
             <c:if test="${ticketBought == false}">
                 <div class="dark-text">Purchasing was not successful!</div>
-                <div class="dark-text-small">
-                    Possible problems:
-                    <ul>
-                        <li>This seat number already was purchased</li>
-                        <li>You have not enough money on your account</li>
-                    </ul>
-
+                <div class="text-bad-news">
+                    Because: ${ticketBuyError}
                 </div>
             </c:if>
 

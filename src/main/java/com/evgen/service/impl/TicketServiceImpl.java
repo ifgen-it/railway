@@ -2,6 +2,7 @@ package com.evgen.service.impl;
 
 import com.evgen.dao.TicketDAO;
 import com.evgen.dao.UserDAO;
+import com.evgen.dao.impl.BusySeatPurchaseException;
 import com.evgen.dto.station.RouteExtDTO;
 import com.evgen.dto.ticket.TicketDTO;
 import com.evgen.dto.user.UserDTO;
@@ -54,22 +55,69 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public boolean buyTicket(RouteExtDTO routeExtDTO, int seatNumber, int userId) {
+    public int buyTicket(RouteExtDTO routeExtDTO, int seatNumber, int userId)
+            throws TimeLimitPurchaseException,
+            TwinUserPurchaseException,
+            BusySeatPurchaseException {
 
         // ERRORS WHY USER CANNOT BUY TICKET NEED TO IMPLEMENT WITH DIFF. EXCEPTIONS
 
+        boolean timeLimitPurchaseExpired = false;
+        // CHECK HERE TIME LIMIT
+        LocalDateTime deptTime = routeExtDTO.getRouteDepartureTime();
+        LocalDateTime nowTime = LocalDateTime.now();
+
+        if (nowTime.isAfter(deptTime)){
+            throw new TimeLimitPurchaseException("Train was gone already. Select another one");
+        }
+
+        LocalDateTime purchaseTimeLimit = deptTime.minusMinutes(10);
+        if (nowTime.isAfter(purchaseTimeLimit)){
+            timeLimitPurchaseExpired = true;
+        }
+
+        if (timeLimitPurchaseExpired == true){
+            System.out.println("========> Time limit purchase Exception thrown =====");
+            throw new TimeLimitPurchaseException("Train will " +
+                    "start less than 10 minutes. Ticket purchasing was stopped");
+        }
+
+        boolean twinUserOnTheTrain = false;
+        // CHECK HERE FOR A EXISTENCE TWIN USER ON THE TRAIN
         ModelMapper modelMapper = new ModelMapper();
 
         UserEntity userEntity = userDAO.get(userId);
         RouteEntity routeEntity = modelMapper.map(routeExtDTO.getRouteDTO(), RouteEntity.class);
+
+        if(ticketDAO.getTicket(routeEntity,userEntity) != null){
+            twinUserOnTheTrain = true;
+        }
+
+        if (twinUserOnTheTrain == true){
+            System.out.println("===========> There is twin user on the train");
+            throw new TwinUserPurchaseException("User with the same first name, last name and" +
+                    " birthday already purchased ticket on this route");
+        }
+
+
+        // CONTINUE TO BUY TICKET
+
         StationEntity startStationEntity = modelMapper.map(routeExtDTO.getRouteBeginStation(), StationEntity.class);
         StationEntity finishStationEntity = modelMapper.map(routeExtDTO.getRouteEndStation(), StationEntity.class);
         LocalDateTime startTime = routeExtDTO.getRouteDepartureTime();
         LocalDateTime finishTime = routeExtDTO.getRouteArrivalTime();
         float price = routeExtDTO.getRoutePrice();
 
-        return ticketDAO.buyTicket(routeEntity, startStationEntity, finishStationEntity,
-                startTime, finishTime, seatNumber, userEntity, price);
+        int ticketId = 0;
+        try {
+            ticketId = ticketDAO.buyTicket(routeEntity, startStationEntity, finishStationEntity,
+                    startTime, finishTime, seatNumber, userEntity, price);
+        } catch (BusySeatPurchaseException e) {
+            e.printStackTrace();
+            throw e;
+        }
+
+        return ticketId;
 
     }
 }
