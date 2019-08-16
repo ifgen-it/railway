@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class TicketController {
@@ -339,6 +341,8 @@ public class TicketController {
             System.out.println("---------> User route: " + userRoute);
             userRoutes.add(userRoute);
         }
+
+        userRoutes = userRoutes.stream().filter(route -> route.getRouteDepartureTime().isAfter(LocalDateTime.now())).collect(Collectors.toList());
 
         //CONVERT DATE
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
