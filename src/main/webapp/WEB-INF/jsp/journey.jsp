@@ -60,54 +60,83 @@
         </form>
 
         <%--            FOUND ROUTES --%>
-        <c:if test="${directRoutes != null}">
+        <c:if test="${futureRoutes != null}">
             <div class="dark-text">${beginStationName} - ${endStationName}</div>
             <div class="dark-text-small">Departure from ${dateFrom} to ${dateTo}</div>
 
-            <c:if test="${directRoutesNum == 0}">
+            <c:if test="${futureRoutesNum == 0}">
+                <br>
                 <div class="text-bad-news">
-                    There is no routes yet
+                    There is no trains to ride
                 </div>
             </c:if>
-            <c:if test="${directRoutesNum > 0}">
-
-                <table id="table-journey" border="2">
+            <c:if test="${futureRoutesNum > 0}">
+                <br>
+                <div class="text-good-news">Trains to ride</div>
+                <table id="table-journey-future" border="2">
                     <tr>
-
                         <th>Route name</th>
                         <th>Train name</th>
-
                         <th>Begin station</th>
                         <th>Departure time</th>
                         <th>End station</th>
                         <th>Arrival time</th>
-
                         <th>Length</th>
                         <th>Price</th>
-
                         <th>Ticket</th>
                     </tr>
 
-                    <c:forEach var="route" items="${directRoutes}">
+                    <c:forEach var="route" items="${futureRoutes}">
                         <tr>
 
                             <td>${route.routeDTO.routeName}</td>
                             <td>${route.routeDTO.train.trainName}</td>
-
                             <td>${route.routeBeginStation.stationName}</td>
                             <td>${route.routeDepartureTime}</td>
                             <td>${route.routeEndStation.stationName}</td>
                             <td>${route.routeArrivalTime}</td>
-
                             <td align="center">${route.routeLength}</td>
                             <td align="center">${route.routePrice}</td>
+                            <td align="center"><a
+                                    href="/tickets/buy?routeId=${route.routeDTO.routeId}&startStationId=${route.routeBeginStation.stationId}&finishStationId=${route.routeEndStation.stationId}">Buy</a>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </table>
 
-                            <td align="center"><a href="/tickets/buy?routeId=${route.routeDTO.routeId}&startStationId=${route.routeBeginStation.stationId}&finishStationId=${route.routeEndStation.stationId}">Buy</a></td>
+            </c:if>
+            <c:if test="${pastRoutesNum > 0}">
+                <br>
+                <div class="text-good-news">Departed trains</div>
 
+                <table id="table-journey-past" border="2">
+                    <tr>
+                        <th>Route name</th>
+                        <th>Train name</th>
+                        <th>Begin station</th>
+                        <th>Departure time</th>
+                        <th>End station</th>
+                        <th>Arrival time</th>
+                        <th>Length</th>
+                        <th>Price</th>
+                    </tr>
+
+                    <c:forEach var="route" items="${pastRoutes}">
+                        <tr>
+
+                            <td>${route.routeDTO.routeName}</td>
+                            <td>${route.routeDTO.train.trainName}</td>
+                            <td>${route.routeBeginStation.stationName}</td>
+                            <td>${route.routeDepartureTime}</td>
+                            <td>${route.routeEndStation.stationName}</td>
+                            <td>${route.routeArrivalTime}</td>
+                            <td align="center">${route.routeLength}</td>
+                            <td align="center">${route.routePrice}</td>
 
                         </tr>
                     </c:forEach>
                 </table>
+
             </c:if>
 
         </c:if>
@@ -116,7 +145,7 @@
     </div>
 </div>
 
-<c:import url="footer.jsp"/>
+<%--<c:import url="footer.jsp"/>--%>
 
 </body>
 </html>

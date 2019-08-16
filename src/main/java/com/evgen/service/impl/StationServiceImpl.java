@@ -204,6 +204,7 @@ public class StationServiceImpl implements StationService {
         List<RouteExtDTO> dtosExt = new ArrayList<>();
         ModelMapper modelMapper = new ModelMapper();
 
+        System.out.println("===== > routeDAO.getAll size = " + routeDAO.getAll().size());
 
         routeDAO.getAll().forEach(item -> {
 

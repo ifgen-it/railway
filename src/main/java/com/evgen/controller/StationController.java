@@ -147,9 +147,9 @@ public class StationController {
         model.addAttribute("routes", stationService.getAllRoutesExt());
 
 
-        System.out.println("====== > GETTING route Path with routeId : 2 ");
-        RoutePathDTO rPath = stationService.getFirstArc(2);
-        System.out.println("====== > route Path with routeId : 2 = " + rPath);
+        //System.out.println("====== > GETTING route Path with routeId : 2 ");
+        //RoutePathDTO rPath = stationService.getFirstArc(2);
+        //System.out.println("====== > route Path with routeId : 2 = " + rPath);
         return "/routes";
     }
 

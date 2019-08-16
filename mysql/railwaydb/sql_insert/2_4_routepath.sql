@@ -25,6 +25,21 @@ values(5, 9, '2019-08-10 18:35:00', '2019-08-10 21:20:00');
 insert into routepath(route_id, arc_id, departure_time, arrival_time)
 values(5, 13, '2019-08-10 21:35:00', '2019-08-11 9:05:00');
 
+-- Рейс 6 - СПБ-Кировск
+insert into routepath(route_id, arc_id, departure_time, arrival_time)
+values(6, 14, '2018-12-31 21:25:00', '2019-01-01 20:30:00');
+
+-- Рейс 7 - СПБ-Кировск-2
+insert into routepath(route_id, arc_id, departure_time, arrival_time)
+values(7, 14, '2019-12-31 22:22:00', '2020-01-01 21:15:00');
+
+
+
+
+select * from arc;
+truncate ticket;
+select * from routepath;
+truncate routepath;
 -- =============================================================
 
 delete from routepath

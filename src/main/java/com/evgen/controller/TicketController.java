@@ -342,7 +342,17 @@ public class TicketController {
             userRoutes.add(userRoute);
         }
 
-        userRoutes = userRoutes.stream().filter(route -> route.getRouteDepartureTime().isAfter(LocalDateTime.now())).collect(Collectors.toList());
+        List<RouteExtDTO> futureRoutes = new ArrayList<>();
+        List<RouteExtDTO> pastRoutes = new ArrayList<>();
+
+        LocalDateTime timeNow = LocalDateTime.now();
+        userRoutes.forEach(route -> {
+            if (route.getRouteDepartureTime().isAfter(timeNow)){
+                futureRoutes.add(route);
+            } else {
+                pastRoutes.add(route);
+            }
+        });
 
         //CONVERT DATE
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
@@ -350,8 +360,12 @@ public class TicketController {
         String fmtDateTo = formatter.format(dateTo);
 
         //SET MODEL ATTRIBUTES
-        model.addAttribute("directRoutes", userRoutes);
-        model.addAttribute("directRoutesNum", userRoutes.size());
+        model.addAttribute("futureRoutes", futureRoutes);
+        model.addAttribute("pastRoutes", pastRoutes);
+
+        model.addAttribute("futureRoutesNum", futureRoutes.size());
+        model.addAttribute("pastRoutesNum", pastRoutes.size());
+
         model.addAttribute("beginStationName", stationService.getStation(beginStationId).getStationName());
         model.addAttribute("endStationName", stationService.getStation(endStationId).getStationName());
         model.addAttribute("dateFrom", fmtDateFrom);
