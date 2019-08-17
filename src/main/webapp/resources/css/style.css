@@ -311,6 +311,22 @@ footer{
     font-size: 13pt;
     padding: 4px;
 }
+
+/*==========  NEW ROUTE ===============*/
+#content-new-route{
+    padding: 30px;
+    background: dodgerblue;
+}
+#table-new-route{
+    background: #add8e6;
+    margin-top: 10px;
+}
+#table-new-route th{
+    color: indigo;
+    font-size: 13pt;
+    padding: 4px;
+}
+
 /* =====  TIME TABLE ===============*/
 #content-table-timetable{
     padding: 30px;

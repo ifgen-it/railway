@@ -24,6 +24,8 @@
                 <li><a href="/timetable">Timetable</a></li>
                 <li><a href="/arcs">Arcs</a></li>
                 <li><a href="/passengers">Passengers</a></li>
+                <li><a href="/routes/new">Create route</a></li>
+
             </ul>
         </li>
         <li><a href="/info">Info</a></li>

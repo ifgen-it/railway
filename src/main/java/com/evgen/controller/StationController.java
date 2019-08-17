@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
 
 @Controller
 public class StationController {
@@ -142,7 +146,7 @@ public class StationController {
     @GetMapping("/routes")
     public String getRoutes(Model model) {
 
-       // model.addAttribute("routes", stationService.getAllRoutes());
+        // model.addAttribute("routes", stationService.getAllRoutes());
 
         model.addAttribute("routes", stationService.getAllRoutesExt());
 
@@ -176,5 +180,85 @@ public class StationController {
 
         return "/timetable";
     }
+
+    @GetMapping("/routes/new")
+    public String getNewRoute(Model model) {
+
+        System.out.println("----> Get Mapping New Route");
+
+        List<ArcDTO> arcs = stationService.getAllArcs();
+        model.addAttribute("arcs", arcs);
+
+
+        return "/new_route";
+    }
+
+    @PostMapping("/routes/new")
+    public String newRoute(@RequestParam(name = "arcId") int arcId,
+                           @RequestParam(name = "departureTime") String strDepartureTime,
+                           @RequestParam(name = "arrivalTime") String strArrivalTime,
+                           Model model) {
+
+        System.out.println("----> Post Mapping New Route");
+        System.out.println("----> arcId = " + arcId);
+        System.out.println("----> str departure time = " + strDepartureTime);
+        System.out.println("----> str arrival time = " + strArrivalTime);
+
+        // CONVERTING DATES
+
+        strDepartureTime = strDepartureTime.replace('T', ' ');
+        strArrivalTime = strArrivalTime.replace('T', ' ');
+
+        System.out.println("After replace:");
+        System.out.println("----> str departure time = " + strDepartureTime);
+        System.out.println("----> str arrival time = " + strArrivalTime);
+
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime departureTime = LocalDateTime.parse(strDepartureTime, dtf);
+        LocalDateTime arrivalTime = LocalDateTime.parse(strArrivalTime, dtf);
+
+        System.out.println("----> departure time = " + departureTime);
+        System.out.println("----> arrival time = " + arrivalTime);
+
+        // VALIDATE DATE TIME
+
+        if (departureTime.isAfter(arrivalTime)) {
+
+            System.out.println("--> arrivalTimeError");
+            String arrivalTimeError = "Arrival time must be after departure time";
+            model.addAttribute("arrivalTimeError", arrivalTimeError);
+            List<ArcDTO> arcs = stationService.getAllArcs();
+            model.addAttribute("arcs", arcs);
+
+            return "/new_route";
+        }
+
+        // ALL RIGHT - CONTINUE
+
+        RoutePathDTO routePath = new RoutePathDTO();
+        routePath.setArc(stationService.getArc(arcId));
+        routePath.setDepartureTime(departureTime);
+        routePath.setArrivalTime(arrivalTime);
+
+        // NEED TO ADD LIST OF ROUTE PATHS INTO SESSION
+
+        model.addAttribute("routePath", routePath);
+        System.out.println("routePath = " + routePath);
+
+
+
+
+
+
+
+        // GENERATE RESPONSE
+
+        List<ArcDTO> arcs = stationService.getAllArcs();
+        model.addAttribute("arcs", arcs);
+
+        return "/new_route";
+    }
+
 
 }
