@@ -1,5 +1,6 @@
 package com.evgen.service;
 
+import com.evgen.dto.ticket.TicketDTO;
 import com.evgen.dto.user.RoleDTO;
 import com.evgen.dto.user.UserDTO;
 
@@ -20,5 +21,7 @@ public interface UserService {
     UserDTO getUser(int userId);
 
     RoleDTO getRole(int roleId);
+
+    List<TicketDTO> getTickets(int userId);
 
 }

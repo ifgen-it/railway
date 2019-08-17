@@ -3,6 +3,7 @@
 <%@ page import="com.evgen.dto.user.UserDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 
 <%
     List<UserDTO> users = (List<UserDTO>) request.getAttribute("users");
@@ -43,6 +44,7 @@
                         <td>${user.firstName}</td>
                         <td>${user.lastName}</td>
                         <td>${user.birthday}</td>
+<%--                        <td><fmt:formatDate value="${user.birthday}" pattern="yyyy-MM-dd"/></td>--%>
                         <td>${user.email}</td>
                         <td>${user.password}</td>
                         <td align="center">

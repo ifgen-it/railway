@@ -2,8 +2,10 @@ package com.evgen.service.impl;
 
 import com.evgen.dao.RoleDAO;
 import com.evgen.dao.UserDAO;
+import com.evgen.dto.ticket.TicketDTO;
 import com.evgen.dto.user.RoleDTO;
 import com.evgen.dto.user.UserDTO;
+import com.evgen.entity.ticket.TicketEntity;
 import com.evgen.entity.user.RoleEntity;
 import com.evgen.entity.user.UserEntity;
 import com.evgen.service.UserService;
@@ -85,7 +87,13 @@ public class UserServiceImpl implements UserService {
     public UserDTO getUser(int userId) {
 
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(userDAO.get(userId), UserDTO.class);
+        UserEntity userEntity = userDAO.get(userId);
+
+        if (userEntity == null){
+            return null;
+        } else {
+            return modelMapper.map(userEntity, UserDTO.class);
+        }
     }
 
     @Override
@@ -93,5 +101,17 @@ public class UserServiceImpl implements UserService {
 
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(roleDAO.get(roleId), RoleDTO.class);
+    }
+
+    @Override
+    public List<TicketDTO> getTickets(int userId) {
+
+        List<TicketEntity>  ticketEntities = userDAO.get(userId).getTickets();
+
+        List<TicketDTO> dtos = new ArrayList<>();
+        ModelMapper modelMapper = new ModelMapper();
+        ticketEntities.forEach(item -> dtos.add(modelMapper.map(item, TicketDTO.class)));
+
+        return dtos;
     }
 }

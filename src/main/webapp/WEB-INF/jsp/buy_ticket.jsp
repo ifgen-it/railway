@@ -34,12 +34,73 @@
 
         <c:if test="${ (errorGotNull == false && errorParse == false) || (errorGotNull == true && sessionScope.ticketDetails != null)}">
 
+            <%--  TICKET WAS BOUGHT --%>
             <c:if test="${ticketBought == true}">
-                <div class="dark-text">Thank you for purchase! Your ticket number is ${ticketId}</div>
-                <div class="dark-text">Discover another <a href="/journey">journey</a> or see your purchase in your <a
-                        href="/account">account page</a></div>
+
+                <div class="dark-text">Thank you for purchase!</div>
+                <div class="ticket-paper">
+
+
+                    <table id="table-ticket-paper">
+                        <caption><span class="ticket-paper-small">TRAINS AND RAILS</span></caption>
+
+                        <tr><td colspan="2"><span class="ticket-paper-small">------------------------------</span></td></tr>
+                        <tr>
+                            <td><span class="ticket-paper-small">TICKET:</span></td>
+                            <td><span class="ticket-paper-big">${ticket.ticketId}</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="ticket-paper-small">PASSENGER:</span></td>
+                            <td><span class="ticket-paper-big">${ticket.user.firstName} ${ticket.user.lastName}</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><span class="ticket-paper-small">FROM:</span></td>
+                            <td><span class="ticket-paper-big">${ticket.startStation.stationName}</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="ticket-paper-small">TO:</span></td>
+                            <td><span class="ticket-paper-big">${ticket.finishStation.stationName}</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><span class="ticket-paper-small">DEPARTURE:</span></td>
+                            <td><span class="ticket-paper-big">${ticket.startTime}</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="ticket-paper-small">ARRIVAL:</span></td>
+                            <td><span class="ticket-paper-big">${ticket.finishTime}</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><span class="ticket-paper-small">ROUTE:</span></td>
+                            <td><span class="ticket-paper-big">${ticket.ticketRoute.routeName}</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><span class="ticket-paper-small">TRAIN:</span></td>
+                            <td><span class="ticket-paper-big">${ticket.ticketRoute.train.trainName}</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="ticket-paper-small">SEAT:</span></td>
+                            <td><span class="ticket-paper-big">${ticket.seatNumber}</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><span class="ticket-paper-small">PRICE:</span></td>
+                            <td><span class="ticket-paper-big">${ticket.price}</span></td>
+                        </tr>
+
+                    </table>
+
+                </div>
+
+                <div class="dark-text">Discover another <a href="/journey">journey</a> or see your purchase in
+                    your <a
+                            href="/account?id=${userId}">account page</a></div>
             </c:if>
 
+            <%--            PURCHASE FAIL  --%>
             <c:if test="${ticketBought == false}">
                 <div class="dark-text">Purchasing was not successful!</div>
                 <div class="text-bad-news">
@@ -47,6 +108,7 @@
                 </div>
             </c:if>
 
+            <%--            TICKET WAS NOT BOUGHT YET  -- GET CHOOSEN ROUTE FROM SESSION --%>
             <c:if test="${ticketBought == null}">
                 <div class="dark-text">Ticket details</div>
 
@@ -129,110 +191,10 @@
 
         </c:if>
 
-
-        <%--        <div class="dark-text">Select stations for journey and departure date range:</div>--%>
-
-        <%--        <form action="/journey" method="post">--%>
-        <%--            <div class="form-element">--%>
-        <%--                <div class="dark-text-small">Begin station</div>--%>
-        <%--                <select name="beginStation">--%>
-        <%--                    <option value="0" selected>Select station</option>--%>
-        <%--                    <c:forEach var="station" items="${stations}">--%>
-        <%--                        <option value="${station.stationId}">${station.stationName}</option>--%>
-        <%--                    </c:forEach>--%>
-        <%--                </select>--%>
-        <%--                <label class="error-message">${beginStationError}</label>--%>
-        <%--            </div>--%>
-
-        <%--            <div class="form-element">--%>
-        <%--                <div class="dark-text-small">End station</div>--%>
-        <%--                <select name="endStation">--%>
-        <%--                    <option value="0" selected>Select station</option>--%>
-        <%--                    <c:forEach var="station" items="${stations}">--%>
-        <%--                        <option value="${station.stationId}">${station.stationName}</option>--%>
-        <%--                    </c:forEach>--%>
-        <%--                </select>--%>
-        <%--                <label class="error-message">${endStationError}</label>--%>
-        <%--            </div>--%>
-
-        <%--            <div class="form-element">--%>
-        <%--                <div class="dark-text-small">Date From</div>--%>
-        <%--                <input id="dateFrom" name="dateFrom" type="date" required>--%>
-        <%--                <label class="error-message">${dateFromError}</label>--%>
-        <%--            </div>--%>
-
-        <%--            <div class="form-element">--%>
-        <%--                <div class="dark-text-small">Date To</div>--%>
-        <%--                <input id="dateTo" name="dateTo" type="date" required>--%>
-        <%--                <label class="error-message">${dateToError}</label>--%>
-        <%--            </div>--%>
-
-        <%--            <input type="submit" value="Find routes">--%>
-        <%--        </form>--%>
-
-
-        <%--            FOUND ROUTES --%>
-
-
-        <%--        <c:if test="${directRoutes != null}">--%>
-        <%--            <div class="dark-text">${beginStationName} - ${endStationName}</div>--%>
-        <%--            <div class="dark-text-small">Departure from ${dateFrom} to ${dateTo}</div>--%>
-
-        <%--            <c:if test="${directRoutesNum == 0}">--%>
-        <%--                <div class="text-bad-news">--%>
-        <%--                    There is no routes yet--%>
-        <%--                </div>--%>
-        <%--            </c:if>--%>
-        <%--            <c:if test="${directRoutesNum > 0}">--%>
-
-        <%--                <table id="table-journey" border="2">--%>
-        <%--                    <tr>--%>
-
-        <%--                        <th>Route name</th>--%>
-        <%--                        <th>Train name</th>--%>
-
-        <%--                        <th>Begin station</th>--%>
-        <%--                        <th>Departure time</th>--%>
-        <%--                        <th>End station</th>--%>
-        <%--                        <th>Arrival time</th>--%>
-
-        <%--                        <th>Length</th>--%>
-        <%--                        <th>Price</th>--%>
-
-        <%--                        <th>Ticket</th>--%>
-        <%--                    </tr>--%>
-
-        <%--                    <c:forEach var="route" items="${directRoutes}">--%>
-        <%--                        <tr>--%>
-
-        <%--                            <td>${route.routeDTO.routeName}</td>--%>
-        <%--                            <td>${route.routeDTO.train.trainName}</td>--%>
-
-        <%--                            <td>${route.routeBeginStation.stationName}</td>--%>
-        <%--                            <td>${route.routeDepartureTime}</td>--%>
-        <%--                            <td>${route.routeEndStation.stationName}</td>--%>
-        <%--                            <td>${route.routeArrivalTime}</td>--%>
-
-        <%--                            <td align="center">${route.routeLength}</td>--%>
-        <%--                            <td align="center">${route.routePrice}</td>--%>
-
-        <%--                            <td align="center"><a--%>
-        <%--                                    href="/tickets/buy?routeId=${route.routeDTO.routeId}&startStationId=${route.routeBeginStation.stationId}&finishStationId=${route.routeEndStation.stationId}">Buy</a>--%>
-        <%--                            </td>--%>
-
-
-        <%--                        </tr>--%>
-        <%--                    </c:forEach>--%>
-        <%--                </table>--%>
-        <%--            </c:if>--%>
-
-        <%--        </c:if>--%>
-
-
     </div>
 </div>
 
-<c:import url="footer.jsp"/>
+<%--<c:import url="footer.jsp"/>--%>
 
 </body>
 </html>

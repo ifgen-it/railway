@@ -1,5 +1,6 @@
 package com.evgen.controller;
 
+import com.evgen.dto.ticket.TicketDTO;
 import com.evgen.dto.user.RoleDTO;
 import com.evgen.dto.user.UserDTO;
 import com.evgen.service.UserService;
@@ -8,12 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -24,11 +27,6 @@ public class UserController {
     @Autowired
     private UserValidator userValidator;
 
-    @GetMapping("/account")
-    public String getAccount(Model model){
-
-        return "/account";
-    }
 
     @GetMapping("/users")
     public String getUsers(Model model) {
@@ -141,6 +139,59 @@ public class UserController {
         userService.addUser(user);
 
         return "redirect:/users";
+    }
+
+
+    @GetMapping("/accounts")
+    public String getAccount(Model model){
+
+        List<UserDTO> users = userService.getAllUsers();
+        model.addAttribute("users", users);
+
+        return "/accounts";
+    }
+
+    @GetMapping("/account")
+    public String getAccount(@RequestParam(name = "id", required = false) String strUserId,
+                       Model model){
+
+        System.out.println("--------> In Get mapping Account id, id = " + strUserId);
+
+        // NEED TO VALIDATE STR USER ID
+        int userId = 0;
+
+        if(strUserId == null){
+            System.out.println("strUserId = null");
+            return "redirect:/";
+        }
+
+        try {
+            userId = Integer.parseInt(strUserId);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Parse error user id");
+            return "redirect:/";
+        }
+
+        if (userId <= 0) {
+            System.out.println("User id <= 0");
+            return "redirect:/";
+        }
+
+        if (userService.getUser(userId) == null){
+            System.out.println("No such user");
+            return "redirect:/";
+        }
+
+        // ALL RIGHT - FETCH USER DETAILS
+
+        UserDTO user = userService.getUser(userId);
+        List<TicketDTO> tickets = userService.getTickets(userId);
+
+        model.addAttribute("user", user);
+        model.addAttribute("tickets", tickets);
+
+        return "/account";
     }
 
 }

@@ -23,9 +23,10 @@
                 <li><a href="/routes">Routes</a></li>
                 <li><a href="/timetable">Timetable</a></li>
                 <li><a href="/arcs">Arcs</a></li>
+                <li><a href="/passengers">Passengers</a></li>
             </ul>
         </li>
         <li><a href="/info">Info</a></li>
-        <li><a href="/account">My account</a></li>
+        <li><a href="/accounts">Accounts</a></li>
     </ul>
 </nav>

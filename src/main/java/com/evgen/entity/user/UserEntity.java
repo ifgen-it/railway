@@ -121,5 +121,13 @@ public class UserEntity implements Serializable {
                 ", password='" + password + '\'' +
                 '}';
     }
+
+    public List<TicketEntity> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<TicketEntity> tickets) {
+        this.tickets = tickets;
+    }
 }
 

@@ -120,4 +120,29 @@ public class TicketServiceImpl implements TicketService {
         return ticketId;
 
     }
+
+    @Override
+    public List<TicketDTO> getTickets(int routeId) {
+
+        List<TicketDTO> dtos = new ArrayList<>();
+        ModelMapper modelMapper = new ModelMapper();
+
+        ticketDAO.getTickets(routeId).forEach(item -> dtos.add(modelMapper.map(item, TicketDTO.class)));
+
+        return dtos;
+    }
+
+    @Override
+    public TicketDTO get(int ticketId) {
+
+        TicketEntity ticketEntity = ticketDAO.get(ticketId);
+        ModelMapper modelMapper = new ModelMapper();
+
+        if (ticketEntity == null){
+            return null;
+        }
+        else {
+            return modelMapper.map(ticketEntity, TicketDTO.class);
+        }
+    }
 }

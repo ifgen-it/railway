@@ -15,7 +15,7 @@
 
 
     <div id="content-table-timetable">
-        <div class="dark-text">Choose station:</div>
+        <div class="dark-text">Select station to display timetable:</div>
         <form action="/timetable" method="post">
             <div class="form-element">
                 <select name="stationId" class="form-element">

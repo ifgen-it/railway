@@ -2,6 +2,7 @@ package com.evgen.controller;
 
 import com.evgen.dao.impl.BusySeatPurchaseException;
 import com.evgen.dto.station.RouteExtDTO;
+import com.evgen.dto.ticket.TicketDTO;
 import com.evgen.service.StationService;
 import com.evgen.service.TicketService;
 import com.evgen.service.UserService;
@@ -21,7 +22,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class TicketController {
@@ -208,7 +208,9 @@ public class TicketController {
 
         if (buyError == false){
 
-            model.addAttribute("ticketId", ticketId);
+            model.addAttribute("ticket", ticketService.get(ticketId));
+            model.addAttribute("userId", userId);
+            System.out.println("-----> userId = " + userId);
 
             // HERE TICKET MUST BE BOUGHT SO TICKET DETAILS CAN BE REMOVED FROM SESSION
             session.removeAttribute("ticketDetails");
@@ -375,4 +377,40 @@ public class TicketController {
         return "/journey";
     }
 
+
+    @GetMapping("/passengers")
+    public String getPassengers(Model model) {
+
+        System.out.println("----> Get Mapping Passengers");
+        model.addAttribute("routesExt", stationService.getAllRoutesExt());
+
+        return "/passengers";
+    }
+
+    @PostMapping("/passengers")
+    public String passengers(@RequestParam(name = "routeId") int routeId,
+                            Model model) {
+
+        model.addAttribute("routesExt", stationService.getAllRoutesExt());
+
+        System.out.println("----> Post Mapping Passengers");
+
+        List<TicketDTO> tickets;
+        boolean allRoutes = true;
+        RouteExtDTO searchRoute = null;
+
+        if (routeId == 0){
+            tickets = ticketService.getAllTickets();
+        } else {
+            tickets = ticketService.getTickets(routeId);
+            allRoutes = false;
+            searchRoute = stationService.getRouteExt(routeId);
+        }
+
+        model.addAttribute("tickets", tickets);
+        model.addAttribute("allRoutes", allRoutes);
+        model.addAttribute("searchRoute", searchRoute);
+
+        return "/passengers";
+    }
 }

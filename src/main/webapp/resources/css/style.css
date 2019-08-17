@@ -220,6 +220,21 @@ footer{
     padding: 4px;
 }
 
+/*==========  BUY PASSENGERS ===============*/
+#content-passengers{
+    padding: 30px;
+    background: dodgerblue;
+}
+#table-passengers{
+    background: #add8e6;
+    margin-top: 10px;
+}
+#table-passengers th{
+    color: indigo;
+    font-size: 13pt;
+    padding: 4px;
+}
+
 /*==========  BUY TICKET ===============*/
 #content-buy-ticket{
     padding: 30px;
@@ -235,6 +250,38 @@ footer{
     padding: 4px;
 }
 
+
+.ticket-paper{
+    color: #585858;
+    background: whitesmoke;
+    /*background: whitesmoke;*/
+    border: 2px solid #585858;
+    padding: 14px;
+    /*font-family: "Consolas";*/
+    font-family: "Consolas";
+    font-size: 14px;
+    margin-top: 14px;
+    margin-bottom: 14px;
+    width: 250px;
+}
+#table-ticket-paper{
+
+}
+
+#table-ticket-paper td{
+    vertical-align: top;
+}
+
+.ticket-paper-big{
+    font-size: 16px;
+    font-weight: bold;
+    color: #585858;
+}
+.ticket-paper-small{
+    font-size: 14px;
+    color: #585858;
+}
+
 /*==========  ACCOUNT ===============*/
 #content-account{
     padding: 30px;
@@ -245,6 +292,21 @@ footer{
     margin-top: 10px;
 }
 #table-account th{
+    color: indigo;
+    font-size: 13pt;
+    padding: 4px;
+}
+
+/*==========  ACCOUNTS ===============*/
+#content-accounts{
+    padding: 30px;
+    background: dodgerblue;
+}
+#table-accounts{
+    background: #add8e6;
+    margin-top: 10px;
+}
+#table-accounts th{
     color: indigo;
     font-size: 13pt;
     padding: 4px;

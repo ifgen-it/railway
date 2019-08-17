@@ -32,5 +32,7 @@ public interface TicketDAO {
 
     TicketEntity getTicket(RouteEntity route, UserEntity user);
 
+    List<TicketEntity> getTickets(int routeId);
+
 
 }

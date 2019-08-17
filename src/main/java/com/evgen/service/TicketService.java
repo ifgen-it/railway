@@ -22,5 +22,8 @@ public interface TicketService {
             TwinUserPurchaseException,
             BusySeatPurchaseException;
 
+    List<TicketDTO> getTickets(int routeId);
+
+    TicketDTO get(int ticketId);
 
 }

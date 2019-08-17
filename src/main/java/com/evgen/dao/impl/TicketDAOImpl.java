@@ -138,4 +138,19 @@ public class TicketDAOImpl implements TicketDAO {
             return tickets.get(0);
         }
     }
+
+    @Override
+    public List<TicketEntity> getTickets(int routeId) {
+
+        String queryString = "select t from TicketEntity t " +
+                "where t.ticketRoute.routeId = :routeId";
+
+        TypedQuery<TicketEntity> query = em.createQuery(queryString, TicketEntity.class);
+        query.setParameter("routeId", routeId);
+
+        List<TicketEntity> tickets = query.getResultList();
+        System.out.println("======> Ticket : " + tickets);
+
+        return tickets;
+    }
 }

@@ -39,6 +39,7 @@
                     <td>${route.routeDTO.train.seatsAmount}</td>
                     <td>${route.routeBeginStation.stationName}</td>
                     <td>${route.routeDepartureTime}</td>
+<%--                    <td><fmt:formatDate type="time" value="${route.routeDepartureTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>--%>
                     <td>${route.routeEndStation.stationName}</td>
                     <td>${route.routeArrivalTime}</td>
 
