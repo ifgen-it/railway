@@ -19,4 +19,6 @@ public interface ArcDAO {
     ArcEntity update(ArcEntity arc);
 
     ArcEntity getByStations(int beginStationId, int endStationId);
+
+    List<ArcEntity> getOutArcs(int stationId);
 }

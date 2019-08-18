@@ -2,6 +2,7 @@ package com.evgen.dao;
 
 import com.evgen.entity.train.TrainEntity;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface TrainDAO {
@@ -19,4 +20,6 @@ public interface TrainDAO {
     TrainEntity update(TrainEntity train);
 
     TrainEntity getByName(String trainName);
+
+    List<Integer> getFreeTrains(LocalDateTime startTime, LocalDateTime finishTime);
 }

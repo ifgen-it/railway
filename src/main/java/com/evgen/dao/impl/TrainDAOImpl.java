@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
@@ -37,7 +39,7 @@ public class TrainDAOImpl implements TrainDAO {
     @Override
     public void remove(TrainEntity train) {
 
-        if (!em.contains(train)){
+        if (!em.contains(train)) {
             train = em.merge(train);
         }
         em.remove(train);
@@ -68,5 +70,30 @@ public class TrainDAOImpl implements TrainDAO {
             return null;
         else
             return trains.get(0);
+    }
+
+    @Override
+    public List<Integer> getFreeTrains(LocalDateTime startTime, LocalDateTime finishTime) {
+
+        String subQueryString = "select distinct r.route.train.trainId " +
+                "from RoutePathEntity r " +
+                "where " +
+                "( r.arrivalTime >= :startTime and r.arrivalTime <= :finishTime ) " +
+                "or " +
+                "( r.departureTime >= :startTime and r.departureTime <= :finishTime ) " +
+                "or " +
+                "( r.departureTime < :startTime and r.arrivalTime > :finishTime ) ";
+
+        String queryString = "select t.trainId from TrainEntity t " +
+                "where t.trainId not in ( " + subQueryString + " )";
+
+
+        TypedQuery<Integer> query = em.createQuery(queryString, Integer.class);
+        query.setParameter("startTime", startTime);
+        query.setParameter("finishTime", finishTime);
+
+        List<Integer> result =  query.getResultList();
+
+        return result;
     }
 }

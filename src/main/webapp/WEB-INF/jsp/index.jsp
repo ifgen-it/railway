@@ -26,6 +26,7 @@
             <a class="a-big" href="/timetable">Timetable</a><br>
             <a class="a-small" href="/arcs">Arcs</a><br>
             <a class="a-normal" href="/journey">Journey</a><br>
+            <a class="a-small" href="/routes/new/arcs">Create route</a><br>
 
         </aside>
     </section>

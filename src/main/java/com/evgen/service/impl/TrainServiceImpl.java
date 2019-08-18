@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,5 +56,11 @@ public class TrainServiceImpl implements TrainService {
 
         TrainDTO trainDTO = modelMapper.map(trainEntity, TrainDTO.class);
         return trainDTO;
+    }
+
+    @Override
+    public List<Integer> getFreeTrains(LocalDateTime startTime, LocalDateTime finishTime) {
+
+        return trainDAO.getFreeTrains(startTime, finishTime);
     }
 }

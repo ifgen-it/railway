@@ -10,6 +10,7 @@ import com.evgen.entity.station.RouteEntity;
 import com.evgen.entity.station.RoutePathEntity;
 import com.evgen.entity.station.StationEntity;
 import com.evgen.service.StationService;
+import com.evgen.service.TrainService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,9 @@ public class StationServiceImpl implements StationService {
 
     @Autowired
     private RoutePathDAO routePathDAO;
+
+    @Autowired
+    private TrainService trainService;
 
     @Override
     public List<StationDTO> getAllStations() {
@@ -280,5 +284,64 @@ public class StationServiceImpl implements StationService {
     @Override
     public Integer getRouteLength(int routeId, LocalDateTime startTime, LocalDateTime finishTime) {
         return routePathDAO.getRouteLength(routeId, startTime, finishTime);
+    }
+
+    @Override
+    public List<ArcDTO> getOutArcs(int stationId) {
+
+        ModelMapper modelMapper = new ModelMapper();
+        List<ArcDTO> dtos = new ArrayList<>();
+
+        List<ArcEntity> entities = arcDAO.getOutArcs(stationId);
+        entities.forEach(item -> dtos.add(modelMapper.map(item, ArcDTO.class)));
+
+        return dtos;
+    }
+
+    @Override
+    public int createRoute(RouteDTO routeDTO, List<RoutePathDTO> routePathDTOS) throws UseReservedTrainException {
+
+        ModelMapper modelMapper = new ModelMapper();
+        RouteEntity routeEntity = modelMapper.map(routeDTO, RouteEntity.class);
+
+        // BEFORE CREATION ROUTE WITH SELECTED TRAIN ID
+        // NEED TO CHECK THIS TRAIN ID - IF SOME MANAGER USED IT
+        // IN OUR TIME RANGE (DEPARTURE - ARRIVAL)
+
+        RoutePathDTO firstRoutePath = routePathDTOS.get(0);
+        RoutePathDTO lastRoutePath = routePathDTOS.get(routePathDTOS.size() - 1);
+
+        LocalDateTime departureTime = firstRoutePath.getDepartureTime();
+        LocalDateTime arrivalTime = lastRoutePath.getArrivalTime();
+
+        List<Integer> freeTrainsId = trainService.getFreeTrains(departureTime, arrivalTime);
+        int trainId = routeDTO.getTrain().getTrainId();
+
+        System.out.println("---> in Create Route ---->");
+        System.out.println("train id = " + trainId);
+        System.out.println("free trains : " + freeTrainsId);
+
+        if (freeTrainsId.contains(Integer.valueOf(trainId)) == false){
+
+            throw new UseReservedTrainException("Train : " + trainId + "_" + routeDTO.getTrain().getTrainName() +
+                    " was used in another route recently");
+        }
+
+
+        // ALL RIGHT - ADD ROUTE
+
+        int routeId = routeDAO.add(routeEntity);
+        RouteEntity realRouteEntity = routeDAO.get(routeId);
+        RouteDTO realRouteDTO = modelMapper.map(realRouteEntity, RouteDTO.class);
+        System.out.println("----> in Create Route, real route dto: " + realRouteDTO);
+
+        routePathDTOS.forEach(item -> item.setRoute(realRouteDTO));
+
+        List<RoutePathEntity> routePathEntities = new ArrayList<>();
+        routePathDTOS.forEach(item ->routePathEntities.add(modelMapper.map(item, RoutePathEntity.class)));
+
+        routePathEntities.forEach(item -> routePathDAO.add(item));
+
+        return routeId;
     }
 }

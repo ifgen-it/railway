@@ -327,6 +327,21 @@ footer{
     padding: 4px;
 }
 
+/*==========  NEW ROUTE : ATTACH TRAIN ===============*/
+#content-attach-train{
+    padding: 30px;
+    background: dodgerblue;
+}
+#table-attach-train{
+    background: #add8e6;
+    margin-top: 10px;
+}
+#table-attach-train th{
+    color: indigo;
+    font-size: 13pt;
+    padding: 4px;
+}
+
 /* =====  TIME TABLE ===============*/
 #content-table-timetable{
     padding: 30px;

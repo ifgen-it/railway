@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Component
@@ -76,5 +77,19 @@ public class ArcDAOImpl implements ArcDAO {
             return null;
         else
             return arcs.get(0);
+    }
+
+    @Override
+    public List<ArcEntity> getOutArcs(int stationId) {
+
+        String queryString = "select a from ArcEntity a " +
+                "where a.beginStation.stationId = :beginStationId";
+
+        TypedQuery<ArcEntity> query = em.createQuery(queryString, ArcEntity.class);
+        query.setParameter("beginStationId", stationId);
+
+        List<ArcEntity> results = query.getResultList();
+
+        return results;
     }
 }

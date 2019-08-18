@@ -2,6 +2,7 @@ package com.evgen.service;
 
 import com.evgen.dto.train.TrainDTO;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface TrainService {
@@ -13,6 +14,8 @@ public interface TrainService {
     TrainDTO getTrain(int trainId);
 
     TrainDTO getByName(String trainName);
+
+    List<Integer> getFreeTrains(LocalDateTime startTime, LocalDateTime finishTime);
 
 
 }

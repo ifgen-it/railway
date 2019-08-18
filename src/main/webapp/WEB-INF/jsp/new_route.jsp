@@ -16,14 +16,15 @@
 
     <div id="content-new-route">
         <div class="dark-text">Add new arc to the route:</div>
-        <form action="/routes/new" method="post">
+        <form action="/routes/new/arcs" method="post">
 
             <div class="form-element">
                 <div class="dark-text-small">Arc</div>
                 <select name="arcId">
                     <c:forEach var="arc" items="${arcs}">
                         <option value="${arc.arcId}">${arc.beginStation.stationName}
-                            - ${arc.endStation.stationName}</option>
+                            - ${arc.endStation.stationName}_${arc.length} km
+                        </option>
                     </c:forEach>
                 </select>
             </div>
@@ -44,37 +45,38 @@
             <input type="submit" value="Add arc">
         </form>
 
-        <c:if test="${routePath != null}">
+        <c:if test="${sessionScope.firstArcAdded != null}">
             <div class="dark-text">Added arcs:</div>
 
             <table id="table-new-route" border="2">
                 <tr>
+                    <th>Arc</th>
                     <th>Begin station</th>
                     <th>End station</th>
                     <th>Departure</th>
                     <th>Arrival</th>
+                    <th>Length</th>
 
                 </tr>
 
-                <tr>
-                    <td>${routePath.arc.beginStation.stationName}</td>
-                    <td>${routePath.arc.endStation.stationName}</td>
-                    <td>${routePath.departureTime}</td>
-                    <td>${routePath.arrivalTime}</td>
+                <c:forEach var="routePath" items="${sessionScope.tempRoutePaths}" varStatus="routePathsCount">
+                    <tr>
 
-                </tr>
+                        <td>${routePathsCount.count}</td>
+                        <td>${routePath.arc.beginStation.stationName}</td>
+                        <td>${routePath.arc.endStation.stationName}</td>
+                        <td>${routePath.departureTime}</td>
+                        <td>${routePath.arrivalTime}</td>
+                        <td>${routePath.arc.length}</td>
 
-                    <%--                <c:forEach var="arrival" items="${arrivals}">--%>
-                    <%--                    <tr>--%>
-                    <%--                        <td>${arrival.arrivalTime}</td>--%>
-                    <%--                        <td>${arrival.route.routeName}</td>--%>
-                    <%--                        <td>${arrival.route.train.trainName}</td>--%>
-
-                    <%--                    </tr>--%>
-                    <%--                </c:forEach>--%>
+                    </tr>
+                </c:forEach>
 
             </table>
 
+            <form action="/routes/new/train" method="get">
+                <input type="submit" value="Next: Add train and route name">
+            </form>
         </c:if>
 
     </div>

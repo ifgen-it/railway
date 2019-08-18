@@ -1,6 +1,7 @@
 package com.evgen.service;
 
 import com.evgen.dto.station.*;
+import com.evgen.service.impl.UseReservedTrainException;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -52,4 +53,7 @@ public interface StationService {
 
     Integer getRouteLength(int routeId, LocalDateTime startTime, LocalDateTime finishTime);
 
+    List<ArcDTO> getOutArcs(int stationId);
+
+    int createRoute(RouteDTO routeDTO, List<RoutePathDTO> routePathDTOS) throws UseReservedTrainException;
 }
