@@ -22,7 +22,7 @@
             <a class="a-normal" href="/routes">Routes</a><br>
             <a class="a-small" href="/stations">Stations</a><br>
             <a class="a-big" href="/users">Users</a><br>
-            <a class="a-normal" href="/users/new">Add new user</a><br>
+            <a class="a-normal" href="/sign_up">Sign up</a><br>
             <a class="a-big" href="/timetable">Timetable</a><br>
             <a class="a-small" href="/arcs">Arcs</a><br>
             <a class="a-normal" href="/journey">Journey</a><br>

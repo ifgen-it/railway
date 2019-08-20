@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.ParseException;
@@ -55,14 +55,14 @@ public class UserController {
         return "redirect:/users";
     }
 
-    @GetMapping("/users/new")
+    @GetMapping("/sign_up")
     public String getSignUp(Model model){
 
         model.addAttribute("roles", userService.getAllRoles());
         return "/sign_up";
     }
 
-    @PostMapping("/users/new")
+    @PostMapping("/sign_up")
     public String SignUp(@RequestParam("firstName") String firstName,
                          @RequestParam("lastName") String lastName,
                          @RequestParam("birthday") String strBirthday,
@@ -194,4 +194,9 @@ public class UserController {
         return "/account";
     }
 
+    @RequestMapping("/login")
+    public String login(){
+
+        return "sign_in";
+    }
 }
