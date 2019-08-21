@@ -9,7 +9,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -20,6 +22,9 @@ public class AuthProviderImpl implements AuthenticationProvider {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -33,7 +38,7 @@ public class AuthProviderImpl implements AuthenticationProvider {
         }
 
         String password = authentication.getCredentials().toString();
-        if (!password.equals(userDTO.getPassword())){
+        if (!passwordEncoder.matches(password, userDTO.getPassword())){
 
             System.out.println("---> Bad credentials");
             throw new BadCredentialsException("Bad credentials");
@@ -41,8 +46,13 @@ public class AuthProviderImpl implements AuthenticationProvider {
 
         // NOW WE CAN GIVE A ROLE TO USER
 
-        List<GrantedAuthority> authorities = new ArrayList<>(); //  LIST WITH ROLES
+        List<GrantedAuthority> authorities = new ArrayList<>(); //  LIST WITH ROLE
 
+        String userRole = userDTO.getRole().getRoleName();
+        System.out.println("----> in authenticate user, user role = " + userRole + ", user name = "+ userDTO.getFirstName());
+
+        authorities.add(new SimpleGrantedAuthority(userRole));
+        System.out.println("--> authorities: " + authorities);
         // NEED TO USE THIS LIST THEN
 
         return new UsernamePasswordAuthenticationToken(userDTO, null, authorities);

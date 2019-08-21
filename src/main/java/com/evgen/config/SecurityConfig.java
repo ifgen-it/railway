@@ -2,12 +2,15 @@ package com.evgen.config;
 
 import com.evgen.security.AuthProviderImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
@@ -25,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/sign_up", "/login").anonymous()    // AUTH USER CANNOT GO THERE, ONLY ANON
+                .antMatchers("/sign-up", "/login").anonymous()    // AUTH USER CANNOT GO THERE, ONLY ANON
                 .antMatchers("/users", "/tickets/buy", "/trains",
                         "/arcs", "/passengers", "/routes/new/arcs",
                         "/accounts", "/account").authenticated()               // ANY AUTH USER
@@ -34,8 +37,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .loginProcessingUrl("/login/process")
                 .usernameParameter("email")
+                .failureUrl("/login?error=true")    // HERE WILL REDIRECT IF BAD CREDENTIALS OR USER NOT FOUND
+                .and()
+                .exceptionHandling()
+                .accessDeniedPage("/")  // WHEN AUTH USER WANT TO LOGIN OR SIGN UP ( WANT ANON-PAGES )
                 .and().logout();
 
 
     }
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
 }

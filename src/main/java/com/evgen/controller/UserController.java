@@ -45,9 +45,9 @@ public class UserController {
         if (delUsers == null)
             return "redirect:/users";
 
-        for (int i = 0; i < delUsers.length; i++){
+        for (int i = 0; i < delUsers.length; i++) {
             int userDelId = Integer.parseInt(delUsers[i]);
-            System.out.println("wanna delete user with id: " + userDelId );
+            System.out.println("wanna delete user with id: " + userDelId);
 
             userService.removeWith(userDelId);
         }
@@ -55,14 +55,14 @@ public class UserController {
         return "redirect:/users";
     }
 
-    @GetMapping("/sign_up")
-    public String getSignUp(Model model){
+    @GetMapping("/sign-up")
+    public String getSignUp(Model model) {
 
         model.addAttribute("roles", userService.getAllRoles());
         return "/sign_up";
     }
 
-    @PostMapping("/sign_up")
+    @PostMapping("/sign-up")
     public String SignUp(@RequestParam("firstName") String firstName,
                          @RequestParam("lastName") String lastName,
                          @RequestParam("birthday") String strBirthday,
@@ -95,24 +95,24 @@ public class UserController {
             birthdayError = "Date is required"; //"Required format: DD.MM.YYYY";
         }
 
-        if (email.equals("")){
+        if (email.equals("")) {
             emailError = "Email is required";
             error = true;
         }
-        if (firstName.equals("")){
+        if (firstName.equals("")) {
             firstNameError = "First name is required";
             error = true;
         }
-        if (lastName.equals("")){
+        if (lastName.equals("")) {
             lastNameError = "Last name is required";
             error = true;
         }
-        if (password.equals("")){
+        if (password.equals("")) {
             passwordError = "Password is required";
             error = true;
         }
 
-        if (error == true){
+        if (error == true) {
             model.addAttribute("firstNameError", firstNameError);
             model.addAttribute("lastNameError", lastNameError);
             model.addAttribute("birthdayError", birthdayError);
@@ -123,9 +123,9 @@ public class UserController {
         }
 
         // CHECK THE SAME EMAIL EXISTENCE IN DB
-        boolean emailExist =  userValidator.checkEmailExistence(email);
+        boolean emailExist = userValidator.checkEmailExistence(email);
 
-        if (emailExist){
+        if (emailExist) {
             model.addAttribute("emailError", "This email already in use");
             return "/sign_up";
         }
@@ -138,12 +138,12 @@ public class UserController {
 
         userService.addUser(user);
 
-        return "redirect:/users";
+        return "redirect:/";
     }
 
 
     @GetMapping("/accounts")
-    public String getAccount(Model model){
+    public String getAccount(Model model) {
 
         List<UserDTO> users = userService.getAllUsers();
         model.addAttribute("users", users);
@@ -153,14 +153,14 @@ public class UserController {
 
     @GetMapping("/account")
     public String getAccount(@RequestParam(name = "id", required = false) String strUserId,
-                       Model model){
+                             Model model) {
 
         System.out.println("--------> In Get mapping Account id, id = " + strUserId);
 
         // NEED TO VALIDATE STR USER ID
         int userId = 0;
 
-        if(strUserId == null){
+        if (strUserId == null) {
             System.out.println("strUserId = null");
             return "redirect:/";
         }
@@ -178,7 +178,7 @@ public class UserController {
             return "redirect:/";
         }
 
-        if (userService.getUser(userId) == null){
+        if (userService.getUser(userId) == null) {
             System.out.println("No such user");
             return "redirect:/";
         }
@@ -195,8 +195,15 @@ public class UserController {
     }
 
     @RequestMapping("/login")
-    public String login(){
+    public String login(@RequestParam(name = "error", required = false) Boolean error,
+                        Model model) {
 
-        return "sign_in";
+        System.out.println("---> In the Login Request Mapping, error = " + error);
+
+        if (Boolean.TRUE.equals(error)){
+            model.addAttribute("passwordError", "User not found or bad credentials");
+        }
+
+        return "/sign_in";
     }
 }

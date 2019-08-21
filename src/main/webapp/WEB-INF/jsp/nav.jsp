@@ -1,12 +1,13 @@
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
 <nav class="menu">
     <ul>
         <li><a href="/">Home</a></li>
 
-        <li><a href="/users">Users</a>
-            <ul>
-                <li><a href="/users">All users</a></li>
-            </ul>
-        </li>
+        <sec:authorize access="hasRole('ROLE_ADMIN')">
+            <li><a href="/users">Users</a></li>
+        </sec:authorize>
+
 
         <li><a href="/journey">Journey</a>
             <ul>
@@ -28,8 +29,22 @@
             </ul>
         </li>
         <li><a href="/info">Info</a></li>
-        <li><a href="/accounts">Accounts</a></li>
-        <li><a href="/sign_up">Sign up</a></li>
-        <li><a href="/login">Login</a></li>
+
+        <sec:authorize access="hasRole('ROLE_ADMIN')">
+            <li><a href="/accounts">Accounts</a></li>
+        </sec:authorize>
+
+
+        <li><a href="/sign-up">Sign up</a></li>
+
+        <sec:authorize access="!isAuthenticated()">
+            <li><a href="/login">Login</a></li>
+        </sec:authorize>
+
+        <sec:authorize access="isAuthenticated()">
+            <li><a href="/logout">Logout</a></li>
+        </sec:authorize>
+
+
     </ul>
 </nav>

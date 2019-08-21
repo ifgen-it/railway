@@ -11,6 +11,7 @@ import com.evgen.entity.user.UserEntity;
 import com.evgen.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +27,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private RoleDAO roleDAO;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public List<UserDTO> getAllUsers() {
@@ -58,6 +62,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public int addUser(UserDTO user) {
 
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         ModelMapper modelMapper = new ModelMapper();
         UserEntity userEntity = modelMapper.map(user, UserEntity.class);
 
