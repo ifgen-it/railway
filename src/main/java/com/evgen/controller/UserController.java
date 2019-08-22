@@ -6,6 +6,8 @@ import com.evgen.dto.user.UserDTO;
 import com.evgen.service.UserService;
 import com.evgen.util.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +31,7 @@ public class UserController {
 
 
     @GetMapping("/users")
+//    @Secured("ROLE_ADMIN")
     public String getUsers(Model model) {
 
         model.addAttribute("users", userService.getAllUsers());
@@ -37,6 +40,7 @@ public class UserController {
     }
 
     @PostMapping("/users")
+//    @Secured("ROLE_ADMIN")
     public String removeUsers(@RequestParam(value = "delete-user", required = false) String[] delUsers,
                               Model model) {
 
@@ -142,7 +146,9 @@ public class UserController {
     }
 
 
+
     @GetMapping("/accounts")
+//    @Secured("ROLE_ADMIN")
     public String getAccount(Model model) {
 
         List<UserDTO> users = userService.getAllUsers();

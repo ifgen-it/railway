@@ -28,10 +28,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/sign-up", "/login").anonymous()    // AUTH USER CANNOT GO THERE, ONLY ANON
-                .antMatchers("/users", "/tickets/buy", "/trains",
-                        "/arcs", "/passengers", "/routes/new/arcs",
-                        "/accounts", "/account").authenticated()               // ANY AUTH USER
+                //.antMatchers("/login", "/sign-up").permitAll()
+                .antMatchers("/users").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/accounts").hasRole("ADMIN")
+               // .antMatchers("/sign-up", "/login").anonymous()    // AUTH USER CANNOT GO THERE, ONLY ANON
+               // .antMatchers( "/tickets/buy", "/trains",
+                //        "/arcs", "/passengers", "/routes/new/arcs",
+                 //        "/account").authenticated()               // ANY AUTH USER
+               // .antMatchers("/accounts", "/users").hasRole("ROLE_ADMIN")
                 .and().csrf().disable()
                 .formLogin()
                 .loginPage("/login")
@@ -41,7 +45,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .exceptionHandling()
                 .accessDeniedPage("/")  // WHEN AUTH USER WANT TO LOGIN OR SIGN UP ( WANT ANON-PAGES )
-                .and().logout();
+                .and().logout()
+                .invalidateHttpSession(true);
 
 
     }

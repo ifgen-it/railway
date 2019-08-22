@@ -4,9 +4,9 @@
     <ul>
         <li><a href="/">Home</a></li>
 
-        <sec:authorize access="hasRole('ROLE_ADMIN')">
+<%--        <sec:authorize access="hasRole('ROLE_ADMIN')">--%>
             <li><a href="/users">Users</a></li>
-        </sec:authorize>
+<%--        </sec:authorize>--%>
 
 
         <li><a href="/journey">Journey</a>
@@ -30,21 +30,20 @@
         </li>
         <li><a href="/info">Info</a></li>
 
-        <sec:authorize access="hasRole('ROLE_ADMIN')">
+<%--        <sec:authorize access="hasRole('ROLE_ADMIN')">--%>
             <li><a href="/accounts">Accounts</a></li>
-        </sec:authorize>
+<%--        </sec:authorize>--%>
 
 
         <li><a href="/sign-up">Sign up</a></li>
 
-        <sec:authorize access="!isAuthenticated()">
+<%--        <sec:authorize access="!isAuthenticated()">--%>
             <li><a href="/login">Login</a></li>
-        </sec:authorize>
+<%--        </sec:authorize>--%>
 
-        <sec:authorize access="isAuthenticated()">
+<%--        <sec:authorize access="isAuthenticated()">--%>
             <li><a href="/logout">Logout</a></li>
-        </sec:authorize>
-
+<%--        </sec:authorize>--%>
 
     </ul>
 </nav>
