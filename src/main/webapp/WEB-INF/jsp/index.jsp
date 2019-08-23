@@ -13,12 +13,14 @@
     <c:import url="nav.jsp"/>
 
     <section id="content" class="clearfix">
+
         <section id="page-content">
             <div class="picture">
                 <img height=60%" src="/resources/img/train_pic_1.png" alt="Train picture">
             </div>
         </section>
         <aside>
+            <div class="dark-text">Hello, ${user}!</div>
             <a class="a-normal" href="/routes">Routes</a><br>
             <a class="a-small" href="/stations">Stations</a><br>
             <a class="a-big" href="/users">Users</a><br>

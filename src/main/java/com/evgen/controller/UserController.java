@@ -31,7 +31,6 @@ public class UserController {
 
 
     @GetMapping("/users")
-//    @Secured("ROLE_ADMIN")
     public String getUsers(Model model) {
 
         model.addAttribute("users", userService.getAllUsers());
@@ -40,7 +39,6 @@ public class UserController {
     }
 
     @PostMapping("/users")
-//    @Secured("ROLE_ADMIN")
     public String removeUsers(@RequestParam(value = "delete-user", required = false) String[] delUsers,
                               Model model) {
 
