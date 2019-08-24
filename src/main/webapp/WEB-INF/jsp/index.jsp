@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -21,14 +22,22 @@
         </section>
         <aside>
             <div class="dark-text">Hello, ${user}!</div>
+
             <a class="a-normal" href="/routes">Routes</a><br>
-            <a class="a-small" href="/stations">Stations</a><br>
-            <a class="a-big" href="/users">Users</a><br>
-            <a class="a-normal" href="/sign_up">Sign up</a><br>
             <a class="a-big" href="/timetable">Timetable</a><br>
-            <a class="a-small" href="/arcs">Arcs</a><br>
             <a class="a-normal" href="/journey">Journey</a><br>
-            <a class="a-small" href="/routes/new/arcs">Create route</a><br>
+            <a class="a-small" href="/ticket/details">Ticket</a><br>
+
+            <sec:authorize access="hasRole('ROLE_USER')">
+                <a class="a-big" href="/account">Account</a><br>
+            </sec:authorize>
+
+            <sec:authorize access="hasRole('ROLE_ADMIN')">
+                <a class="a-big" href="/users">Users</a><br>
+                <a class="a-small" href="/stations">Stations</a><br>
+                <a class="a-normal" href="/routes/new/arcs">Create route</a><br>
+                <a class="a-small" href="/arcs">Arcs</a><br>
+            </sec:authorize>
 
         </aside>
     </section>

@@ -190,9 +190,15 @@ public class StationController {
         return "/timetable";
     }
 
+    @GetMapping("/routes/new")
+    public String getNewRoute() {
+
+        return "redirect:/routes/new/arcs";
+    }
+
     @GetMapping("/routes/new/arcs")
-    public String getNewRoute(Model model,
-                              HttpSession session) {
+    public String getNewRouteAddArc(Model model,
+                                    HttpSession session) {
 
         System.out.println("----> Get Mapping New Route");
 
@@ -216,11 +222,11 @@ public class StationController {
     }
 
     @PostMapping("/routes/new/arcs")
-    public String newRoute(@RequestParam(name = "arcId") int arcId,
-                           @RequestParam(name = "departureTime") String strDepartureTime,
-                           @RequestParam(name = "arrivalTime") String strArrivalTime,
-                           Model model,
-                           HttpSession session) {
+    public String newRouteAddArc(@RequestParam(name = "arcId") int arcId,
+                                 @RequestParam(name = "departureTime") String strDepartureTime,
+                                 @RequestParam(name = "arrivalTime") String strArrivalTime,
+                                 Model model,
+                                 HttpSession session) {
 
         System.out.println("----> Post Mapping New Route");
         System.out.println("----> arcId = " + arcId);
@@ -352,7 +358,6 @@ public class StationController {
         return "/new_route";
     }
 
-
     @GetMapping("/routes/new/train")
     public String getAttachTrain(Model model,
                                  HttpSession session) {
@@ -388,9 +393,9 @@ public class StationController {
 
         model.addAttribute("trains", freeTrains);
 
-        if (freeTrains.size() == 0){
+        if (freeTrains.size() == 0) {
             String trainError = "There is no free train for this time period. Create train";
-            model.addAttribute("trainError",trainError );
+            model.addAttribute("trainError", trainError);
         }
 
         return "/attach_train";
@@ -432,7 +437,7 @@ public class StationController {
                 model.addAttribute("routeCreationError", routeCreationError);
             }
 
-            if (routeId > 0){
+            if (routeId > 0) {
                 routeCreated = true;
                 model.addAttribute("routeId", routeId);
             }

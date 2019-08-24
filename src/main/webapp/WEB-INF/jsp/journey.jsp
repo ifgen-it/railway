@@ -98,7 +98,7 @@
                             <td align="center">${route.routeLength}</td>
                             <td align="center">${route.routePrice}</td>
                             <td align="center"><a
-                                    href="/tickets/buy?routeId=${route.routeDTO.routeId}&startStationId=${route.routeBeginStation.stationId}&finishStationId=${route.routeEndStation.stationId}">Buy</a>
+                                    href="/ticket/details?routeId=${route.routeDTO.routeId}&startStationId=${route.routeBeginStation.stationId}&finishStationId=${route.routeEndStation.stationId}">Buy</a>
                             </td>
                         </tr>
                     </c:forEach>

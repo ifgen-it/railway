@@ -2,7 +2,11 @@ package com.evgen.controller;
 
 
 import com.evgen.dto.user.UserDTO;
+import com.evgen.service.SecurityService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,11 +17,14 @@ import java.security.Principal;
 @Controller
 public class MainController {
 
+    @Autowired
+    private SecurityService securityService;
 
 
     @GetMapping("/")
     public String getIndex(Principal principal, Model model){
 
+        /*
         System.out.println("---> principal = " + principal);
         System.out.println("---> model = " + model);
 
@@ -31,7 +38,15 @@ public class MainController {
 
             model.addAttribute("user", user.getFirstName());
         }
+    */
 
+        UserDTO user = securityService.getAuthUser();
+        if (user == null){
+            model.addAttribute("user", "Guest");
+        }
+        else {
+            model.addAttribute("user", user.getFirstName());
+        }
 
         return "/index";
     }

@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 
 <html>
@@ -97,7 +98,7 @@
 
                 <div class="dark-text">Discover another <a href="/journey">journey</a> or see your purchase in
                     your <a
-                            href="/account?id=${userId}">account page</a></div>
+                            href="/account">account page</a></div>
             </c:if>
 
             <%--            PURCHASE FAIL  --%>
@@ -108,86 +109,7 @@
                 </div>
             </c:if>
 
-            <%--            TICKET WAS NOT BOUGHT YET  -- GET CHOOSEN ROUTE FROM SESSION --%>
-            <c:if test="${ticketBought == null}">
-                <div class="dark-text">Ticket details</div>
 
-                <table id="table-buy-ticket" border="2">
-                    <tr>
-
-                        <th>Name</th>
-                        <th>Value</th>
-                    </tr>
-                    <tr>
-                        <td>Route name</td>
-                        <td>${sessionScope.ticketDetails.routeDTO.routeName}</td>
-                    </tr>
-                    <tr>
-                        <td>Train name</td>
-                        <td>${sessionScope.ticketDetails.routeDTO.train.trainName}</td>
-                    </tr>
-                    <tr>
-                        <td>From</td>
-                        <td>${sessionScope.ticketDetails.routeBeginStation.stationName}</td>
-                    </tr>
-                    <tr>
-                        <td>To</td>
-                        <td>${sessionScope.ticketDetails.routeEndStation.stationName}</td>
-                    </tr>
-                    <tr>
-                        <td>Departure</td>
-                        <td>${sessionScope.ticketDetails.routeDepartureTime}</td>
-                    </tr>
-                    <tr>
-                        <td>Arrival</td>
-                        <td>${sessionScope.ticketDetails.routeArrivalTime}</td>
-                    </tr>
-                    <tr>
-                        <td>Price, rub</td>
-                        <td>${sessionScope.ticketDetails.routePrice}</td>
-                    </tr>
-                </table>
-
-                <%--                IF THERE IS NO AVALIABLE SEATS --%>
-                <c:if test="${sessionScope.freeSeatsAmount == 0}">
-                    <div class="text-bad-news">
-                        <br>
-                        There is no available seats for purchase on this route!
-                    </div>
-                </c:if>
-
-                <%--                IF THERE ARE AVALIABLE SEATS --%>
-                <c:if test="${sessionScope.freeSeatsAmount > 0}">
-
-                    <form action="/tickets/buy" method="post">
-
-                        <div class="form-element">
-                            <div class="dark-text-small">Select seat number</div>
-                            <select name="seatNumber" required>
-                                <c:forEach var="seat" items="${sessionScope.freeSeats}">
-                                    <option value="${seat}">${seat}</option>
-                                </c:forEach>
-                            </select>
-                            <label class="error-message">${seatNumberError}</label>
-                        </div>
-
-                        <div class="form-element">
-                            <div class="dark-text-small">Select user</div>
-                            <select name="userId" required>
-                                <c:forEach var="user" items="${sessionScope.allUsers}">
-                                    <option value="${user.userId}">${user.email} ${user.firstName} ${user.lastName} </option>
-                                </c:forEach>
-                            </select>
-                            <label class="error-message">${seatNumberError}</label>
-                        </div>
-
-                        <input type="submit" value="Buy ticket">
-                    </form>
-
-                </c:if>
-
-
-            </c:if>
 
         </c:if>
 

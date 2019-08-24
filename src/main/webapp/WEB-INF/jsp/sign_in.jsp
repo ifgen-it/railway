@@ -28,6 +28,11 @@
                 <label class="error-message">${passwordError}</label>
             </div>
 
+            <%--            <div class="form-element">--%>
+            <%--                <label class="dark-text-small">Remember password:</label>--%>
+            <%--                <input id="remember-me" name="remember-me" type="checkbox" value="true">--%>
+            <%--            </div>--%>
+
             <input type="submit" value="Login">
         </form>
     </div>

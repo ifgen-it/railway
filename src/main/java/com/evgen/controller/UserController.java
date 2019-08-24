@@ -3,6 +3,7 @@ package com.evgen.controller;
 import com.evgen.dto.ticket.TicketDTO;
 import com.evgen.dto.user.RoleDTO;
 import com.evgen.dto.user.UserDTO;
+import com.evgen.service.SecurityService;
 import com.evgen.service.UserService;
 import com.evgen.util.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class UserController {
 
     @Autowired
     private UserValidator userValidator;
+
+    @Autowired
+    private SecurityService securityService;
 
 
     @GetMapping("/users")
@@ -146,51 +150,73 @@ public class UserController {
 
 
     @GetMapping("/accounts")
-//    @Secured("ROLE_ADMIN")
-    public String getAccount(Model model) {
+    public String getAccounts(@RequestParam(name = "id", required = false) String strUserId,
+                              Model model) {
 
-        List<UserDTO> users = userService.getAllUsers();
-        model.addAttribute("users", users);
 
-        return "/accounts";
-    }
-
-    @GetMapping("/account")
-    public String getAccount(@RequestParam(name = "id", required = false) String strUserId,
-                             Model model) {
-
-        System.out.println("--------> In Get mapping Account id, id = " + strUserId);
+        System.out.println("--------> In Get mapping Accounts id, id = " + strUserId);
 
         // NEED TO VALIDATE STR USER ID
         int userId = 0;
 
         if (strUserId == null) {
             System.out.println("strUserId = null");
-            return "redirect:/";
+
+            List<UserDTO> users = userService.getAllUsers();
+            model.addAttribute("users", users);
+            return "/accounts";
+        }
+        else {
+
+            // GIVE SELECTED ACCOUNT TO ADMIN
+            try {
+                userId = Integer.parseInt(strUserId);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                System.out.println("Parse error user id");
+                return "redirect:/accounts";
+            }
+
+            if (userId <= 0) {
+                System.out.println("User id <= 0");
+                return "redirect:/accounts";
+            }
+
+            if (userService.getUser(userId) == null) {
+                System.out.println("No such user");
+                return "redirect:/accounts";
+            }
+
+            // ALL RIGHT - FETCH USER DETAILS
+
+            UserDTO user = userService.getUser(userId);
+            List<TicketDTO> tickets = userService.getTickets(userId);
+
+            model.addAttribute("user", user);
+            model.addAttribute("tickets", tickets);
+
+            //ALSO SOURCE INFO
+            List<UserDTO> users = userService.getAllUsers();
+            model.addAttribute("users", users);
+
+            return "/accounts";
+
+
         }
 
-        try {
-            userId = Integer.parseInt(strUserId);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            System.out.println("Parse error user id");
+
+    }
+
+    @GetMapping("/account")
+    public String getAccount(Model model) {
+
+        System.out.println("--------> In Get mapping Account");
+
+        UserDTO user = securityService.getAuthUser();
+        if (user == null){
             return "redirect:/";
         }
-
-        if (userId <= 0) {
-            System.out.println("User id <= 0");
-            return "redirect:/";
-        }
-
-        if (userService.getUser(userId) == null) {
-            System.out.println("No such user");
-            return "redirect:/";
-        }
-
-        // ALL RIGHT - FETCH USER DETAILS
-
-        UserDTO user = userService.getUser(userId);
-        List<TicketDTO> tickets = userService.getTickets(userId);
+        List<TicketDTO> tickets = userService.getTickets(user.getUserId());
 
         model.addAttribute("user", user);
         model.addAttribute("tickets", tickets);

@@ -28,25 +28,40 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                //.antMatchers("/login", "/sign-up").permitAll()
-                .antMatchers("/users").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/accounts").hasRole("ADMIN")
-               // .antMatchers("/sign-up", "/login").anonymous()    // AUTH USER CANNOT GO THERE, ONLY ANON
-               // .antMatchers( "/tickets/buy", "/trains",
-                //        "/arcs", "/passengers", "/routes/new/arcs",
-                 //        "/account").authenticated()               // ANY AUTH USER
-               // .antMatchers("/accounts", "/users").hasRole("ROLE_ADMIN")
+                .antMatchers("/login", "/sign-up").permitAll()
+
+                .antMatchers("/account", "/ticket/buy")
+                .hasAnyRole("USER", "ADMIN")
+
+                .antMatchers("/users", "/accounts", "/passengers",
+                        "/trains", "/routes/new/**",
+                        "/stations", "/arcs")
+                .hasRole("ADMIN")
+
+                .antMatchers("/sign-up", "/login").anonymous()    // AUTH USER CANNOT GO THERE, ONLY ANON
+
                 .and().csrf().disable()
+
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/login/process")
+
                 .usernameParameter("email")
                 .failureUrl("/login?error=true")    // HERE WILL REDIRECT IF BAD CREDENTIALS OR USER NOT FOUND
+
                 .and()
                 .exceptionHandling()
                 .accessDeniedPage("/")  // WHEN AUTH USER WANT TO LOGIN OR SIGN UP ( WANT ANON-PAGES )
+
                 .and().logout()
-                .invalidateHttpSession(true);
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+
+//                .and()
+//                .rememberMe().key("uniqueKey")
+
+
+                ;
 
 
     }

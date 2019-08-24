@@ -3,6 +3,8 @@ package com.evgen.controller;
 import com.evgen.dao.impl.BusySeatPurchaseException;
 import com.evgen.dto.station.RouteExtDTO;
 import com.evgen.dto.ticket.TicketDTO;
+import com.evgen.dto.user.UserDTO;
+import com.evgen.service.SecurityService;
 import com.evgen.service.StationService;
 import com.evgen.service.TicketService;
 import com.evgen.service.UserService;
@@ -35,9 +37,12 @@ public class TicketController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private SecurityService securityService;
 
-    @GetMapping("/tickets/buy")
-    public String getBuyTicket(@RequestParam(name = "routeId", required = false) String strRouteId,
+
+    @GetMapping("/ticket/details")
+    public String getTicketDetails(@RequestParam(name = "routeId", required = false) String strRouteId,
                                @RequestParam(name = "startStationId", required = false) String strStartStationId,
                                @RequestParam(name = "finishStationId", required = false) String strFinishStationId,
                                Model model, HttpSession session) {
@@ -56,7 +61,7 @@ public class TicketController {
             errorGotNull = true;
             System.out.println("===> Got nulls");
             model.addAttribute("errorGotNull", errorGotNull);
-            return "/buy_ticket";
+            return "/ticket_details";
         }
 
         int routeId = 0;
@@ -79,7 +84,7 @@ public class TicketController {
         if (errorParse == true) {
             System.out.println("===> Error parse");
             model.addAttribute("errorParse", errorParse);
-            return "/buy_ticket";
+            return "/ticket_details";
         }
 
         // ALL RIGHT - CONTINUE TO BUY TICKET
@@ -138,7 +143,7 @@ public class TicketController {
             session.setAttribute("freeSeatsAmount", freeSeats.size());
 
             // GET ALL USERS
-            session.setAttribute("allUsers", userService.getAllUsers());
+            //session.setAttribute("allUsers", userService.getAllUsers());
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -149,17 +154,34 @@ public class TicketController {
         model.addAttribute("errorParse", errorParse);
         model.addAttribute("errorGotNull", errorGotNull);
 
-        return "/buy_ticket";
+        return "/ticket_details";
     }
 
 
-    @PostMapping("/tickets/buy")
-    public String buyTicket(@RequestParam(name = "userId") int userId,
-                            @RequestParam(name = "seatNumber") int seatNumber,
+
+    @GetMapping("/ticket/buy")
+    public String getBuyTicket() {
+
+        return "redirect:/ticket/details";
+    }
+
+    @PostMapping("/ticket/buy")
+    public String buyTicket(@RequestParam(name = "seatNumber") int seatNumber,
                             Model model, HttpSession session) {
 
 
         System.out.println("============== Ticket buy in the POST ==============");
+
+        UserDTO userDTO = securityService.getAuthUser();
+
+        // THIS CASE FOR INSURANCE, REALLY SECURITY WILL REDIRECT GUEST TO THE LOGIN PAGE
+        // AND AFTER LOGIN SECURITY PERMIT TO GO INTO THIS METHOD TO BUY TICKET
+        if (userDTO == null){
+            return "redirect:/login";
+        }
+
+        int userId = userDTO.getUserId();
+
         System.out.println("---- seat number = " + seatNumber);
         System.out.println("---- user id = " + userId);
 
@@ -173,7 +195,7 @@ public class TicketController {
             errorGotNull = true;
             model.addAttribute("errorGotNull", errorGotNull);
 
-            return "/buy_ticket";
+            return "redirect:/ticket/details";
         }
 
         model.addAttribute("errorGotNull", errorGotNull);
@@ -216,7 +238,7 @@ public class TicketController {
             session.removeAttribute("ticketDetails");
             session.removeAttribute("freeSeats");
             session.removeAttribute("freeSeatsAmount");
-            session.removeAttribute("allUsers");
+            //session.removeAttribute("allUsers");
 
             model.addAttribute("ticketBought", true);
         } else {
@@ -226,9 +248,7 @@ public class TicketController {
             model.addAttribute("ticketBuyError", ticketBuyError);
         }
 
-
-
-        return "/buy_ticket";
+        return "/ticket_buy";
     }
 
     @GetMapping("/journey")

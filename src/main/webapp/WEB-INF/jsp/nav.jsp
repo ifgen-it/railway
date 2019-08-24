@@ -2,48 +2,78 @@
 
 <nav class="menu">
     <ul>
+
+        <%--        ANONYMOUS --%>
         <li><a href="/">Home</a></li>
 
-<%--        <sec:authorize access="hasRole('ROLE_ADMIN')">--%>
-            <li><a href="/users">Users</a></li>
-<%--        </sec:authorize>--%>
-
+        <li><a href="/timetable">Timetable</a>
+            <ul>
+                <li><a href="/timetable">Timetable</a></li>
+                <li><a href="/routes">Routes</a></li>
+            </ul>
+        </li>
 
         <li><a href="/journey">Journey</a>
             <ul>
                 <li><a href="/journey">Find route</a></li>
-                <li><a href="/tickets/buy">Buy ticket</a></li>
+                <li><a href="/ticket/details">Ticket</a></li>
             </ul>
         </li>
 
-        <li><a href="/trains">Trains</a>
-            <ul>
-                <li><a href="/stations">Stations</a></li>
-                <li><a href="/trains">Trains</a></li>
-                <li><a href="/routes">Routes</a></li>
-                <li><a href="/timetable">Timetable</a></li>
-                <li><a href="/arcs">Arcs</a></li>
-                <li><a href="/passengers">Passengers</a></li>
-                <li><a href="/routes/new/arcs">Create route</a></li>
-
-            </ul>
-        </li>
         <li><a href="/info">Info</a></li>
 
-<%--        <sec:authorize access="hasRole('ROLE_ADMIN')">--%>
-            <li><a href="/accounts">Accounts</a></li>
-<%--        </sec:authorize>--%>
+        <%--            USER --%>
+        <sec:authorize access="isAuthenticated()">
 
+            <li><a href="/account">Account</a></li>
 
-        <li><a href="/sign-up">Sign up</a></li>
+        </sec:authorize>
 
-<%--        <sec:authorize access="!isAuthenticated()">--%>
+        <%--            ADMIN --%>
+        <sec:authorize access="hasRole('ROLE_ADMIN')">
+
+            <li><a href="/users">Humans</a>
+                <ul>
+                    <li><a href="/users">Users</a></li>
+                    <li><a href="/accounts">Accounts</a></li>
+                    <li><a href="/passengers">Passengers</a></li>
+                </ul>
+            </li>
+
+            <li><a href="/trains">Trains</a>
+                <ul>
+                    <li><a href="/trains">Trains</a></li>
+                    <li><a href="/routes/new/arcs">New route</a></li>
+                </ul>
+            </li>
+
+            <li><a href="/arcs">Rails</a>
+                <ul>
+                    <li><a href="/arcs">Arcs</a></li>
+                    <li><a href="/stations">Stations</a></li>
+                </ul>
+            </li>
+
+        </sec:authorize>
+
+        <%-- AUTHORIZE --%>
+        <sec:authorize access="!isAuthenticated()">
+            <li><a href="/sign-up">Sign up</a></li>
             <li><a href="/login">Login</a></li>
-<%--        </sec:authorize>--%>
+        </sec:authorize>
 
-<%--        <sec:authorize access="isAuthenticated()">--%>
+        <sec:authorize access="isAuthenticated()">
             <li><a href="/logout">Logout</a></li>
-<%--        </sec:authorize>--%>
+        </sec:authorize>
+
+
+        <%--            USER NAME --%>
+        <sec:authorize access="isAuthenticated()">
+            <li><sec:authentication property="principal.firstName"/></li>
+        </sec:authorize>
+        <sec:authorize access="!isAuthenticated()">
+            <li>Guest</li>
+        </sec:authorize>
 
     </ul>
 </nav>
