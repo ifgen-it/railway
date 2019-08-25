@@ -126,12 +126,13 @@
             <version>2.3.5</version>
         </dependency>
 
+        <!-- SECURITY -->
+
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
             <version>5.1.6.RELEASE</version>
         </dependency>
-
 
         <dependency>
             <groupId>org.springframework.security</groupId>
@@ -151,6 +152,28 @@
             <version>5.1.6.RELEASE</version>
         </dependency>
 
+        <!-- TESTING -->
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring-version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.5.1</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.10.19</version>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 
@@ -172,7 +195,6 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.2.3</version>
             </plugin>
-
 
 
         </plugins>

@@ -39,12 +39,12 @@ CREATE TABLE IF NOT EXISTS `railwaydb`.`Arc` (
   CONSTRAINT `fk_Arc_Station`
     FOREIGN KEY (`begin_station`)
     REFERENCES `railwaydb`.`Station` (`station_id`)
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_Arc_Station1`
     FOREIGN KEY (`end_station`)
     REFERENCES `railwaydb`.`Station` (`station_id`)
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `railwaydb`.`Route` (
   CONSTRAINT `fk_Route_Train1`
     FOREIGN KEY (`train_id`)
     REFERENCES `railwaydb`.`Train` (`train_id`)
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
@@ -93,12 +93,12 @@ CREATE TABLE IF NOT EXISTS `railwaydb`.`RoutePath` (
   CONSTRAINT `fk_RoutePath_Route1`
     FOREIGN KEY (`route_id`)
     REFERENCES `railwaydb`.`Route` (`route_id`)
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_RoutePath_Arc1`
     FOREIGN KEY (`arc_id`)
     REFERENCES `railwaydb`.`Arc` (`arc_id`)
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
@@ -108,9 +108,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `railwaydb`.`Role` (
   `role_id` INT NOT NULL AUTO_INCREMENT,
-  `role` VARCHAR(60) NOT NULL,
+  `role_name` VARCHAR(60) NOT NULL,
   PRIMARY KEY (`role_id`),
-  UNIQUE INDEX `role_UNIQUE` (`role` ASC) VISIBLE)
+  UNIQUE INDEX `role_UNIQUE` (`role_name` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
@@ -130,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `railwaydb`.`User` (
   CONSTRAINT `fk_User_Role1`
     FOREIGN KEY (`role_id`)
     REFERENCES `railwaydb`.`Role` (`role_id`)
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
@@ -141,7 +141,6 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `railwaydb`.`Ticket` (
   `ticket_id` INT NOT NULL AUTO_INCREMENT,
   `route_id` INT NOT NULL,
-  `train_id` INT NOT NULL,
   `start_station` INT NOT NULL,
   `finish_station` INT NOT NULL,
   `start_time` DATETIME NOT NULL,
@@ -154,31 +153,25 @@ CREATE TABLE IF NOT EXISTS `railwaydb`.`Ticket` (
   INDEX `fk_Ticket_Station2_idx` (`finish_station` ASC) VISIBLE,
   INDEX `fk_Ticket_User1_idx` (`user_id` ASC) VISIBLE,
   INDEX `fk_Ticket_Route1_idx` (`route_id` ASC) VISIBLE,
-  INDEX `fk_Ticket_Train1_idx` (`train_id` ASC) VISIBLE,
   CONSTRAINT `fk_Ticket_Station1`
     FOREIGN KEY (`start_station`)
     REFERENCES `railwaydb`.`Station` (`station_id`)
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_Ticket_Station2`
     FOREIGN KEY (`finish_station`)
     REFERENCES `railwaydb`.`Station` (`station_id`)
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_Ticket_User1`
     FOREIGN KEY (`user_id`)
     REFERENCES `railwaydb`.`User` (`user_id`)
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_Ticket_Route1`
     FOREIGN KEY (`route_id`)
     REFERENCES `railwaydb`.`Route` (`route_id`)
-    ON DELETE RESTRICT
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_Ticket_Train1`
-    FOREIGN KEY (`train_id`)
-    REFERENCES `railwaydb`.`Train` (`train_id`)
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
