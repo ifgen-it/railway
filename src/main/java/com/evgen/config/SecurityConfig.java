@@ -60,7 +60,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .and()
 //                .rememberMe().key("uniqueKey")
 
-
                 ;
 
 

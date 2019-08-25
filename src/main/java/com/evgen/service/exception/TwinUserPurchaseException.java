@@ -1,4 +1,4 @@
-package com.evgen.service.impl;
+package com.evgen.service.exception;
 
 public class TwinUserPurchaseException extends Exception {
 

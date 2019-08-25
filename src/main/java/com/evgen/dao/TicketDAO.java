@@ -1,6 +1,6 @@
 package com.evgen.dao;
 
-import com.evgen.dao.impl.BusySeatPurchaseException;
+import com.evgen.dao.exception.BusySeatPurchaseException;
 import com.evgen.entity.station.RouteEntity;
 import com.evgen.entity.station.StationEntity;
 import com.evgen.entity.ticket.TicketEntity;

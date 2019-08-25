@@ -7,7 +7,7 @@ import com.evgen.dto.station.StationDTO;
 import com.evgen.dto.train.TrainDTO;
 import com.evgen.service.StationService;
 import com.evgen.service.TrainService;
-import com.evgen.service.impl.UseReservedTrainException;
+import com.evgen.service.exception.UseReservedTrainException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

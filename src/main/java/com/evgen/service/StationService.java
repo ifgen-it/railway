@@ -1,7 +1,7 @@
 package com.evgen.service;
 
 import com.evgen.dto.station.*;
-import com.evgen.service.impl.UseReservedTrainException;
+import com.evgen.service.exception.UseReservedTrainException;
 
 import java.time.LocalDateTime;
 import java.util.Date;

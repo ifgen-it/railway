@@ -2,15 +2,16 @@ package com.evgen.service.impl;
 
 import com.evgen.dao.TicketDAO;
 import com.evgen.dao.UserDAO;
-import com.evgen.dao.impl.BusySeatPurchaseException;
+import com.evgen.dao.exception.BusySeatPurchaseException;
 import com.evgen.dto.station.RouteExtDTO;
 import com.evgen.dto.ticket.TicketDTO;
-import com.evgen.dto.user.UserDTO;
 import com.evgen.entity.station.RouteEntity;
 import com.evgen.entity.station.StationEntity;
 import com.evgen.entity.ticket.TicketEntity;
 import com.evgen.entity.user.UserEntity;
 import com.evgen.service.TicketService;
+import com.evgen.service.exception.TimeLimitPurchaseException;
+import com.evgen.service.exception.TwinUserPurchaseException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

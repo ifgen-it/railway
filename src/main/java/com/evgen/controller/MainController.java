@@ -4,12 +4,15 @@ package com.evgen.controller;
 import com.evgen.dto.user.UserDTO;
 import com.evgen.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.security.Principal;
 
@@ -53,6 +56,11 @@ public class MainController {
 
     @GetMapping("/info")
     public String getInfo(){
+
+//        if (5 > 4){
+//            throw new NoHandlerFoundException("GET", "/info", new HttpHeaders());
+//        }
+
         return "/info";
     }
 

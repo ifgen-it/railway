@@ -1,10 +1,10 @@
 package com.evgen.service;
 
-import com.evgen.dao.impl.BusySeatPurchaseException;
+import com.evgen.dao.exception.BusySeatPurchaseException;
 import com.evgen.dto.station.RouteExtDTO;
 import com.evgen.dto.ticket.TicketDTO;
-import com.evgen.service.impl.TimeLimitPurchaseException;
-import com.evgen.service.impl.TwinUserPurchaseException;
+import com.evgen.service.exception.TimeLimitPurchaseException;
+import com.evgen.service.exception.TwinUserPurchaseException;
 
 import java.time.LocalDateTime;
 import java.util.List;

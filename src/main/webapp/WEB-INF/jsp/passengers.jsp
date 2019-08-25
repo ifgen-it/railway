@@ -68,7 +68,7 @@
                         <td>${ticket.finishTime}</td>
                         <td>${ticket.price}</td>
                         <td>${ticket.ticketId}</td>
-                        <td><a href="/account?id=${ticket.user.userId}">${ticket.user.lastName} ${ticket.user.firstName} ${ticket.user.email}</a></td>
+                        <td><a href="/accounts?id=${ticket.user.userId}">${ticket.user.lastName} ${ticket.user.firstName} ${ticket.user.email}</a></td>
 
                     </tr>
                 </c:forEach>

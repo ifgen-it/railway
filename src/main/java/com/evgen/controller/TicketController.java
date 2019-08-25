@@ -1,6 +1,6 @@
 package com.evgen.controller;
 
-import com.evgen.dao.impl.BusySeatPurchaseException;
+import com.evgen.dao.exception.BusySeatPurchaseException;
 import com.evgen.dto.station.RouteExtDTO;
 import com.evgen.dto.ticket.TicketDTO;
 import com.evgen.dto.user.UserDTO;
@@ -8,8 +8,8 @@ import com.evgen.service.SecurityService;
 import com.evgen.service.StationService;
 import com.evgen.service.TicketService;
 import com.evgen.service.UserService;
-import com.evgen.service.impl.TimeLimitPurchaseException;
-import com.evgen.service.impl.TwinUserPurchaseException;
+import com.evgen.service.exception.TimeLimitPurchaseException;
+import com.evgen.service.exception.TwinUserPurchaseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

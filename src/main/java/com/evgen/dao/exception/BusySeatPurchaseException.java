@@ -1,4 +1,4 @@
-package com.evgen.dao.impl;
+package com.evgen.dao.exception;
 
 public class BusySeatPurchaseException extends Exception {
 

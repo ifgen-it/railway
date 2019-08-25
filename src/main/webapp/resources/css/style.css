@@ -127,6 +127,27 @@ footer{
     color: indigo;
 }
 
+/*======================= ERRORS ============================*/
+.content-error{
+    padding: 30px;
+    background: dodgerblue;
+}
+
+.error-exception{
+
+    color: #585858;
+    background: lightsteelblue;
+    border: 2px solid #585858;
+
+    padding: 14px;
+    font-family: "Consolas";
+    font-size: 16px;
+    margin-top: 14px;
+    margin-bottom: 14px;
+    /*width: 900px;*/
+}
+
+
 /*======================= USERS ============================*/
 #content-table-users{
     padding: 30px;
