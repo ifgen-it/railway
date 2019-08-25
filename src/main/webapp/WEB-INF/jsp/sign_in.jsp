@@ -24,7 +24,7 @@
             </div>
 
             <div class="form-element">
-                <input id="password" name="password" type="text" placeholder="Password" required>
+                <input id="password" name="password" type="password" placeholder="Password" required>
                 <label class="error-message">${passwordError}</label>
             </div>
 

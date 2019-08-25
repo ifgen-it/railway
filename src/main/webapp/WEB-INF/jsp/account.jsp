@@ -1,6 +1,6 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 
 <html>
@@ -21,7 +21,11 @@
         <br>
         <div class="dark-text-small">Email: ${user.email}</div>
         <div class="dark-text-small">Birthday: ${user.birthday}</div>
-        <div class="dark-text-small">Role: ${user.role.roleName}</div>
+
+        <sec:authorize access="hasRole('ROLE_ADMIN')">
+            <div class="dark-text-small">Role: Admin</div>
+        </sec:authorize>
+
         <br>
         <div class="dark-text-small">Tickets:</div>
 

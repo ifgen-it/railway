@@ -14,7 +14,7 @@
     <c:import url="nav.jsp"/>
 
     <div id="content-add-user">
-        <div class="dark-text">Fill inputs to add new user:</div>
+        <div class="dark-text">Fill inputs to register:</div>
         <form action="/sign-up" method="post">
             <div class="form-element">
                 <input id="firstName" name="firstName" type="text" placeholder="First name" required>
@@ -26,13 +26,13 @@
                 <label class="error-message">${lastNameError}</label>
             </div>
 
-            <div class="form-element">
-                <select name="userRoleId">
-                    <c:forEach var="role" items="${roles}">
-                        <option value="${role.roleId}">${role.roleName}</option>
-                    </c:forEach>
-                </select>
-            </div>
+<%--            <div class="form-element">--%>
+<%--                <select name="userRoleId">--%>
+<%--                    <c:forEach var="role" items="${roles}">--%>
+<%--                        <option value="${role.roleId}">${role.roleName}</option>--%>
+<%--                    </c:forEach>--%>
+<%--                </select>--%>
+<%--            </div>--%>
 
             <div class="form-element">
                 <input id="birthday" name="birthday" type="date" placeholder="Birthday" required>
@@ -49,7 +49,7 @@
                 <label class="error-message">${passwordError}</label>
             </div>
 
-            <input type="submit" value="Add user">
+            <input type="submit" value="Sign up">
         </form>
     </div>
 </div>

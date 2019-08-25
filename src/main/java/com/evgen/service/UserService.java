@@ -22,6 +22,10 @@ public interface UserService {
 
     RoleDTO getRole(int roleId);
 
+    RoleDTO getRoleByName(String roleName);
+
     List<TicketDTO> getTickets(int userId);
+
+    void changeRole(int userId, String roleName);
 
 }

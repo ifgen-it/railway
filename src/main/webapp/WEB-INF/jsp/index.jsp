@@ -28,13 +28,13 @@
             <a class="a-normal" href="/journey">Journey</a><br>
             <a class="a-small" href="/ticket/details">Ticket</a><br>
 
-            <sec:authorize access="hasRole('ROLE_USER')">
+            <sec:authorize access="isAuthenticated()">
                 <a class="a-big" href="/account">Account</a><br>
             </sec:authorize>
 
             <sec:authorize access="hasRole('ROLE_ADMIN')">
-                <a class="a-big" href="/users">Users</a><br>
                 <a class="a-small" href="/stations">Stations</a><br>
+                <a class="a-big" href="/users">Users</a><br>
                 <a class="a-normal" href="/routes/new/arcs">Create route</a><br>
                 <a class="a-small" href="/arcs">Arcs</a><br>
             </sec:authorize>

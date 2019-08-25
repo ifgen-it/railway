@@ -43,19 +43,60 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public String removeUsers(@RequestParam(value = "delete-user", required = false) String[] delUsers,
+    public String changeUsers(@RequestParam(value = "delete-user", required = false) String[] delUsers,
+                              @RequestParam(value = "make-admin", required = false) String[] makeAdmin,
+                              @RequestParam(value = "make-user", required = false) String[] makeUser,
                               Model model) {
 
         System.out.println("---> in the Users POST");
         System.out.println("del Users: " + delUsers);
-        if (delUsers == null)
+        System.out.println("make Admins: " + makeAdmin);
+        System.out.println("make Users: " + makeUser);
+
+        if ((delUsers == null) && (makeAdmin == null) && (makeUser == null)) {
             return "redirect:/users";
+        }
 
-        for (int i = 0; i < delUsers.length; i++) {
-            int userDelId = Integer.parseInt(delUsers[i]);
-            System.out.println("wanna delete user with id: " + userDelId);
+        boolean deleteMyself = false;
+        int mySelfUserId = securityService.getAuthUser().getUserId();
 
-            userService.removeWith(userDelId);
+        // MAKE ADMINS
+        if (makeAdmin != null) {
+            for (int i = 0; i < makeAdmin.length; i++) {
+                int makeAdminUserId = Integer.parseInt(makeAdmin[i]);
+                System.out.println("wanna make ADMIN user with id: " + makeAdminUserId);
+
+                userService.changeRole(makeAdminUserId, "ROLE_ADMIN");
+            }
+        }
+
+        // MAKE USERS
+        if (makeUser != null) {
+            for (int i = 0; i < makeUser.length; i++) {
+                int makeUserUserId = Integer.parseInt(makeUser[i]);
+                System.out.println("wanna make USER user with id: " + makeUserUserId);
+
+                if (makeUserUserId == mySelfUserId) {
+                    continue;
+                }
+                userService.changeRole(makeUserUserId, "ROLE_USER");
+            }
+        }
+
+        // DELETE USERS
+        if (delUsers != null) {
+            for (int i = 0; i < delUsers.length; i++) {
+                int userDelId = Integer.parseInt(delUsers[i]);
+                System.out.println("wanna delete user with id: " + userDelId);
+
+                if (userDelId == mySelfUserId) {
+                    deleteMyself = true;
+                }
+                userService.removeWith(userDelId);
+            }
+        }
+        if (deleteMyself == true) {
+            return "redirect:/logout";
         }
 
         return "redirect:/users";
@@ -64,7 +105,7 @@ public class UserController {
     @GetMapping("/sign-up")
     public String getSignUp(Model model) {
 
-        model.addAttribute("roles", userService.getAllRoles());
+//        model.addAttribute("roles", userService.getAllRoles());
         return "/sign_up";
     }
 
@@ -74,7 +115,7 @@ public class UserController {
                          @RequestParam("birthday") String strBirthday,
                          @RequestParam("email") String email,
                          @RequestParam("password") String password,
-                         @RequestParam("userRoleId") String userRoleId,
+                         //@RequestParam("userRoleId") String userRoleId,
                          Model model) {
 
         System.out.println("---> in the SignUp");
@@ -82,7 +123,8 @@ public class UserController {
         UserDTO user = new UserDTO();
 
 
-        RoleDTO roleDTO = userService.getRole(Integer.parseInt(userRoleId));
+        //RoleDTO roleDTO = userService.getRole(Integer.parseInt(userRoleId));
+        RoleDTO roleDTO = userService.getRoleByName("ROLE_USER");
         user.setRole(roleDTO);
 
         String firstNameError = "";
@@ -148,7 +190,6 @@ public class UserController {
     }
 
 
-
     @GetMapping("/accounts")
     public String getAccounts(@RequestParam(name = "id", required = false) String strUserId,
                               Model model) {
@@ -165,8 +206,7 @@ public class UserController {
             List<UserDTO> users = userService.getAllUsers();
             model.addAttribute("users", users);
             return "/accounts";
-        }
-        else {
+        } else {
 
             // GIVE SELECTED ACCOUNT TO ADMIN
             try {
@@ -213,7 +253,9 @@ public class UserController {
         System.out.println("--------> In Get mapping Account");
 
         UserDTO user = securityService.getAuthUser();
-        if (user == null){
+        System.out.println("---> user: " + user);
+
+        if (user == null) {
             return "redirect:/";
         }
         List<TicketDTO> tickets = userService.getTickets(user.getUserId());
@@ -230,7 +272,7 @@ public class UserController {
 
         System.out.println("---> In the Login Request Mapping, error = " + error);
 
-        if (Boolean.TRUE.equals(error)){
+        if (Boolean.TRUE.equals(error)) {
             model.addAttribute("passwordError", "User not found or bad credentials");
         }
 

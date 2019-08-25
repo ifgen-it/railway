@@ -17,11 +17,11 @@ public class SecurityServiceImpl implements SecurityService {
     public UserDTO getAuthUser() {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        //System.out.println("===> authentication = " + authentication);
+        System.out.println("===> authentication = " + authentication);
         if (authentication instanceof AnonymousAuthenticationToken) {
             return null;
         } else {
-            //System.out.println("---> getIndex: authentication: " + authentication.getPrincipal());
+            System.out.println("---> authentication.getPrincipal: " + authentication.getPrincipal());
             UserDTO user = (UserDTO) authentication.getPrincipal();
             return user;
         }

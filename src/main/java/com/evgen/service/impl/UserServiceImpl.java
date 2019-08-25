@@ -109,6 +109,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public RoleDTO getRoleByName(String roleName) {
+
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(roleDAO.getRoleByName(roleName), RoleDTO.class);
+    }
+
+    @Override
     public List<TicketDTO> getTickets(int userId) {
 
         List<TicketEntity>  ticketEntities = userDAO.get(userId).getTickets();
@@ -118,5 +125,14 @@ public class UserServiceImpl implements UserService {
         ticketEntities.forEach(item -> dtos.add(modelMapper.map(item, TicketDTO.class)));
 
         return dtos;
+    }
+
+    @Override
+    public void changeRole(int userId, String roleName) {
+        UserEntity userEntity = userDAO.get(userId);
+        RoleEntity roleEntity = roleDAO.getRoleByName(roleName);
+
+        userEntity.setRole(roleEntity);
+        userDAO.update(userEntity);
     }
 }

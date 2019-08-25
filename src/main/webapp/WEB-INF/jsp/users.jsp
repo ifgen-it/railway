@@ -33,20 +33,40 @@
                     <th>Birthday</th>
                     <th>Email</th>
                     <th>Password</th>
-                    <th>Delete user</th>
+
+                    <th>Admin</th>
+                    <th>User</th>
+                    <th>Delete</th>
 
                 </tr>
 
                 <c:forEach var="user" items="${users}">
                     <tr>
                         <td>${user.userId}</td>
-                        <td>${user.role.roleName}</td>
+
+                        <c:if test="${user.role.roleName == 'ROLE_ADMIN'}">
+                            <td>Admin</td>
+                        </c:if>
+
+                        <c:if test="${user.role.roleName == 'ROLE_USER'}">
+                            <td>User</td>
+                        </c:if>
+
                         <td>${user.firstName}</td>
                         <td>${user.lastName}</td>
                         <td>${user.birthday}</td>
-<%--                        <td><fmt:formatDate value="${user.birthday}" pattern="yyyy-MM-dd"/></td>--%>
+                            <%--                        <td><fmt:formatDate value="${user.birthday}" pattern="yyyy-MM-dd"/></td>--%>
                         <td>${user.email}</td>
                         <td>${user.password}</td>
+
+                        <td align="center">
+                            <input type="checkbox" name="make-admin" value=${user.userId}>
+                        </td>
+
+                        <td align="center">
+                            <input type="checkbox" name="make-user" value=${user.userId}>
+                        </td>
+
                         <td align="center">
                             <input type="checkbox" name="delete-user" value=${user.userId}>
                         </td>
@@ -72,12 +92,12 @@
                 <%--                }--%>
                 <%--            %>--%>
             </table>
-            <input type="submit" value="Delete users">
+            <input type="submit" value="Apply">
         </form>
     </div>
 </div>
 
-<c:import url="footer.jsp"/>
+<%--<c:import url="footer.jsp"/>--%>
 
 </body>
 </html>
