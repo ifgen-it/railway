@@ -26,8 +26,91 @@
             <tr>
                 <td><a href="/api/stations">/api/stations</a></td>
 
-                <td align="left">
-                    Get all station names
+                <td>
+                    <div class="dark-text-small">Get the list of STATIONS:</div>
+
+                    <table id="table-class-stations">
+                        <tr>
+                            <td><i>int</i></td><td>stationId</td>
+                        </tr>
+                        <tr>
+                            <td><i>String</i></td><td>stationName</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <a href="/api/arrivals/Санкт-Петербург">/api/arrivals/stationName</a>
+                    <br><br>
+                    stationName = Санкт-Петербург
+                </td>
+
+                <td>
+                    <div class="dark-text-small">Get the list of STATION ARRIVALS</div>
+
+                    <table id="table-class-arrivals">
+                        <tr>
+                            <td><i>int</i></td><td>routePathId</td>
+                        </tr>
+                        <tr>
+                            <td><i>LocalDateTime</i></td><td>departureTime</td>
+                        </tr>
+                        <tr>
+                            <td><i>LocalDateTime</i></td><td>arrivalTime</td>
+                        </tr>
+                        <tr>
+                            <td><i>int</i></td><td>routeId</td>
+                        </tr>
+                        <tr>
+                            <td><i>String</i></td><td>routeName</td>
+                        </tr>
+                        <tr>
+                            <td><i>int</i></td><td>trainId</td>
+                        </tr>
+                        <tr>
+                            <td><i>String</i></td><td>trainName</td>
+                        </tr>
+                    </table>
+
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <a href="/api/departures/Санкт-Петербург">/api/departures/stationName</a>
+                    <br><br>
+                    stationName = Санкт-Петербург
+                </td>
+
+                <td>
+                    <div class="dark-text-small">Get the list of STATION DEPARTURES</div>
+
+                    <table id="table-class-departures">
+                        <tr>
+                            <td><i>int</i></td><td>routePathId</td>
+                        </tr>
+                        <tr>
+                            <td><i>LocalDateTime</i></td><td>departureTime</td>
+                        </tr>
+                        <tr>
+                            <td><i>LocalDateTime</i></td><td>arrivalTime</td>
+                        </tr>
+                        <tr>
+                            <td><i>int</i></td><td>routeId</td>
+                        </tr>
+                        <tr>
+                            <td><i>String</i></td><td>routeName</td>
+                        </tr>
+                        <tr>
+                            <td><i>int</i></td><td>trainId</td>
+                        </tr>
+                        <tr>
+                            <td><i>String</i></td><td>trainName</td>
+                        </tr>
+                    </table>
+
                 </td>
             </tr>
 

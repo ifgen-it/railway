@@ -317,6 +317,43 @@ footer{
     font-size: 13pt;
     padding: 4px;
 }
+#table-api td{
+    padding: 7px;
+}
+
+/*==========  API-CLASS-stations ===============*/
+
+#table-class-stations{
+    background: #add8e6;
+}
+
+#table-class-stations td{
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 12px;
+}
+/*==========  API-CLASS-arrivals ===============*/
+
+#table-class-arrivals{
+    background: #add8e6;
+}
+
+#table-class-arrivals td{
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 12px;
+}
+/*==========  API-CLASS-departures ===============*/
+
+#table-class-departures{
+    background: #add8e6;
+}
+
+#table-class-departures td{
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 12px;
+}
 
 /*==========  ACCOUNT ===============*/
 #content-account{
