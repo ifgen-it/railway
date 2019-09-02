@@ -21,6 +21,7 @@
         </li>
 
         <li><a href="/info">Info</a></li>
+        <li><a href="/api">API</a></li>
 
         <%--            USER --%>
         <sec:authorize access="isAuthenticated()">
@@ -52,6 +53,9 @@
                     <li><a href="/arcs">Arcs</a></li>
                     <li><a href="/stations">Stations</a></li>
                 </ul>
+            </li>
+
+            <li><a href="/send-message">Message</a>
             </li>
 
         </sec:authorize>

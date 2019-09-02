@@ -12,6 +12,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -81,6 +82,20 @@ public class RoutePathDAOImpl implements RoutePathDAO {
 
     @Override
     public List<RoutePathEntity> getDepartures(int stationId) {
+
+//        System.out.println("---> In getDepartures");
+//        LocalDateTime dateTimeNow = LocalDateTime.now();
+//        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//        String dateToday = dateTimeNow.format(fmt);
+//        System.out.println("Today = " + dateToday);
+//
+//        dateToday += "%";
+
+//        String queryString = "select r from RoutePathEntity r join r.arc a " +
+//                "where a.beginStation.stationId = :stationId " +
+//                "and r.departureTime like :dateToday " +
+//                "order by r.departureTime asc ";
+
         String queryString = "select r from RoutePathEntity r join r.arc a " +
                 "where a.beginStation.stationId = :stationId order by r.departureTime asc";
 

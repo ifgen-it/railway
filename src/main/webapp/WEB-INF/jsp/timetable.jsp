@@ -24,6 +24,12 @@
                     </c:forEach>
                 </select>
             </div>
+
+            <div class="form-element">
+                <label class="dark-text-small">Only today</label>
+                <input id="timetable-today" name="timetable-today" type="checkbox">
+            </div>
+
             <input type="submit" value="Show timetable">
         </form>
 

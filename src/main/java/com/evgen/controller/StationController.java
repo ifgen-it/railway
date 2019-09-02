@@ -177,11 +177,15 @@ public class StationController {
 
     @PostMapping("/timetable")
     public String timetable(@RequestParam(name = "stationId") int stationId,
+                            @RequestParam(name = "timetable-today", required = false) boolean timetableToday,
                             Model model) {
 
         model.addAttribute("stations", stationService.getAllStations());
 
         System.out.println("----> Post Mapping timetable");
+        System.out.println("stationId = " + stationId);
+        System.out.println("timetableToday = " + timetableToday);
+
         model.addAttribute("arrivals", stationService.getArrivals(stationId));
         model.addAttribute("departures", stationService.getDepartures(stationId));
 

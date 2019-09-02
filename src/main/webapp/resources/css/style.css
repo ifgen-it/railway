@@ -303,6 +303,21 @@ footer{
     color: #585858;
 }
 
+/*==========  API ===============*/
+#content-api{
+    padding: 30px;
+    background: dodgerblue;
+}
+#table-api{
+    background: #add8e6;
+    margin-top: 10px;
+}
+#table-api th{
+    color: indigo;
+    font-size: 13pt;
+    padding: 4px;
+}
+
 /*==========  ACCOUNT ===============*/
 #content-account{
     padding: 30px;
