@@ -45,33 +45,37 @@ public class APIController {
 
         List<StationSimpleDTO> stationsSimple = new ArrayList<>();
         List<StationDTO> stations = stationService.getAllStations();
-
         for (StationDTO station : stations) {
 
             StationSimpleDTO stationSimple = stationConverter.convertStationToSimple(station);
             stationsSimple.add(stationSimple);
         }
-
         System.out.println("---> API - stations simple: " + stationsSimple);
-
         return stationsSimple;
     }
 
-    @GetMapping("/api/arrivals/{stationName}")
+    @GetMapping("/api/arrivals/{stationId}")
     @ResponseBody
     public List<RoutePathSimpleDTO> getArrivals(
-            @PathVariable(name = "stationName") String stationName) {
+            @PathVariable(name = "stationId") String strStationId) {
 
-        System.out.println("---> In the API - get Arrivals, station name = " + stationName);
-        StationDTO station = stationService.getByName(stationName);
-        if (station == null){
+        System.out.println("---> In the API - get Arrivals, station id = " + strStationId);
+
+        int stationId = 0;
+        try {
+            stationId = Integer.parseInt(strStationId);
+        } catch (NumberFormatException e) {
+            return null;
+        }
+        StationDTO station = stationService.getStation(stationId);
+        if (station == null) {
             return null;
         }
 
         List<RoutePathDTO> routePaths = stationService.getArrivals(station.getStationId());
         List<RoutePathSimpleDTO> routePathsSimple = new ArrayList<>();
 
-        for (RoutePathDTO routePath : routePaths){
+        for (RoutePathDTO routePath : routePaths) {
 
             RoutePathSimpleDTO routePathSimple = stationConverter.convertRoutePathToSimple(routePath);
             routePathsSimple.add(routePathSimple);
@@ -80,30 +84,34 @@ public class APIController {
         return routePathsSimple;
     }
 
-    @GetMapping("/api/departures/{stationName}")
+    @GetMapping("/api/departures/{stationId}")
     @ResponseBody
     public List<RoutePathSimpleDTO> getDepartures(
-            @PathVariable(name = "stationName") String stationName) {
+            @PathVariable(name = "stationId") String strStationId) {
 
-        System.out.println("---> In the API - get Departures, station name = " + stationName);
-        StationDTO station = stationService.getByName(stationName);
-        if (station == null){
+        System.out.println("---> In the API - get Departures, station id = " + strStationId);
+
+        int stationId = 0;
+        try {
+            stationId = Integer.parseInt(strStationId);
+        } catch (NumberFormatException e) {
+            return null;
+        }
+        StationDTO station = stationService.getStation(stationId);
+        if (station == null) {
             return null;
         }
 
         List<RoutePathDTO> routePaths = stationService.getDepartures(station.getStationId());
         List<RoutePathSimpleDTO> routePathsSimple = new ArrayList<>();
 
-        for (RoutePathDTO routePath : routePaths){
+        for (RoutePathDTO routePath : routePaths) {
 
             RoutePathSimpleDTO routePathSimple = stationConverter.convertRoutePathToSimple(routePath);
             routePathsSimple.add(routePathSimple);
         }
 
         return routePathsSimple;
-
-
-
 
 
     }

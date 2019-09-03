@@ -42,9 +42,9 @@
 
             <tr>
                 <td>
-                    <a href="/api/arrivals/Санкт-Петербург">/api/arrivals/stationName</a>
+                    <a href="/api/arrivals/1">/api/arrivals/stationId</a>
                     <br><br>
-                    stationName = Санкт-Петербург
+                    stationId = 1 (Санкт-Петербург)
                 </td>
 
                 <td>
@@ -79,9 +79,9 @@
 
             <tr>
                 <td>
-                    <a href="/api/departures/Санкт-Петербург">/api/departures/stationName</a>
+                    <a href="/api/departures/1">/api/departures/stationId</a>
                     <br><br>
-                    stationName = Санкт-Петербург
+                    stationId = 1 (Санкт-Петербург)
                 </td>
 
                 <td>
