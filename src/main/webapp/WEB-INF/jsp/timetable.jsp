@@ -34,7 +34,7 @@
         </form>
 
         <c:if test="${stationName != null}">
-            <div class="dark-text">Timetable : ${stationName}</div>
+            <div class="dark-text">Timetable :: ${stationName}</div>
             <table id="table-timetable-arr-dep">
 
                 <tr>

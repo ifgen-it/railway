@@ -22,7 +22,6 @@ public class MessageController {
 
     @GetMapping("/send-message")
     public String getSendMessage(Model model) {
-
         System.out.println("----> Get Mapping send-message");
         model.addAttribute("stations", stationService.getAllStations());
 
@@ -32,12 +31,10 @@ public class MessageController {
     @PostMapping("/send-message")
     public String sendMessage(@RequestParam(name = "stationId") int stationId,
                             Model model) throws JMSException {
-
         System.out.println("----> Post Mapping send Message");
         model.addAttribute("stations", stationService.getAllStations());
         String stationName = stationService.getStation(stationId).getStationName();
         model.addAttribute("stationName", stationName);
-
         messageService.sendMessage(stationName);
 
         return "/send_message";

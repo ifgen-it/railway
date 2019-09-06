@@ -75,7 +75,11 @@ public class StationServiceImpl implements StationService {
     public StationDTO getStation(int stationId) {
 
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(stationDAO.get(stationId), StationDTO.class);
+        StationEntity stationEntity = stationDAO.get(stationId);
+        if (stationEntity == null){
+            return null;
+        }
+        return modelMapper.map(stationEntity, StationDTO.class);
     }
 
     @Override
