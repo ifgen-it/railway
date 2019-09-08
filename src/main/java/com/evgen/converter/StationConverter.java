@@ -7,7 +7,7 @@ import com.evgen.dto.station.StationSimpleDTO;
 
 public interface StationConverter {
 
-    RoutePathSimpleDTO convertRoutePathToSimple(RoutePathDTO routePath);
+    RoutePathSimpleDTO convertRoutePathToSimple(RoutePathDTO routePath, boolean isArrival);
 
     StationSimpleDTO convertStationToSimple(StationDTO station);
 }

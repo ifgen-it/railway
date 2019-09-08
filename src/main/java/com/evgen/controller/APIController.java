@@ -77,7 +77,7 @@ public class APIController {
 
         for (RoutePathDTO routePath : routePaths) {
 
-            RoutePathSimpleDTO routePathSimple = stationConverter.convertRoutePathToSimple(routePath);
+            RoutePathSimpleDTO routePathSimple = stationConverter.convertRoutePathToSimple(routePath, true);
             routePathsSimple.add(routePathSimple);
         }
 
@@ -107,7 +107,7 @@ public class APIController {
 
         for (RoutePathDTO routePath : routePaths) {
 
-            RoutePathSimpleDTO routePathSimple = stationConverter.convertRoutePathToSimple(routePath);
+            RoutePathSimpleDTO routePathSimple = stationConverter.convertRoutePathToSimple(routePath, false);
             routePathsSimple.add(routePathSimple);
         }
 

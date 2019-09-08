@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class StationConverterImpl implements StationConverter {
 
-    public RoutePathSimpleDTO convertRoutePathToSimple(RoutePathDTO routePath){
+    public RoutePathSimpleDTO convertRoutePathToSimple(RoutePathDTO routePath, boolean isArrival){
 
         RoutePathSimpleDTO routePathSimple = new RoutePathSimpleDTO();
 
@@ -21,6 +21,7 @@ public class StationConverterImpl implements StationConverter {
         routePathSimple.setRouteName(routePath.getRoute().getRouteName());
         routePathSimple.setTrainId(routePath.getRoute().getTrain().getTrainId());
         routePathSimple.setTrainName(routePath.getRoute().getTrain().getTrainName());
+        routePathSimple.setIsArrival(isArrival);
 
         return routePathSimple;
     }
