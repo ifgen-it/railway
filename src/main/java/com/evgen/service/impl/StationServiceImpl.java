@@ -13,6 +13,8 @@ import com.evgen.service.StationService;
 import com.evgen.service.TrainService;
 import com.evgen.service.exception.UseReservedTrainException;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +27,8 @@ import java.util.List;
 @Service
 @Transactional
 public class StationServiceImpl implements StationService {
+
+    private static final Logger logger = LoggerFactory.getLogger(StationServiceImpl.class);
 
     @Autowired
     private StationDAO stationDAO;
@@ -236,6 +240,12 @@ public class StationServiceImpl implements StationService {
             dtosExt.add(routeExtDTO);
 
         });
+
+        System.out.println("Get all routes ext. - console message");
+        logger.info("Get all routes ext. - info message");
+        logger.debug("Get all routes ext. - debug message");
+        int logNumber = 6;
+        logger.error("Log number {} not in use", logNumber);
 
         return dtosExt;
     }
