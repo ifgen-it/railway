@@ -13,8 +13,7 @@ import com.evgen.service.StationService;
 import com.evgen.service.TrainService;
 import com.evgen.service.exception.UseReservedTrainException;
 import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +27,7 @@ import java.util.List;
 @Transactional
 public class StationServiceImpl implements StationService {
 
-    private static final Logger logger = LoggerFactory.getLogger(StationServiceImpl.class);
+    private static final Logger logger = Logger.getLogger(StationServiceImpl.class);
 
     @Autowired
     private StationDAO stationDAO;
@@ -217,8 +216,6 @@ public class StationServiceImpl implements StationService {
         List<RouteExtDTO> dtosExt = new ArrayList<>();
         ModelMapper modelMapper = new ModelMapper();
 
-        System.out.println("===== > routeDAO.getAll size = " + routeDAO.getAll().size());
-
         routeDAO.getAll().forEach(item -> {
 
             RouteDTO routeDTO = modelMapper.map(item, RouteDTO.class);
@@ -241,11 +238,7 @@ public class StationServiceImpl implements StationService {
 
         });
 
-        System.out.println("Get all routes ext. - console message");
-        logger.info("Get all routes ext. - info message");
-        logger.debug("Get all routes ext. - debug message");
-        int logNumber = 6;
-        logger.error("Log number {} not in use", logNumber);
+        logger.info("Get all routes extended");
 
         return dtosExt;
     }
@@ -332,12 +325,11 @@ public class StationServiceImpl implements StationService {
         List<Integer> freeTrainsId = trainService.getFreeTrains(departureTime, arrivalTime);
         int trainId = routeDTO.getTrain().getTrainId();
 
-        System.out.println("---> in Create Route ---->");
-        System.out.println("train id = " + trainId);
-        System.out.println("free trains : " + freeTrainsId);
+
 
         if (freeTrainsId.contains(Integer.valueOf(trainId)) == false){
 
+            logger.warn("UseReservedTrainException: Train : " + trainId + "_" + routeDTO.getTrain().getTrainName() +" was used in another route recently");
             throw new UseReservedTrainException("Train : " + trainId + "_" + routeDTO.getTrain().getTrainName() +
                     " was used in another route recently");
         }
@@ -348,7 +340,6 @@ public class StationServiceImpl implements StationService {
         int routeId = routeDAO.add(routeEntity);
         RouteEntity realRouteEntity = routeDAO.get(routeId);
         RouteDTO realRouteDTO = modelMapper.map(realRouteEntity, RouteDTO.class);
-        System.out.println("----> in Create Route, real route dto: " + realRouteDTO);
 
         routePathDTOS.forEach(item -> item.setRoute(realRouteDTO));
 
@@ -357,6 +348,7 @@ public class StationServiceImpl implements StationService {
 
         routePathEntities.forEach(item -> routePathDAO.add(item));
 
+        logger.info("Route created, routeId = " + routeId);
         return routeId;
     }
 }

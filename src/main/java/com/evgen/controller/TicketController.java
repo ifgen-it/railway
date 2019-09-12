@@ -7,9 +7,9 @@ import com.evgen.dto.user.UserDTO;
 import com.evgen.service.SecurityService;
 import com.evgen.service.StationService;
 import com.evgen.service.TicketService;
-import com.evgen.service.UserService;
 import com.evgen.service.exception.TimeLimitPurchaseException;
 import com.evgen.service.exception.TwinUserPurchaseException;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,14 +28,13 @@ import java.util.List;
 @Controller
 public class TicketController {
 
+    private static final Logger logger = Logger.getLogger(TicketController.class);
+
     @Autowired
     private StationService stationService;
 
     @Autowired
     private TicketService ticketService;
-
-    @Autowired
-    private UserService userService;
 
     @Autowired
     private SecurityService securityService;
@@ -52,14 +51,14 @@ public class TicketController {
         boolean errorParse = false;
         boolean errorGotNull = false;
 
-        System.out.println("===== in the BUY TICKET GET =======");
-        System.out.println("----- RouteId = " + strRouteId);
-        System.out.println("----- startStationId = " + strStartStationId);
-        System.out.println("----- finishStationId = " + strFinishStationId);
+        logger.info("BUY TICKET");
+        logger.info("RouteId = " + strRouteId);
+        logger.info("startStationId = " + strStartStationId);
+        logger.info("finishStationId = " + strFinishStationId);
 
         if (strRouteId == null || strStartStationId == null || strFinishStationId == null) {
             errorGotNull = true;
-            System.out.println("===> Got nulls");
+            logger.warn("Got nulls");
             model.addAttribute("errorGotNull", errorGotNull);
             return "/ticket_details";
         }
@@ -73,7 +72,7 @@ public class TicketController {
             startStationId = Integer.parseInt(strStartStationId);
             finishStationId = Integer.parseInt(strFinishStationId);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.warn(e.getMessage());
             errorParse = true;
         }
 
@@ -82,7 +81,7 @@ public class TicketController {
         }
 
         if (errorParse == true) {
-            System.out.println("===> Error parse");
+            logger.warn("Error parse");
             model.addAttribute("errorParse", errorParse);
             return "/ticket_details";
         }
@@ -113,14 +112,13 @@ public class TicketController {
 
 
             // GET BUSY SEATS IN TRAIN
-            System.out.println("=====> want to get Busy seats =====");
             List<Integer> busySeats = ticketService.getBusySeats(
                     userRoute.getRouteDTO().getRouteId(),
                     userRoute.getRouteDepartureTime(),
                     userRoute.getRouteArrivalTime());
 
             int seatsAmount = userRoute.getRouteDTO().getTrain().getSeatsAmount();
-            System.out.println("======> Busy seats in RouteId " + routeId + " : " + busySeats +
+            logger.info("Busy seats in RouteId " + routeId + " : " + busySeats +
                     " of " + seatsAmount);
 
             // GET FREE SEATS IN TRAIN
@@ -146,7 +144,7 @@ public class TicketController {
             //session.setAttribute("allUsers", userService.getAllUsers());
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.warn(e.getMessage());
             errorParse = true;
             session.removeAttribute("ticketDetails");
         }
@@ -170,8 +168,6 @@ public class TicketController {
                             Model model, HttpSession session) {
 
 
-        System.out.println("============== Ticket buy in the POST ==============");
-
         UserDTO userDTO = securityService.getAuthUser();
 
         // THIS CASE FOR INSURANCE, REALLY SECURITY WILL REDIRECT GUEST TO THE LOGIN PAGE
@@ -182,8 +178,8 @@ public class TicketController {
 
         int userId = userDTO.getUserId();
 
-        System.out.println("---- seat number = " + seatNumber);
-        System.out.println("---- user id = " + userId);
+        logger.info("seat number = " + seatNumber);
+        logger.info("user id = " + userId);
 
         // CHECKING ERRORS
         boolean errorParse = false;
@@ -213,16 +209,19 @@ public class TicketController {
             ticketId = ticketService.buyTicket(userRoute, seatNumber, userId);
 
         } catch (TimeLimitPurchaseException e) {
+            logger.warn("TimeLimitPurchaseException caught");
             e.printStackTrace();
             buyError = true;
             ticketBuyError = e.getMessage();
 
         } catch (TwinUserPurchaseException e) {
+            logger.warn("TwinUserPurchaseException caught");
             e.printStackTrace();
             buyError = true;
             ticketBuyError = e.getMessage();
 
         } catch (BusySeatPurchaseException e) {
+            logger.warn("BusySeatPurchaseException caught");
             e.printStackTrace();
             buyError = true;
             ticketBuyError = e.getMessage();
@@ -232,7 +231,7 @@ public class TicketController {
 
             model.addAttribute("ticket", ticketService.get(ticketId));
             model.addAttribute("userId", userId);
-            System.out.println("-----> userId = " + userId);
+            logger.info("userId = " + userId);
 
             // HERE TICKET MUST BE BOUGHT SO TICKET DETAILS CAN BE REMOVED FROM SESSION
             session.removeAttribute("ticketDetails");
@@ -273,11 +272,11 @@ public class TicketController {
         String dateToError = "";
         boolean error = false;
 
-        System.out.println("===== in the Journey Post =======");
-        System.out.println("----- begin station id = " + beginStationId);
-        System.out.println("----- end station id = " + endStationId);
-        System.out.println("----- end date from = " + strDateFrom);
-        System.out.println("----- end date to = " + strDateTo);
+        logger.info("Journey");
+        logger.info("begin station id = " + beginStationId);
+        logger.info("end station id = " + endStationId);
+        logger.info("end date from = " + strDateFrom);
+        logger.info("end date to = " + strDateTo);
 
         // CHECK DATES
         Date dateFrom = null;
@@ -285,14 +284,14 @@ public class TicketController {
         try {
             dateFrom = new SimpleDateFormat("yyyy-MM-dd").parse(strDateFrom);
         } catch (ParseException e) {
-            System.out.println("---> dateFrom error");
+            logger.warn("dateFrom error");
             error = true;
             dateFromError = "Date From is required";
         }
         try {
             dateTo = new SimpleDateFormat("yyyy-MM-dd").parse(strDateTo);
         } catch (ParseException e) {
-            System.out.println("---> dateTo error");
+            logger.warn("dateTo error");
             error = true;
             dateToError = "Date To is required";
         }
@@ -335,8 +334,7 @@ public class TicketController {
 
         List<Integer> routesId = stationService.getCommonRoutes(beginStationId, endStationId, dateFrom, dateTo);
 
-        System.out.println("======== in the Post journey ===========");
-        System.out.println("-----> Common routes = " + routesId);
+        logger.info("Common routes = " + routesId);
 
         // LIST OF ROUTES WITH START-END STATIONS : USERS START-END STATIONS
         List<RouteExtDTO> userRoutes = new ArrayList<>();
@@ -360,7 +358,7 @@ public class TicketController {
             userRoute.setRoutePrice(RouteExtDTO.makePrice(userRoute.getRouteLength()));
 
 
-            System.out.println("---------> User route: " + userRoute);
+            logger.info("User route: " + userRoute);
             userRoutes.add(userRoute);
         }
 
@@ -401,7 +399,7 @@ public class TicketController {
     @GetMapping("/passengers")
     public String getPassengers(Model model) {
 
-        System.out.println("----> Get Mapping Passengers");
+        logger.info("Get passengers");
         model.addAttribute("routesExt", stationService.getAllRoutesExt());
 
         return "/passengers";
@@ -412,8 +410,6 @@ public class TicketController {
                             Model model) {
 
         model.addAttribute("routesExt", stationService.getAllRoutesExt());
-
-        System.out.println("----> Post Mapping Passengers");
 
         List<TicketDTO> tickets;
         boolean allRoutes = true;

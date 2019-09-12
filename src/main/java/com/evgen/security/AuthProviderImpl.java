@@ -2,6 +2,7 @@ package com.evgen.security;
 
 import com.evgen.dto.user.UserDTO;
 import com.evgen.service.UserService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -20,6 +21,8 @@ import java.util.List;
 @Component
 public class AuthProviderImpl implements AuthenticationProvider {
 
+    private static final Logger logger = Logger.getLogger(AuthProviderImpl.class);
+
     @Autowired
     private UserService userService;
 
@@ -33,14 +36,14 @@ public class AuthProviderImpl implements AuthenticationProvider {
         UserDTO userDTO = userService.getByEmail(email);
         if (userDTO == null){
 
-            System.out.println("---> User not found");
+            logger.info("User not found");
             throw new UsernameNotFoundException("User not found");
         }
 
         String password = authentication.getCredentials().toString();
         if (!passwordEncoder.matches(password, userDTO.getPassword())){
 
-            System.out.println("---> Bad credentials");
+            logger.info("Bad credentials");
             throw new BadCredentialsException("Bad credentials");
         }
 
@@ -49,10 +52,10 @@ public class AuthProviderImpl implements AuthenticationProvider {
         List<GrantedAuthority> authorities = new ArrayList<>(); //  LIST WITH ROLE
 
         String userRole = userDTO.getRole().getRoleName();
-        System.out.println("----> in authenticate user, user role = " + userRole + ", user name = "+ userDTO.getFirstName());
+        logger.info("In authenticate user, user role = " + userRole + ", user name = "+ userDTO.getFirstName());
 
         authorities.add(new SimpleGrantedAuthority(userRole));
-        System.out.println("--> authorities: " + authorities);
+        logger.info("Authorities: " + authorities);
         // NEED TO USE THIS LIST THEN
 
         return new UsernamePasswordAuthenticationToken(userDTO, null, authorities);

@@ -2,6 +2,7 @@ package com.evgen.service.impl;
 
 import com.evgen.dto.user.UserDTO;
 import com.evgen.service.SecurityService;
+import org.apache.log4j.Logger;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,16 +13,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class SecurityServiceImpl implements SecurityService {
 
+    private static final Logger logger = Logger.getLogger(SecurityServiceImpl.class);
 
     @Override
     public UserDTO getAuthUser() {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println("===> authentication = " + authentication);
+        logger.info("Authentication = " + authentication);
         if (authentication instanceof AnonymousAuthenticationToken) {
             return null;
         } else {
-            System.out.println("---> authentication.getPrincipal: " + authentication.getPrincipal());
+            logger.info("Authentication.getPrincipal: " + authentication.getPrincipal());
             UserDTO user = (UserDTO) authentication.getPrincipal();
             return user;
         }

@@ -3,6 +3,7 @@ package com.evgen.dao.impl;
 import com.evgen.dao.RoutePathDAO;
 import com.evgen.entity.station.RouteEntity;
 import com.evgen.entity.station.RoutePathEntity;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,8 @@ import java.util.List;
 @Component
 @Transactional
 public class RoutePathDAOImpl implements RoutePathDAO {
+
+    private static final Logger logger = Logger.getLogger(RoutePathDAOImpl.class);
 
     @PersistenceContext(unitName = "emf")
     private EntityManager em;
@@ -73,28 +76,11 @@ public class RoutePathDAOImpl implements RoutePathDAO {
 
         List<RoutePathEntity> results = query.getResultList();
 
-        for (RoutePathEntity item : results){
-            System.out.println("--> item: " + item);
-        }
-
         return results;
     }
 
     @Override
     public List<RoutePathEntity> getDepartures(int stationId) {
-
-//        System.out.println("---> In getDepartures");
-//        LocalDateTime dateTimeNow = LocalDateTime.now();
-//        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//        String dateToday = dateTimeNow.format(fmt);
-//        System.out.println("Today = " + dateToday);
-//
-//        dateToday += "%";
-
-//        String queryString = "select r from RoutePathEntity r join r.arc a " +
-//                "where a.beginStation.stationId = :stationId " +
-//                "and r.departureTime like :dateToday " +
-//                "order by r.departureTime asc ";
 
         String queryString = "select r from RoutePathEntity r join r.arc a " +
                 "where a.beginStation.stationId = :stationId order by r.departureTime asc";
@@ -187,7 +173,7 @@ public class RoutePathDAOImpl implements RoutePathDAO {
 
         LocalDateTime result = query.getSingleResult();
 
-        System.out.println("====> getRouteStartTime = " + result + ", routeId = " + routeId + ", startStationId = " + startStationId);
+        logger.info("getRouteStartTime = " + result + ", routeId = " + routeId + ", startStationId = " + startStationId);
         return result;
     }
 
@@ -204,7 +190,7 @@ public class RoutePathDAOImpl implements RoutePathDAO {
         query.setParameter("finishStationId", finishStationId);
 
         LocalDateTime result = query.getSingleResult();
-        System.out.println("====> getRouteFinishTime = " + result + ", routeId = " + routeId + ", finishStationId = " + finishStationId);
+        logger.info("getRouteFinishTime = " + result + ", routeId = " + routeId + ", finishStationId = " + finishStationId);
         return result;
     }
 

@@ -6,9 +6,8 @@ import com.evgen.dto.user.UserDTO;
 import com.evgen.service.SecurityService;
 import com.evgen.service.UserService;
 import com.evgen.util.UserValidator;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +22,8 @@ import java.util.List;
 
 @Controller
 public class UserController {
+
+    private static final Logger logger = Logger.getLogger(UserController.class);
 
     @Autowired
     private UserService userService;
@@ -48,10 +49,9 @@ public class UserController {
                               @RequestParam(value = "make-user", required = false) String[] makeUser,
                               Model model) {
 
-        System.out.println("---> in the Users POST");
-        System.out.println("del Users: " + delUsers);
-        System.out.println("make Admins: " + makeAdmin);
-        System.out.println("make Users: " + makeUser);
+        logger.info("del Users: " + delUsers);
+        logger.info("make Admins: " + makeAdmin);
+        logger.info("make Users: " + makeUser);
 
         if ((delUsers == null) && (makeAdmin == null) && (makeUser == null)) {
             return "redirect:/users";
@@ -64,7 +64,7 @@ public class UserController {
         if (makeAdmin != null) {
             for (int i = 0; i < makeAdmin.length; i++) {
                 int makeAdminUserId = Integer.parseInt(makeAdmin[i]);
-                System.out.println("wanna make ADMIN user with id: " + makeAdminUserId);
+                logger.info("wanna make ADMIN user with id: " + makeAdminUserId);
 
                 userService.changeRole(makeAdminUserId, "ROLE_ADMIN");
             }
@@ -74,7 +74,7 @@ public class UserController {
         if (makeUser != null) {
             for (int i = 0; i < makeUser.length; i++) {
                 int makeUserUserId = Integer.parseInt(makeUser[i]);
-                System.out.println("wanna make USER user with id: " + makeUserUserId);
+                logger.info("wanna make USER user with id: " + makeUserUserId);
 
                 if (makeUserUserId == mySelfUserId) {
                     continue;
@@ -87,7 +87,7 @@ public class UserController {
         if (delUsers != null) {
             for (int i = 0; i < delUsers.length; i++) {
                 int userDelId = Integer.parseInt(delUsers[i]);
-                System.out.println("wanna delete user with id: " + userDelId);
+                logger.info("wanna delete user with id: " + userDelId);
 
                 if (userDelId == mySelfUserId) {
                     deleteMyself = true;
@@ -103,9 +103,8 @@ public class UserController {
     }
 
     @GetMapping("/sign-up")
-    public String getSignUp(Model model) {
+    public String getSignUp() {
 
-//        model.addAttribute("roles", userService.getAllRoles());
         return "/sign_up";
     }
 
@@ -115,15 +114,11 @@ public class UserController {
                          @RequestParam("birthday") String strBirthday,
                          @RequestParam("email") String email,
                          @RequestParam("password") String password,
-                         //@RequestParam("userRoleId") String userRoleId,
                          Model model) {
 
-        System.out.println("---> in the SignUp");
-        System.out.println("Date = " + strBirthday);
+        logger.info("Date = " + strBirthday);
         UserDTO user = new UserDTO();
 
-
-        //RoleDTO roleDTO = userService.getRole(Integer.parseInt(userRoleId));
         RoleDTO roleDTO = userService.getRoleByName("ROLE_USER");
         user.setRole(roleDTO);
 
@@ -138,7 +133,7 @@ public class UserController {
             Date birthday = new SimpleDateFormat("yyyy-MM-dd").parse(strBirthday);
             user.setBirthday(birthday);
         } catch (ParseException e) {
-            System.out.println("---> Birthday error");
+            logger.warn("Birthday error");
             error = true;
             birthdayError = "Date is required"; //"Required format: DD.MM.YYYY";
         }
@@ -166,6 +161,7 @@ public class UserController {
             model.addAttribute("birthdayError", birthdayError);
             model.addAttribute("emailError", emailError);
             model.addAttribute("passwordError", passwordError);
+            logger.warn("Validating error");
 
             return "/sign_up";
         }
@@ -185,6 +181,7 @@ public class UserController {
         user.setPassword(password);
 
         userService.addUser(user);
+        logger.info("user registered, user = " + user);
 
         return "redirect:/";
     }
@@ -195,13 +192,10 @@ public class UserController {
                               Model model) {
 
 
-        System.out.println("--------> In Get mapping Accounts id, id = " + strUserId);
-
         // NEED TO VALIDATE STR USER ID
         int userId = 0;
 
         if (strUserId == null) {
-            System.out.println("strUserId = null");
 
             List<UserDTO> users = userService.getAllUsers();
             model.addAttribute("users", users);
@@ -212,18 +206,18 @@ public class UserController {
             try {
                 userId = Integer.parseInt(strUserId);
             } catch (Exception e) {
-                System.out.println(e.getMessage());
-                System.out.println("Parse error user id");
+                logger.warn(e.getMessage());
+                logger.warn("Parse error user id");
                 return "redirect:/accounts";
             }
 
             if (userId <= 0) {
-                System.out.println("User id <= 0");
+                logger.warn("User id <= 0");
                 return "redirect:/accounts";
             }
 
             if (userService.getUser(userId) == null) {
-                System.out.println("No such user");
+                logger.warn("No such user");
                 return "redirect:/accounts";
             }
 
@@ -250,10 +244,8 @@ public class UserController {
     @GetMapping("/account")
     public String getAccount(Model model) {
 
-        System.out.println("--------> In Get mapping Account");
-
         UserDTO user = securityService.getAuthUser();
-        System.out.println("---> user: " + user);
+        logger.info("user: " + user);
 
         if (user == null) {
             return "redirect:/";
@@ -270,7 +262,7 @@ public class UserController {
     public String login(@RequestParam(name = "error", required = false) Boolean error,
                         Model model) {
 
-        System.out.println("---> In the Login Request Mapping, error = " + error);
+        logger.info("In the Login Request Mapping, error = " + error);
 
         if (Boolean.TRUE.equals(error)) {
             model.addAttribute("passwordError", "User not found or bad credentials");

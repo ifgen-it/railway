@@ -2,6 +2,7 @@ package com.evgen.controller;
 
 import com.evgen.dto.train.TrainDTO;
 import com.evgen.service.TrainService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class TrainController {
+
+    private static final Logger logger = Logger.getLogger(TrainController.class);
 
     @Autowired
     private TrainService trainService;
@@ -28,10 +31,8 @@ public class TrainController {
             @RequestParam(name = "seatsAmount") int seatsAmount,
             Model model) {
 
-        System.out.println("======= in the Post mapping Trains =======");
-
-        System.out.println("--> trainName = " + trainName);
-        System.out.println("--> seatsAmount = " + seatsAmount);
+        logger.info("trainName = " + trainName);
+        logger.info("seatsAmount = " + seatsAmount);
 
         // CHECKING FOR ERRORS
         String trainNameError = "";
@@ -57,12 +58,12 @@ public class TrainController {
         }
 
         // ADD TRAIN
-        System.out.println("------- train is Ok, will ADD --------------");
+        logger.info("train is Ok, will ADD");
         TrainDTO trainDTO = new TrainDTO();
         trainDTO.setTrainName(trainName);
         trainDTO.setSeatsAmount(seatsAmount);
         trainService.addTrain(trainDTO);
-        System.out.println("------- train must be added --------------");
+        logger.info("train must be added");
 
         model.addAttribute("trains", trainService.getAllTrains());
 

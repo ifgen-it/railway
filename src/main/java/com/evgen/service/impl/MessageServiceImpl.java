@@ -2,6 +2,7 @@ package com.evgen.service.impl;
 
 import com.evgen.service.MessageService;
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import javax.jms.*;
@@ -9,10 +10,12 @@ import javax.jms.*;
 @Service
 public class MessageServiceImpl implements MessageService {
 
+    private static final Logger logger = Logger.getLogger(MessageServiceImpl.class);
+
     @Override
     public void sendMessage(String stationName) throws JMSException {
 
-        System.out.println("----> In the JMS TOPIC Sender");
+        logger.info("In the JMS TOPIC Sender");
         ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616");
         TopicConnection connection = connectionFactory.createTopicConnection();
         connection.start();
@@ -26,11 +29,12 @@ public class MessageServiceImpl implements MessageService {
         message.setStringProperty("city", stationName);
 
         publisher.publish(message);
-        System.out.println("Message published into Topic: " + textMessage);
+        logger.info("Message published into Topic: " + textMessage);
 
         publisher.close();
         session.close();
         connection.close();
-        System.out.println("Resources closed");
+        logger.info("Resources closed");
+
     }
 }

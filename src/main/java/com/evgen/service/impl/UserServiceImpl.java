@@ -9,6 +9,7 @@ import com.evgen.entity.ticket.TicketEntity;
 import com.evgen.entity.user.RoleEntity;
 import com.evgen.entity.user.UserEntity;
 import com.evgen.service.UserService;
+import org.apache.log4j.Logger;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,6 +22,8 @@ import java.util.List;
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
+
+    private static final Logger logger = Logger.getLogger(UserServiceImpl.class);
 
     @Autowired
     private UserDAO userDAO;
@@ -65,8 +68,6 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         ModelMapper modelMapper = new ModelMapper();
         UserEntity userEntity = modelMapper.map(user, UserEntity.class);
-
-        System.out.println("----> in addUser, userEntity: " + userEntity);
 
         return userDAO.add(userEntity);
     }
