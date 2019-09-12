@@ -8,6 +8,7 @@ import com.evgen.dto.train.TrainDTO;
 import com.evgen.service.StationService;
 import com.evgen.service.TrainService;
 import com.evgen.service.exception.UseReservedTrainException;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +25,8 @@ import java.util.List;
 
 @Controller
 public class StationController {
+
+    private static final Logger logger = Logger.getLogger(StationController.class);
 
     @Autowired
     private StationService stationService;
@@ -103,7 +106,7 @@ public class StationController {
         ArcDTO arcDTO = new ArcDTO(beginStationDTO, endStationDTO, length);
         stationService.addArc(arcDTO);
 
-        System.out.println("------- Arc must be added --------------");
+        logger.info("Arc must be added");
 
         // ALL RIGHT
         model.addAttribute("arcs", stationService.getAllArcs());
@@ -122,8 +125,6 @@ public class StationController {
     @PostMapping("/stations")
     public String stations(@RequestParam(name = "stationName") String stationName,
                            Model model) {
-
-        System.out.println("======= in the Post mapping Stations =======");
 
         // CHECKING FOR ERRORS
         String stationNameError = "";
@@ -145,7 +146,7 @@ public class StationController {
         StationDTO stationDTO = new StationDTO();
         stationDTO.setStationName(stationName);
         stationService.addStation(stationDTO);
-        System.out.println("------- station must be added --------------");
+        logger.info("Station must be added");
 
         model.addAttribute("stations", stationService.getAllStations());
 
@@ -155,21 +156,14 @@ public class StationController {
     @GetMapping("/routes")
     public String getRoutes(Model model) {
 
-        // model.addAttribute("routes", stationService.getAllRoutes());
-
         model.addAttribute("routes", stationService.getAllRoutesExt());
 
-
-        //System.out.println("====== > GETTING route Path with routeId : 2 ");
-        //RoutePathDTO rPath = stationService.getFirstArc(2);
-        //System.out.println("====== > route Path with routeId : 2 = " + rPath);
         return "/routes";
     }
 
     @GetMapping("/timetable")
     public String getTimetable(Model model) {
 
-        System.out.println("----> Get Mapping timetable");
         model.addAttribute("stations", stationService.getAllStations());
 
         return "/timetable";
@@ -182,9 +176,8 @@ public class StationController {
 
         model.addAttribute("stations", stationService.getAllStations());
 
-        System.out.println("----> Post Mapping timetable");
-        System.out.println("stationId = " + stationId);
-        System.out.println("timetableToday = " + timetableToday);
+        logger.info("stationId = " + stationId);
+        logger.info("timetableToday = " + timetableToday);
 
         model.addAttribute("arrivals", stationService.getArrivals(stationId));
         model.addAttribute("departures", stationService.getDepartures(stationId));
@@ -203,8 +196,6 @@ public class StationController {
     @GetMapping("/routes/new/arcs")
     public String getNewRouteAddArc(Model model,
                                     HttpSession session) {
-
-        System.out.println("----> Get Mapping New Route");
 
         // GET LIST OF AVAILABLE ARCS
         List<ArcDTO> arcs = null;
@@ -232,10 +223,10 @@ public class StationController {
                                  Model model,
                                  HttpSession session) {
 
-        System.out.println("----> Post Mapping New Route");
-        System.out.println("----> arcId = " + arcId);
-        System.out.println("----> str departure time = " + strDepartureTime);
-        System.out.println("----> str arrival time = " + strArrivalTime);
+        logger.info("New Route");
+        logger.info("arcId = " + arcId);
+        logger.info("str departure time = " + strDepartureTime);
+        logger.info("str arrival time = " + strArrivalTime);
 
 
         // GET LIST OF AVAILABLE ARCS - THIS ARCS WILL BE USED ONLY FOR CASE WITH DATETIME ERROR
@@ -247,12 +238,12 @@ public class StationController {
             List<RoutePathDTO> tempRoutePaths = (List<RoutePathDTO>) session.getAttribute("tempRoutePaths");
             RoutePathDTO lastRoutePath = tempRoutePaths.get(tempRoutePaths.size() - 1);
 
-            System.out.println("----> Last arc: " + lastRoutePath);
+            logger.info("Last arc: " + lastRoutePath);
             StationDTO beginStation = lastRoutePath.getArc().getBeginStation();
             StationDTO endStation = lastRoutePath.getArc().getEndStation();
 
             List<ArcDTO> outArcs = stationService.getOutArcs(endStation.getStationId());
-            System.out.println("---> Out arcs of station " + endStation.getStationName() + " : " + outArcs);
+            logger.info("Out arcs of station " + endStation.getStationName() + " : " + outArcs);
 
             // HERE WE CAN REMOVE BEGIN STATION FROM OUT ARCS  ?? FOR NO-CYCLE LOOPS
 
@@ -265,17 +256,17 @@ public class StationController {
         strDepartureTime = strDepartureTime.replace('T', ' ');
         strArrivalTime = strArrivalTime.replace('T', ' ');
 
-        System.out.println("After replace:");
-        System.out.println("----> str departure time = " + strDepartureTime);
-        System.out.println("----> str arrival time = " + strArrivalTime);
+        logger.info("After replace:");
+        logger.info("str departure time = " + strDepartureTime);
+        logger.info("str arrival time = " + strArrivalTime);
 
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime departureTime = LocalDateTime.parse(strDepartureTime, dtf);
         LocalDateTime arrivalTime = LocalDateTime.parse(strArrivalTime, dtf);
 
-        System.out.println("----> departure time = " + departureTime);
-        System.out.println("----> arrival time = " + arrivalTime);
+        logger.info("departure time = " + departureTime);
+        logger.info("arrival time = " + arrivalTime);
 
         // VALIDATE DATE TIME
 
@@ -288,7 +279,7 @@ public class StationController {
 
             if (departureTime.isBefore(LocalDateTime.now())) {
 
-                System.out.println("--> departureTimeError - Departure time must be after now time");
+                logger.warn("departureTimeError - Departure time must be after now time");
                 departureTimeError = "Departure time must be after now time";
                 dateTimeError = true;
             }
@@ -301,7 +292,7 @@ public class StationController {
 
             if (departureTime.isBefore(lastArcArrivalTime)) {
 
-                System.out.println("--> departureTimeError - Departure time must be after previous arc arrival time");
+                logger.warn("departureTimeError - Departure time must be after previous arc arrival time");
                 departureTimeError = "Departure time must be after previous arc arrival time";
                 dateTimeError = true;
             }
@@ -310,7 +301,7 @@ public class StationController {
         // ARRIVAL TIME
         if (departureTime.isAfter(arrivalTime)) {
 
-            System.out.println("--> arrivalTimeError - Arrival time must be after departure time");
+            logger.warn("arrivalTimeError - Arrival time must be after departure time");
             arrivalTimeError = "Arrival time must be after departure time";
             dateTimeError = true;
         }
@@ -352,7 +343,7 @@ public class StationController {
         StationDTO endStation = newArc.getEndStation();
 
         List<ArcDTO> outArcs = stationService.getOutArcs(endStation.getStationId());
-        System.out.println("----> out Arcs: in Post : " + outArcs);
+        logger.info("out Arcs: in Post : " + outArcs);
         // HERE WE CAN REMOVE BEGIN STATION FROM OUT ARCS  ?? FOR NO-CYCLE LOOPS
 
         arcs = outArcs;
@@ -366,7 +357,7 @@ public class StationController {
     public String getAttachTrain(Model model,
                                  HttpSession session) {
 
-        System.out.println("----> Get Mapping Attach train");
+        logger.info("Attach train");
 
         // GET FREE TRAINS
         List<TrainDTO> freeTrains = null;
@@ -385,9 +376,9 @@ public class StationController {
             LocalDateTime arrivalTime = lastRoutePath.getArrivalTime();
 
             List<Integer> trainsId = trainService.getFreeTrains(departureTime, arrivalTime);
-            System.out.println("----> Departure time = " + departureTime);
-            System.out.println("----> Arrival time = " + arrivalTime);
-            System.out.println("----> Free trains = " + trainsId);
+            logger.info("Departure time = " + departureTime);
+            logger.info("Arrival time = " + arrivalTime);
+            logger.info("Free trains = " + trainsId);
 
             List<TrainDTO> trainDTOS = new ArrayList<>();
             trainsId.forEach(id -> trainDTOS.add(trainService.getTrain(id)));
@@ -411,10 +402,10 @@ public class StationController {
                               Model model,
                               HttpSession session) {
 
-        System.out.println("----> Post Mapping Attach train");
+        logger.info("Attach train");
 
-        System.out.println("-----> trainId = " + trainId);
-        System.out.println("-----> route name = " + routeName);
+        logger.info("trainId = " + trainId);
+        logger.info("route name = " + routeName);
 
         if (session.getAttribute("tempRoutePaths") == null) {
 

@@ -27,21 +27,6 @@ public class MainController {
     @GetMapping("/")
     public String getIndex(Principal principal, Model model){
 
-        /*
-        System.out.println("---> principal = " + principal);
-        System.out.println("---> model = " + model);
-
-        Authentication authentication = (Authentication)principal;
-        System.out.println("===> authentication = " + authentication);
-        if (authentication == null){
-            model.addAttribute("user", "Guest");
-        } else {
-            System.out.println("---> getIndex: authentication: " + authentication.getPrincipal());
-            UserDTO user = (UserDTO)authentication.getPrincipal();
-
-            model.addAttribute("user", user.getFirstName());
-        }
-    */
 
         UserDTO user = securityService.getAuthUser();
         if (user == null){
@@ -56,10 +41,6 @@ public class MainController {
 
     @GetMapping("/info")
     public String getInfo(){
-
-//        if (5 > 4){
-//            throw new NoHandlerFoundException("GET", "/info", new HttpHeaders());
-//        }
 
         return "/info";
     }

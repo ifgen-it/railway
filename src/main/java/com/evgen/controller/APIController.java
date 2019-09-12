@@ -7,6 +7,8 @@ import com.evgen.dto.station.StationDTO;
 import com.evgen.dto.station.StationSimpleDTO;
 import com.evgen.service.MessageService;
 import com.evgen.service.StationService;
+import com.evgen.service.impl.StationServiceImpl;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.security.acls.model.NotFoundException;
@@ -22,6 +24,8 @@ import java.util.List;
 @Controller
 public class APIController {
 
+    private static final Logger logger = Logger.getLogger(APIController.class);
+
     @Autowired
     private MessageService messageService;
 
@@ -33,8 +37,6 @@ public class APIController {
 
     @GetMapping("/api")
     public String getApi(Model model) {
-
-        System.out.println("----> Get Mapping API");
 
         return "/api";
     }
@@ -50,7 +52,7 @@ public class APIController {
             StationSimpleDTO stationSimple = stationConverter.convertStationToSimple(station);
             stationsSimple.add(stationSimple);
         }
-        System.out.println("---> API - stations simple: " + stationsSimple);
+        logger.info("API - stations simple: " + stationsSimple);
         return stationsSimple;
     }
 
@@ -59,7 +61,7 @@ public class APIController {
     public List<RoutePathSimpleDTO> getArrivals(
             @PathVariable(name = "stationId") String strStationId) {
 
-        System.out.println("---> In the API - get Arrivals, station id = " + strStationId);
+        logger.info("API - get Arrivals, station id = " + strStationId);
 
         int stationId = 0;
         try {
@@ -89,7 +91,7 @@ public class APIController {
     public List<RoutePathSimpleDTO> getDepartures(
             @PathVariable(name = "stationId") String strStationId) {
 
-        System.out.println("---> In the API - get Departures, station id = " + strStationId);
+        logger.info("API - get Departures, station id = " + strStationId);
 
         int stationId = 0;
         try {

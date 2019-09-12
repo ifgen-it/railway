@@ -12,6 +12,7 @@ import com.evgen.entity.user.UserEntity;
 import com.evgen.service.TicketService;
 import com.evgen.service.exception.TimeLimitPurchaseException;
 import com.evgen.service.exception.TwinUserPurchaseException;
+import org.apache.log4j.Logger;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,8 @@ import java.util.List;
 @Service
 @Transactional
 public class TicketServiceImpl implements TicketService {
+
+    private static final Logger logger = Logger.getLogger(TicketServiceImpl.class);
 
     @Autowired
     private TicketDAO ticketDAO;
@@ -69,6 +72,7 @@ public class TicketServiceImpl implements TicketService {
         LocalDateTime nowTime = LocalDateTime.now();
 
         if (nowTime.isAfter(deptTime)){
+            logger.warn("TimeLimitPurchaseException: Train was gone already. Select another one");
             throw new TimeLimitPurchaseException("Train was gone already. Select another one");
         }
 
@@ -78,7 +82,7 @@ public class TicketServiceImpl implements TicketService {
         }
 
         if (timeLimitPurchaseExpired == true){
-            System.out.println("========> Time limit purchase Exception thrown =====");
+            logger.warn("TimeLimitPurchaseException: Train will start less than 10 minutes. Ticket purchasing was stopped");
             throw new TimeLimitPurchaseException("Train will " +
                     "start less than 10 minutes. Ticket purchasing was stopped");
         }
@@ -95,7 +99,8 @@ public class TicketServiceImpl implements TicketService {
         }
 
         if (twinUserOnTheTrain == true){
-            System.out.println("===========> There is twin user on the train");
+            logger.warn("TwinUserPurchaseException: User with the same first name," +
+                    " last name and birthday already purchased ticket on this route");
             throw new TwinUserPurchaseException("User with the same first name, last name and" +
                     " birthday already purchased ticket on this route");
         }

@@ -1,6 +1,6 @@
 package com.evgen.controller;
 
-import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
+import org.apache.log4j.Logger;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -12,14 +12,15 @@ import javax.servlet.http.HttpServletRequest;
 @ControllerAdvice
 public class GlobalExceptionController {
 
+    private static final Logger logger = Logger.getLogger(GlobalExceptionController.class);
 
     @ExceptionHandler(NoHandlerFoundException.class)
     public String handler404(Exception ex,
                              HttpServletRequest req,
                              Model model) {
 
-        System.out.println("Request: " + req.getRequestURL());
-        System.out.println("Exception: " + ex);
+        logger.error("Request: " + req.getRequestURL());
+        logger.error("Exception: " + ex);
 
         model.addAttribute("url", req.getRequestURL());
         model.addAttribute("exception", ex);
@@ -32,8 +33,8 @@ public class GlobalExceptionController {
                              HttpServletRequest req,
                              Model model) {
 
-        System.out.println("Request: " + req.getRequestURL());
-        System.out.println("Exception: " + ex);
+        logger.error("Request: " + req.getRequestURL());
+        logger.error("Exception: " + ex);
 
         model.addAttribute("url", req.getRequestURL());
         model.addAttribute("exception", ex);
@@ -46,8 +47,8 @@ public class GlobalExceptionController {
                              HttpServletRequest req,
                              Model model) {
 
-        System.out.println("Request: " + req.getRequestURL());
-        System.out.println("Exception: " + ex);
+        logger.error("Request: " + req.getRequestURL());
+        logger.error("Exception: " + ex);
 
         model.addAttribute("url", req.getRequestURL());
         model.addAttribute("exception", ex);

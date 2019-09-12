@@ -6,6 +6,7 @@ import com.evgen.entity.station.RouteEntity;
 import com.evgen.entity.station.StationEntity;
 import com.evgen.entity.ticket.TicketEntity;
 import com.evgen.entity.user.UserEntity;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,8 @@ import java.util.List;
 @Component
 @Transactional
 public class TicketDAOImpl implements TicketDAO {
+
+    private static final Logger logger = Logger.getLogger(TicketDAOImpl.class);
 
     @PersistenceContext(unitName = "emf")
     private EntityManager em;
@@ -97,9 +100,9 @@ public class TicketDAOImpl implements TicketDAO {
         // MAY BE NEED TO SET TRANSACTIONAL MODE TO OTHER DB USERS CANNOT
         // WRITE INTO TABLE TICKETS WHILE RUNNING THIS METHOD
 
-        System.out.println("------> in the Ticket DAO : buyTicket ------>");
+        logger.info("In the Ticket DAO : buyTicket");
         List<Integer> busySeats = getBusySeats(ticketRoute.getRouteId(), startTime, finishTime);
-        System.out.println("=====> busySeats: " + busySeats);
+        logger.info("BusySeats: " + busySeats);
 
         boolean busySeatError = busySeats.contains(Integer.valueOf(seatNumber));
 
@@ -114,7 +117,7 @@ public class TicketDAOImpl implements TicketDAO {
                 startStation, finishStation);
         int ticketId = add(ticketEntity);
 
-        System.out.println("----> Ticket was saved, ticketId = " + ticketId);
+        logger.info("Ticket was saved, ticketId = " + ticketId);
 
         return ticketId;
     }
@@ -131,7 +134,7 @@ public class TicketDAOImpl implements TicketDAO {
         query.setParameter("user", user);
 
         List<TicketEntity> tickets = query.getResultList();
-        System.out.println("======> get Ticket : " + tickets);
+        logger.info("Get Ticket : " + tickets);
         if(tickets.size() == 0){
             return null;
         }
@@ -150,7 +153,7 @@ public class TicketDAOImpl implements TicketDAO {
         query.setParameter("routeId", routeId);
 
         List<TicketEntity> tickets = query.getResultList();
-        System.out.println("======> Ticket : " + tickets);
+        logger.info("Ticket : " + tickets);
 
         return tickets;
     }
