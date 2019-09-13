@@ -1,5 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 
 <html>
 <head>
@@ -25,16 +28,16 @@
                 </select>
             </div>
 
-            <div class="form-element">
-                <label class="dark-text-small">Only today</label>
-                <input id="timetable-today" name="timetable-today" type="checkbox">
-            </div>
+<%--            <div class="form-element">--%>
+<%--                <label class="dark-text-small">Only today</label>--%>
+<%--                <input id="timetable-today" name="timetable-today" type="checkbox">--%>
+<%--            </div>--%>
 
             <input type="submit" value="Show timetable">
         </form>
 
         <c:if test="${stationName != null}">
-            <div class="dark-text">Timetable :: ${stationName}</div>
+            <div class="dark-text">Timetable::${stationName}</div>
             <table id="table-timetable-arr-dep">
 
                 <tr>
@@ -54,7 +57,10 @@
 
                             <c:forEach var="arrival" items="${arrivals}">
                                 <tr>
-                                    <td>${arrival.arrivalTime}</td>
+
+                                    <fmt:parseDate value="${arrival.arrivalTime}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
+                                    <td><fmt:formatDate pattern="dd-MM-yyyy HH:mm" value="${parsedDateTime}" /></td>
+
                                     <td>${arrival.route.routeName}</td>
                                     <td>${arrival.route.train.trainName}</td>
 
@@ -75,7 +81,9 @@
 
                             <c:forEach var="departure" items="${departures}">
                                 <tr>
-                                    <td>${departure.departureTime}</td>
+                                    <fmt:parseDate value="${departure.departureTime}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
+                                    <td><fmt:formatDate pattern="dd-MM-yyyy HH:mm" value="${parsedDateTime}" /></td>
+
                                     <td>${departure.route.routeName}</td>
                                     <td>${departure.route.train.trainName}</td>
 

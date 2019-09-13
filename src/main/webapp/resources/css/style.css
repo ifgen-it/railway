@@ -68,10 +68,11 @@ header{
 }
 
 #page-content{
-    float: right;
-    width: 78%;
+    /*float: right;*/
+    /*width: 78%;*/
     min-height: 300px;
-    padding: 10px;
+    padding-top: 50px;
+    padding-bottom: 50px;
     font-size: larger;
 }
 

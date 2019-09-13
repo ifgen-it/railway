@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <html>
 <head>
@@ -22,7 +24,10 @@
                     <option value="0">All routes</option>
 
                     <c:forEach var="route" items="${routesExt}">
-                        <option value="${route.routeDTO.routeId}">${route.routeDTO.routeId}_${route.routeDTO.routeName}_${route.routeDepartureTime}</option>
+                        <option value="${route.routeDTO.routeId}">${route.routeDTO.routeId}_${route.routeDTO.routeName}_
+                                <fmt:parseDate value="${route.routeDepartureTime}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
+                                <fmt:formatDate pattern="dd-MM-yyyy HH:mm" value="${parsedDateTime}" />
+                        </option>
                     </c:forEach>
                 </select>
             </div>
@@ -35,7 +40,11 @@
             </c:if>
 
             <c:if test="${allRoutes == false}">
-                <div class="dark-text">Passengers on the route : ${searchRoute.routeDTO.routeName} ${searchRoute.routeDepartureTime}</div>
+                <div class="dark-text">Passengers on the route : ${searchRoute.routeDTO.routeName}
+                        <fmt:parseDate value="${searchRoute.routeDepartureTime}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
+                        <fmt:formatDate pattern="dd-MM-yyyy HH:mm" value="${parsedDateTime}" />
+
+                </div>
             </c:if>
 
             <table id="table-passengers" border="2">
@@ -64,8 +73,13 @@
                         <td>${ticket.seatNumber}</td>
                         <td>${ticket.startStation.stationName}</td>
                         <td>${ticket.finishStation.stationName}</td>
-                        <td>${ticket.startTime}</td>
-                        <td>${ticket.finishTime}</td>
+
+                        <fmt:parseDate value="${ticket.startTime}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
+                        <td><fmt:formatDate pattern="dd-MM-yyyy HH:mm" value="${parsedDateTime}" /></td>
+
+                        <fmt:parseDate value="${ticket.finishTime}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
+                        <td><fmt:formatDate pattern="dd-MM-yyyy HH:mm" value="${parsedDateTime}" /></td>
+
                         <td>${ticket.price}</td>
                         <td>${ticket.ticketId}</td>
                         <td><a href="/accounts?id=${ticket.user.userId}">${ticket.user.lastName} ${ticket.user.firstName} ${ticket.user.email}</a></td>

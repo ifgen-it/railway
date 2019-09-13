@@ -1,7 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 
 <html>
@@ -64,11 +65,15 @@
                 </tr>
                 <tr>
                     <td>Departure</td>
-                    <td>${sessionScope.ticketDetails.routeDepartureTime}</td>
+                    <fmt:parseDate value="${sessionScope.ticketDetails.routeDepartureTime}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
+                    <td><fmt:formatDate pattern="dd-MM-yyyy HH:mm" value="${parsedDateTime}" /></td>
+
                 </tr>
                 <tr>
                     <td>Arrival</td>
-                    <td>${sessionScope.ticketDetails.routeArrivalTime}</td>
+                    <fmt:parseDate value="${sessionScope.ticketDetails.routeArrivalTime}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
+                    <td><fmt:formatDate pattern="dd-MM-yyyy HH:mm" value="${parsedDateTime}" /></td>
+
                 </tr>
                 <tr>
                     <td>Price, rub</td>

@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.jms.JMSException;
+import java.util.List;
 
 @Controller
-public class MessageController {
+public class MessageController {  // FOR TESTING - SEND MESSAGE TO JMS
 
     private static final Logger logger = Logger.getLogger(MessageController.class);
 
@@ -37,8 +38,12 @@ public class MessageController {
         model.addAttribute("stations", stationService.getAllStations());
         String stationName = stationService.getStation(stationId).getStationName();
         model.addAttribute("stationName", stationName);
-        messageService.sendMessage(stationName);
-        logger.info("Message sent");
+
+        List<String> stationsToUpdate = stationService.getStationNames(15);
+        for (String stationToUpdate : stationsToUpdate){
+            messageService.sendMessage(stationToUpdate);
+        }
+        logger.info("Message was sent to all stations");
 
         return "/send_message";
     }

@@ -1,7 +1,8 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 
 <html>
@@ -38,10 +39,14 @@
                     <td>${route.routeDTO.train.trainName}</td>
                     <td>${route.routeDTO.train.seatsAmount}</td>
                     <td>${route.routeBeginStation.stationName}</td>
-                    <td>${route.routeDepartureTime}</td>
-<%--                    <td><fmt:formatDate type="time" value="${route.routeDepartureTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>--%>
+
+                    <fmt:parseDate value="${route.routeDepartureTime}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
+                    <td><fmt:formatDate pattern="dd-MM-yyyy HH:mm" value="${parsedDateTime}" /></td>
+
                     <td>${route.routeEndStation.stationName}</td>
-                    <td>${route.routeArrivalTime}</td>
+
+                    <fmt:parseDate value="${route.routeArrivalTime}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
+                    <td><fmt:formatDate pattern="dd-MM-yyyy HH:mm" value="${parsedDateTime}" /></td>
 
                 </tr>
             </c:forEach>

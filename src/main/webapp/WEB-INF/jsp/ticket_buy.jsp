@@ -66,11 +66,18 @@
 
                         <tr>
                             <td><span class="ticket-paper-small">DEPARTURE:</span></td>
-                            <td><span class="ticket-paper-big">${ticket.startTime}</span></td>
+                            <fmt:parseDate value="${ticket.startTime}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
+                            <td><span class="ticket-paper-big">
+                                <fmt:formatDate pattern="dd-MM-yyyy HH:mm" value="${parsedDateTime}" />
+                            </span></td>
+
                         </tr>
                         <tr>
                             <td><span class="ticket-paper-small">ARRIVAL:</span></td>
-                            <td><span class="ticket-paper-big">${ticket.finishTime}</span></td>
+                            <fmt:parseDate value="${ticket.finishTime}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
+                            <td><span class="ticket-paper-big">
+                                <fmt:formatDate pattern="dd-MM-yyyy HH:mm" value="${parsedDateTime}" />
+                            </span></td>
                         </tr>
 
                         <tr>

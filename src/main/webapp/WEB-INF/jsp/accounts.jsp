@@ -1,9 +1,7 @@
-<%@ page import="java.util.List" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="com.evgen.dto.user.UserDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 
 <html>
@@ -41,8 +39,14 @@
             <div class="dark-text">${user.firstName} ${user.lastName}</div>
             <br>
             <div class="dark-text-small">Email: ${user.email}</div>
-            <div class="dark-text-small">Birthday: ${user.birthday}</div>
-            <div class="dark-text-small">Role: ${user.role.roleName}</div>
+
+            <fmt:parseDate value="${user.birthday}" pattern="yyyy-MM-dd HH:mm:ss.SSS" var="parsedDateTime" type="both" />
+            <div class="dark-text-small">Birthday: <fmt:formatDate pattern="dd-MM-yyyy" value="${parsedDateTime}" /></div>
+
+            <div class="dark-text-small">Role: <c:if test="${user.role.roleName == 'ROLE_ADMIN'}">Admin</c:if>
+
+                <c:if test="${user.role.roleName == 'ROLE_USER'}">User</c:if>
+            </div>
             <br>
             <div class="dark-text-small">Tickets:</div>
 
@@ -70,8 +74,13 @@
                         <td>${ticket.seatNumber}</td>
                         <td>${ticket.startStation.stationName}</td>
                         <td>${ticket.finishStation.stationName}</td>
-                        <td>${ticket.startTime}</td>
-                        <td>${ticket.finishTime}</td>
+
+                        <fmt:parseDate value="${ticket.startTime}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
+                        <td><fmt:formatDate pattern="dd-MM-yyyy HH:mm" value="${parsedDateTime}" /></td>
+
+                        <fmt:parseDate value="${ticket.finishTime}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
+                        <td><fmt:formatDate pattern="dd-MM-yyyy HH:mm" value="${parsedDateTime}" /></td>
+
                         <td>${ticket.price}</td>
 
                     </tr>

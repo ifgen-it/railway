@@ -1,9 +1,10 @@
 <%@ page import="java.util.List" %>
-<%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="com.evgen.dto.user.UserDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 
 <%
     List<UserDTO> users = (List<UserDTO>) request.getAttribute("users");
@@ -54,8 +55,10 @@
 
                         <td>${user.firstName}</td>
                         <td>${user.lastName}</td>
-                        <td>${user.birthday}</td>
-                            <%--                        <td><fmt:formatDate value="${user.birthday}" pattern="yyyy-MM-dd"/></td>--%>
+
+                        <fmt:parseDate value="${user.birthday}" pattern="yyyy-MM-dd HH:mm:ss.SSS" var="parsedDateTime" type="both" />
+                        <td><fmt:formatDate pattern="dd-MM-yyyy" value="${parsedDateTime}" /></td>
+
                         <td>${user.email}</td>
                         <td>${user.password}</td>
 

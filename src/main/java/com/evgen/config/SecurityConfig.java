@@ -35,7 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .antMatchers("/users", "/accounts", "/passengers",
                         "/trains", "/routes/new/**",
-                        "/stations", "/arcs")
+                        "/stations", "/arcs",
+                        "/send-message")
                 .hasRole("ADMIN")
 
                 .antMatchers("/sign-up", "/login").anonymous()    // AUTH USER CANNOT GO THERE, ONLY ANON

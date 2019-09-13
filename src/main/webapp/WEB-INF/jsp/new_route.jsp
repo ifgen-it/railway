@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <html>
 <head>
@@ -65,8 +67,13 @@
                         <td>${routePathsCount.count}</td>
                         <td>${routePath.arc.beginStation.stationName}</td>
                         <td>${routePath.arc.endStation.stationName}</td>
-                        <td>${routePath.departureTime}</td>
-                        <td>${routePath.arrivalTime}</td>
+
+                        <fmt:parseDate value="${routePath.departureTime}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
+                        <td><fmt:formatDate pattern="dd-MM-yyyy HH:mm" value="${parsedDateTime}" /></td>
+
+                        <fmt:parseDate value="${routePath.arrivalTime}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
+                        <td><fmt:formatDate pattern="dd-MM-yyyy HH:mm" value="${parsedDateTime}" /></td>
+
                         <td>${routePath.arc.length}</td>
 
                     </tr>

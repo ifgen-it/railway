@@ -56,4 +56,8 @@ public interface StationService {
     List<ArcDTO> getOutArcs(int stationId);
 
     int createRoute(RouteDTO routeDTO, List<RoutePathDTO> routePathDTOS) throws UseReservedTrainException;
+
+    List<String> getStationNames(int routeId);
 }
+
+

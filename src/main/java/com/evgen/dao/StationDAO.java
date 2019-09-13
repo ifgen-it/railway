@@ -19,4 +19,6 @@ public interface StationDAO {
     StationEntity update(StationEntity station);
 
     StationEntity getByName(String stationName);
+
+    List<String> getStationNames(int routeId);
 }

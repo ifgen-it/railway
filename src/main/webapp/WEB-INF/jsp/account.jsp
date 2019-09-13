@@ -1,6 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 
 <html>
@@ -20,7 +22,9 @@
         <div class="dark-text">${user.firstName} ${user.lastName}</div>
         <br>
         <div class="dark-text-small">Email: ${user.email}</div>
-        <div class="dark-text-small">Birthday: ${user.birthday}</div>
+
+        <fmt:parseDate value="${user.birthday}" pattern="yyyy-MM-dd HH:mm:ss.SSS" var="parsedDateTime" type="both" />
+        <div class="dark-text-small">Birthday: <fmt:formatDate pattern="dd-MM-yyyy" value="${parsedDateTime}" /></div>
 
         <sec:authorize access="hasRole('ROLE_ADMIN')">
             <div class="dark-text-small">Role: Admin</div>
@@ -53,8 +57,13 @@
                     <td>${ticket.seatNumber}</td>
                     <td>${ticket.startStation.stationName}</td>
                     <td>${ticket.finishStation.stationName}</td>
-                    <td>${ticket.startTime}</td>
-                    <td>${ticket.finishTime}</td>
+
+                    <fmt:parseDate value="${ticket.startTime}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
+                    <td><fmt:formatDate pattern="dd-MM-yyyy HH:mm" value="${parsedDateTime}" /></td>
+
+                    <fmt:parseDate value="${ticket.finishTime}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
+                    <td><fmt:formatDate pattern="dd-MM-yyyy HH:mm" value="${parsedDateTime}" /></td>
+
                     <td>${ticket.price}</td>
 
                 </tr>

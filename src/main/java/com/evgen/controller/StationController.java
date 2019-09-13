@@ -5,6 +5,7 @@ import com.evgen.dto.station.RouteDTO;
 import com.evgen.dto.station.RoutePathDTO;
 import com.evgen.dto.station.StationDTO;
 import com.evgen.dto.train.TrainDTO;
+import com.evgen.service.MessageService;
 import com.evgen.service.StationService;
 import com.evgen.service.TrainService;
 import com.evgen.service.exception.UseReservedTrainException;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.jms.JMSException;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -33,6 +35,9 @@ public class StationController {
 
     @Autowired
     private TrainService trainService;
+
+    @Autowired
+    private MessageService messageService;
 
 
     @GetMapping("/arcs")
@@ -177,7 +182,7 @@ public class StationController {
         model.addAttribute("stations", stationService.getAllStations());
 
         logger.info("stationId = " + stationId);
-        logger.info("timetableToday = " + timetableToday);
+        //logger.info("timetableToday = " + timetableToday);
 
         model.addAttribute("arrivals", stationService.getArrivals(stationId));
         model.addAttribute("departures", stationService.getDepartures(stationId));
@@ -403,7 +408,6 @@ public class StationController {
                               HttpSession session) {
 
         logger.info("Attach train");
-
         logger.info("trainId = " + trainId);
         logger.info("route name = " + routeName);
 
@@ -430,6 +434,7 @@ public class StationController {
                 e.printStackTrace();
                 String routeCreationError = e.getMessage();
                 model.addAttribute("routeCreationError", routeCreationError);
+                logger.warn("UseReservedTrainException caught");
             }
 
             if (routeId > 0) {
@@ -437,6 +442,22 @@ public class StationController {
                 model.addAttribute("routeId", routeId);
             }
             model.addAttribute("routeCreated", routeCreated);
+
+            // UPDATE TIMETABLE FOR ALL STATIONS IN THE NEW ROUTE
+
+            try {
+
+                List<String> stationsToUpdate = stationService.getStationNames(routeId);
+                for (String stationToUpdate : stationsToUpdate){
+                    messageService.sendMessage(stationToUpdate);
+                }
+                logger.info("Message was sent to all stations");
+
+            } catch (JMSException e) {
+                logger.warn("Message did not sent, error : " + e);
+                e.printStackTrace();
+            }
+
 
         }
 

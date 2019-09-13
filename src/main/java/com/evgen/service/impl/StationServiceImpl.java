@@ -351,4 +351,10 @@ public class StationServiceImpl implements StationService {
         logger.info("Route created, routeId = " + routeId);
         return routeId;
     }
+
+    @Override
+    public List<String> getStationNames(int routeId) {
+
+        return stationDAO.getStationNames(routeId);
+    }
 }

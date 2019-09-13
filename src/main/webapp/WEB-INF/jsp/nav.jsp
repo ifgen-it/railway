@@ -55,8 +55,8 @@
                 </ul>
             </li>
 
-            <li><a href="/send-message">Message</a>
-            </li>
+<%--            <li><a href="/send-message">Message</a>--%>
+<%--            </li>--%>
 
         </sec:authorize>
 
