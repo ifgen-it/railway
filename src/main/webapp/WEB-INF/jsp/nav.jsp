@@ -4,54 +4,54 @@
     <ul>
 
         <%--        ANONYMOUS --%>
-        <li><a href="/">Home</a></li>
+        <li><a href="/">HOME</a></li>
 
-        <li><a href="/timetable">Timetable</a>
+        <li><a href="/timetable">TIMETABLE</a>
             <ul>
-                <li><a href="/timetable">Timetable</a></li>
-                <li><a href="/routes">Routes</a></li>
+                <li><a href="/timetable">TIMETABLE</a></li>
+                <li><a href="/routes">ROUTES</a></li>
             </ul>
         </li>
 
-        <li><a href="/journey">Journey</a>
+        <li><a href="/journey">JOURNEY</a>
             <ul>
-                <li><a href="/journey">Find route</a></li>
-                <li><a href="/ticket/details">Ticket</a></li>
+                <li><a href="/journey">FIND ROUTE</a></li>
+                <li><a href="/ticket/details">TICKET</a></li>
             </ul>
         </li>
 
-        <li><a href="/info">Info</a></li>
+        <li><a href="/info">INFO</a></li>
         <li><a href="/api">API</a></li>
 
         <%--            USER --%>
         <sec:authorize access="isAuthenticated()">
 
-            <li><a href="/account">Account</a></li>
+            <li><a href="/account">ACCOUNT</a></li>
 
         </sec:authorize>
 
         <%--            ADMIN --%>
         <sec:authorize access="hasRole('ROLE_ADMIN')">
 
-            <li><a href="/users">Humans</a>
+            <li><a href="/users">HUMANS</a>
                 <ul>
-                    <li><a href="/users">Users</a></li>
-                    <li><a href="/accounts">Accounts</a></li>
-                    <li><a href="/passengers">Passengers</a></li>
+                    <li><a href="/users">USERS</a></li>
+                    <li><a href="/accounts">ACCOUNTS</a></li>
+                    <li><a href="/passengers">PASSENGERS</a></li>
                 </ul>
             </li>
 
-            <li><a href="/trains">Trains</a>
+            <li><a href="/trains">TRAINS</a>
                 <ul>
-                    <li><a href="/trains">Trains</a></li>
-                    <li><a href="/routes/new/arcs">New route</a></li>
+                    <li><a href="/trains">TRAINS</a></li>
+                    <li><a href="/routes/new/arcs">NEW ROUTE</a></li>
                 </ul>
             </li>
 
-            <li><a href="/arcs">Rails</a>
+            <li><a href="/arcs">RAILS</a>
                 <ul>
-                    <li><a href="/arcs">Arcs</a></li>
-                    <li><a href="/stations">Stations</a></li>
+                    <li><a href="/arcs">ARCS</a></li>
+                    <li><a href="/stations">STAITONS</a></li>
                 </ul>
             </li>
 
@@ -62,12 +62,12 @@
 
         <%-- AUTHORIZE --%>
         <sec:authorize access="!isAuthenticated()">
-            <li><a href="/sign-up">Sign up</a></li>
-            <li><a href="/login">Login</a></li>
+            <li><a href="/sign-up">SIGN UP</a></li>
+            <li><a href="/login">LOGIN</a></li>
         </sec:authorize>
 
         <sec:authorize access="isAuthenticated()">
-            <li><a href="/logout">Logout</a></li>
+            <li><a href="/logout">LOGOUT</a></li>
         </sec:authorize>
 
 

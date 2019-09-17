@@ -10,41 +10,15 @@
 </head>
 <body>
 <div class="wrapper">
-    <header>Trains and Rails</header>
+    <header>TRAINS AND RAILS</header>
     <c:import url="nav.jsp"/>
 
-<%--    <section id="content" class="clearfix">--%>
+    <div id="page-content">
+        <%--            NEED TO INSERT SEARCH FORM HERE --%>
 
-        <div id="page-content">
-            <div class="picture">
-                <img height=60%" src="/resources/img/train_pic_1.png" alt="Train picture">
-            </div>
-        </div>
-<%--        <aside>--%>
-<%--            <div class="dark-text">Hello, ${user}!</div>--%>
-
-<%--            <a class="a-normal" href="/routes">Routes</a><br>--%>
-<%--            <a class="a-big" href="/timetable">Timetable</a><br>--%>
-<%--            <a class="a-normal" href="/journey">Journey</a><br>--%>
-<%--            <a class="a-small" href="/ticket/details">Ticket</a><br>--%>
-
-<%--            <sec:authorize access="isAuthenticated()">--%>
-<%--                <a class="a-big" href="/account">Account</a><br>--%>
-<%--            </sec:authorize>--%>
-
-<%--            <sec:authorize access="hasRole('ROLE_ADMIN')">--%>
-<%--                <a class="a-small" href="/stations">Stations</a><br>--%>
-<%--                <a class="a-big" href="/users">Users</a><br>--%>
-<%--                <a class="a-normal" href="/routes/new/arcs">Create route</a><br>--%>
-<%--                <a class="a-small" href="/arcs">Arcs</a><br>--%>
-<%--            </sec:authorize>--%>
-
-<%--        </aside>--%>
-
-<%--    </section>--%>
-    <%--        <div id="empty-div"></div>--%>
+    </div>
 </div>
-<%--<c:import url="footer.jsp"/>--%>
+
 
 </body>
 </html>

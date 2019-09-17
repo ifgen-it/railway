@@ -5,7 +5,7 @@ html,body{
 }
 
 .wrapper{
-    background-color: darkslateblue;
+    background-color: #033226;
     height: 100%;
     font-size: medium;
     color: indigo;
@@ -19,11 +19,13 @@ html,body{
 
 header{
     height: 84px;
-    background-color: darkslateblue;
+    background-color: #033226;
     font-size: 32pt;
-    color: #f63;
+    color: #259378;
     text-align: center;
     padding-top: 20px;
+    font-family: "Courier New";
+    font-weight: bold;
 }
 
 .light-text{
@@ -498,18 +500,23 @@ input[type="submit"]:hover{
 
 /*===============  NAV MENU  ==================*/
 nav{
-    background-color: #f63;
+    background-color: #259378;
     font-size: 16pt;
+    font-family: "Courier New";
+    font-weight: bold;
 }
 
 .menu ul li{
     padding: 10px;
 }
 .menu ul > li:hover{
-    background-color: #f96;
+    background-color: #ff6633;
+    color: #033226;
+
 }
 .menu ul ul > li:hover{
-    background-color: #69e;
+    background-color: #ff6633;
+    color: #033226;
 }
 .menu ul li, .menu ul{
     display:inline-block;
@@ -518,21 +525,21 @@ nav{
     position: relative;
     margin: 0;
     padding: 0;
-    background-color: #f63;
+    background-color: #259378;
 }
 .menu ul ul{
     display: none;
     position: absolute;
-    background-color: #369;
+    background-color: #259378;
     margin-top: 10px;
     margin-left: -10px;
 }
 .menu ul a{
-    color: #fff;
+    color: #033226;
     text-decoration: none;
 }
 .menu ul ul a{
-    color: #fff;
+    color: #033226;
     text-decoration: none;
 }
 .menu li:hover ul{
