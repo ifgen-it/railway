@@ -39,11 +39,9 @@ public class MessageController {  // FOR TESTING - SEND MESSAGE TO JMS
         String stationName = stationService.getStation(stationId).getStationName();
         model.addAttribute("stationName", stationName);
 
-        List<String> stationsToUpdate = stationService.getStationNames(15);
-        for (String stationToUpdate : stationsToUpdate){
-            messageService.sendMessage(stationToUpdate);
-        }
-        logger.info("Message was sent to all stations");
+        messageService.sendMessage(stationName);
+
+        logger.info("Message was sent to " + stationName);
 
         return "/send_message";
     }
