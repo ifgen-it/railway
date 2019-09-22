@@ -74,10 +74,10 @@
             <c:if test="${futureRoutesNum > 0}">
                 <br>
                 <div class="text-good-news">Trains to ride</div>
-                <table id="table-journey-future" border="2">
+                <table id="table-journey-future">
                     <tr>
-                        <th>Route name</th>
-                        <th>Train name</th>
+                        <th>Route</th>
+                        <th>Train</th>
                         <th>Begin station</th>
                         <th>Departure time</th>
                         <th>End station</th>
@@ -116,10 +116,10 @@
                 <br>
                 <div class="text-good-news">Departed trains</div>
 
-                <table id="table-journey-past" border="2">
+                <table id="table-journey-past">
                     <tr>
-                        <th>Route name</th>
-                        <th>Train name</th>
+                        <th>Route</th>
+                        <th>Train</th>
                         <th>Begin station</th>
                         <th>Departure time</th>
                         <th>End station</th>

@@ -8,13 +8,26 @@ html,body{
     background-color: #033226;
     height: 100%;
     font-size: medium;
-    color: indigo;
+    color: #259378;
+    font-family: "Courier New";
+    font-weight: bold;
 }
 
 .long-wrapper{
-    background-color: darkslateblue;
+    background-color: #033226;
     font-size: medium;
-    color: indigo;
+    color: #259378;
+    font-family: "Courier New";
+    font-weight: bold;
+}
+
+a {
+    color: #259378;
+}
+
+a:hover {
+    color: #033226;
+    background-color: #ff6633;
 }
 
 header{
@@ -35,27 +48,34 @@ header{
 }
 
 .dark-text{
-    color: indigo;
-    font-size: 18pt;
-    padding-bottom: 8px;
+     color: #259378;
+     font-size: 18pt;
+     padding-bottom: 8px;
+ }
+
+.user-logged-text{
+    color: #033226;
+    font-size: 16pt;
+    font-family: "Courier New";
+    font-weight: bold;
 }
 
 .text-good-news{
-    color: indigo;
+    color: #259378;
     font-size: 16pt;
     padding-bottom: 5px;
     padding-left: 2px;
 }
 
 .text-bad-news{
-    color: darkred;
+    color: #ff6633;
     font-size: 16pt;
     padding-bottom: 5px;
     padding-left: 2px;
 }
 
 .dark-text-small{
-    color: indigo;
+    color: #259378;
     font-size: 13pt
 }
 
@@ -70,57 +90,11 @@ header{
 }
 
 #page-content{
-    /*float: right;*/
-    /*width: 78%;*/
     min-height: 300px;
     padding-top: 50px;
     padding-bottom: 50px;
     font-size: larger;
 }
-
-aside{
-    float: left;
-    width: 16%;
-    min-height: 60%;
-    background: slategrey;
-    padding: 10px;
-    font-size: larger;
-}
-
-aside a{
-    color: #f63;
-    text-decoration: none;
-}
-aside a:hover{
-    color: chartreuse;
-    text-decoration: none;
-}
-
-
-.a-big {
-    font-size: 40px;
-}
-.a-normal {
-    font-size: 30px;
-}
-.a-small {
-    font-size: 20px;
-}
-
-.clearfix:after{
-    content: ".";
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden;
-}
-/*end #content*/
-
-#empty-div{
-    height: 70px;
-    clear: both;
-}
-/*end #wrapper*/
 
 footer{
     height: 60px;
@@ -133,62 +107,116 @@ footer{
 /*======================= ERRORS ============================*/
 .content-error{
     padding: 30px;
-    background: dodgerblue;
+    background: #033226;
 }
 
 .error-exception{
 
-    color: #585858;
-    background: lightsteelblue;
-    border: 2px solid #585858;
+    color: #259378;
+    background: #033226;
+    border: 2px solid #259378;
 
     padding: 14px;
-    font-family: "Consolas";
+    font-family: "Courier New";
     font-size: 16px;
     margin-top: 14px;
     margin-bottom: 14px;
-    /*width: 900px;*/
 }
 
 
 /*======================= USERS ============================*/
 #content-table-users{
     padding: 30px;
-    background: dodgerblue;
+    background: #033226;
 }
 #table-users{
-    background: #add8e6;
+    color: #259378;
+    background: #033226;
+    font-size: 13pt;
+    font-weight: bold;
 }
 #table-users th{
-    color: indigo;
+    color: #033226;
+    background: #259378;
     font-size: 13pt;
     padding: 4px;
 }
+
+#table-users td{
+    color: #259378;
+    background: #033226;
+    font-size: 13pt;
+    padding: 4px;
+}
+
+#table-users tr:hover td{
+    color: #033226;
+    background: #ff6633;
+    font-size: 13pt;
+    padding: 4px;
+}
+
 /*============ STATIONS ============*/
+
 #content-table-stations{
     padding: 30px;
-    background: dodgerblue;
+    background: #033226;
 }
 #table-stations{
-    background: #add8e6;
+    color: #259378;
+    background: #033226;
+    font-size: 13pt;
+    font-weight: bold;
 }
 #table-stations th{
-    color: indigo;
+    color: #033226;
+    background: #259378;
     font-size: 13pt;
     padding: 4px;
 }
 
-/*============ ARCS ============*/
-#content-table-arcs{
-    padding: 30px;
-    background: dodgerblue;
-}
-#table-arcs{
-    background: #add8e6;
+#table-stations td{
+    color: #259378;
+    background: #033226;
+    font-size: 13pt;
+    padding: 4px;
 }
 
+#table-stations tr:hover td{
+    color: #033226;
+    background: #ff6633;
+    font-size: 13pt;
+    padding: 4px;
+}
+/*============ ARCS ============*/
+
+#content-table-arcs{
+    padding: 30px;
+    background: #033226;
+}
+#table-arcs{
+    color: #259378;
+    background: #033226;
+    font-size: 13pt;
+    font-weight: bold;
+}
 #table-arcs th{
-    color: indigo;
+    color: #033226;
+    background: #259378;
+    font-size: 13pt;
+    padding: 4px;
+}
+
+#table-arcs td{
+    color: #259378;
+    background: #033226;
+    font-size: 13pt;
+    padding: 4px;
+}
+
+#table-arcs tr:hover td{
+    color: #033226;
+    background: #ff6633;
     font-size: 13pt;
     padding: 4px;
 }
@@ -196,26 +224,64 @@ footer{
 /* ======= ROUTES ===============*/
 #content-table-routes{
     padding: 30px;
-    background: dodgerblue;
+    background: #033226;
 }
 #table-routes{
-    background: #add8e6;
+    color: #259378;
+    background: #033226;
+    font-size: 13pt;
+    font-weight: bold;
 }
 #table-routes th{
-    color: indigo;
+    color: #033226;
+    background: #259378;
     font-size: 13pt;
     padding: 4px;
 }
+
+#table-routes td{
+    color: #259378;
+    background: #033226;
+    font-size: 13pt;
+    padding: 4px;
+}
+
+#table-routes tr:hover td{
+    color: #033226;
+    background: #ff6633;
+    font-size: 13pt;
+    padding: 4px;
+}
+
+
 /*========  TRAINS ===============*/
 #content-table-trains{
     padding: 30px;
-    background: dodgerblue;
+    background: #033226;
 }
 #table-trains{
-    background: #add8e6;
+    color: #259378;
+    background: #033226;
+    font-size: 13pt;
+    font-weight: bold;
 }
 #table-trains th{
-    color: indigo;
+    color: #033226;
+    background: #259378;
+    font-size: 13pt;
+    padding: 4px;
+}
+
+#table-trains td{
+    color: #259378;
+    background: #033226;
+    font-size: 13pt;
+    padding: 4px;
+}
+
+#table-trains tr:hover td{
+    color: #033226;
+    background: #ff6633;
     font-size: 13pt;
     padding: 4px;
 }
@@ -223,66 +289,145 @@ footer{
 /*==========  JOURNEY ===============*/
 #content-table-journey{
     padding: 30px;
-    background: dodgerblue;
+    background: #033226;
 }
+
 #table-journey-past{
-    background: #add8e6;
-    margin-top: 10px;
+    color: #259378;
+    background: #033226;
+    font-size: 13pt;
+    font-weight: bold;
 }
 #table-journey-past th{
-    color: indigo;
-    font-size: 13pt;
-    padding: 4px;
-}
-#table-journey-future{
-    background: #add8e6;
-    margin-top: 10px;
-}
-#table-journey-future th{
-    color: indigo;
+    color: #033226;
+    background: #259378;
     font-size: 13pt;
     padding: 4px;
 }
 
-/*==========  BUY PASSENGERS ===============*/
-#content-passengers{
-    padding: 30px;
-    background: dodgerblue;
-}
-#table-passengers{
-    background: #add8e6;
-    margin-top: 10px;
-}
-#table-passengers th{
-    color: indigo;
+#table-journey-past td{
+    color: #259378;
+    background: #033226;
     font-size: 13pt;
     padding: 4px;
+}
+
+#table-journey-past tr:hover td{
+    color: #033226;
+    background: #ff6633;
+    font-size: 13pt;
+    padding: 4px;
+}
+
+
+#table-journey-future{
+    color: #259378;
+    background: #033226;
+    font-size: 13pt;
+    font-weight: bold;
+}
+#table-journey-future th{
+    color: #033226;
+    background: #259378;
+    font-size: 13pt;
+    padding: 4px;
+}
+
+#table-journey-future td{
+    color: #259378;
+    background: #033226;
+    font-size: 13pt;
+    padding: 4px;
+}
+
+#table-journey-future tr:hover td{
+    color: #033226;
+    background: #ff6633;
+    font-size: 13pt;
+    padding: 4px;
+}
+#table-journey-future tr:hover td a{
+    color: #033226;
+}
+
+
+/*==========  PASSENGERS ===============*/
+#content-passengers{
+    padding: 30px;
+    background: #033226;
+}
+
+#table-passengers{
+    color: #259378;
+    background: #033226;
+    font-size: 13pt;
+    font-weight: bold;
+}
+#table-passengers th{
+    color: #033226;
+    background: #259378;
+    font-size: 13pt;
+    padding: 4px;
+}
+
+#table-passengers td{
+    color: #259378;
+    background: #033226;
+    font-size: 13pt;
+    padding: 4px;
+}
+
+#table-passengers tr:hover td{
+     color: #033226;
+     background: #ff6633;
+     font-size: 13pt;
+     padding: 4px;
+ }
+#table-passengers tr:hover td a{
+    color: #033226;
 }
 
 /*==========  BUY TICKET ===============*/
 #content-buy-ticket{
     padding: 30px;
-    background: dodgerblue;
+    background: #033226;
 }
+
 #table-buy-ticket{
-    background: #add8e6;
-    margin-top: 10px;
+    color: #259378;
+    background: #033226;
+    font-size: 13pt;
+    font-weight: bold;
 }
 #table-buy-ticket th{
-    color: indigo;
+    color: #033226;
+    background: #259378;
+    font-size: 13pt;
+    padding: 4px;
+}
+
+#table-buy-ticket td{
+    color: #259378;
+    background: #033226;
+    font-size: 13pt;
+    padding: 4px;
+}
+
+#table-buy-ticket tr:hover td{
+    color: #033226;
+    background: #ff6633;
     font-size: 13pt;
     padding: 4px;
 }
 
 
+
 .ticket-paper{
     color: #585858;
     background: whitesmoke;
-    /*background: whitesmoke;*/
     border: 2px solid #585858;
     padding: 14px;
-    /*font-family: "Consolas";*/
-    font-family: "Consolas";
+    font-family: "Courier New";
     font-size: 14px;
     margin-top: 14px;
     margin-bottom: 14px;
@@ -309,66 +454,98 @@ footer{
 /*==========  API ===============*/
 #content-api{
     padding: 30px;
-    background: dodgerblue;
+    background: #033226;
 }
+
 #table-api{
-    background: #add8e6;
-    margin-top: 10px;
+    color: #259378;
+    background: #033226;
+    font-size: 13pt;
+    font-weight: bold;
 }
 #table-api th{
-    color: indigo;
+    color: #033226;
+    background: #259378;
     font-size: 13pt;
     padding: 4px;
 }
 #table-api td{
     padding: 7px;
+    vertical-align: top;
 }
+
 
 /*==========  API-CLASS-stations ===============*/
 
 #table-class-stations{
-    background: #add8e6;
+    background: #033226;
 }
 
 #table-class-stations td{
     padding-top: 1px;
     padding-bottom: 1px;
     padding-left: 12px;
+    color: #259378;
+    font-size: 13pt;
 }
+
 /*==========  API-CLASS-arrivals ===============*/
 
 #table-class-arrivals{
-    background: #add8e6;
+    background: #033226;
 }
 
 #table-class-arrivals td{
     padding-top: 1px;
     padding-bottom: 1px;
     padding-left: 12px;
+    color: #259378;
+    font-size: 13pt;
 }
+
 /*==========  API-CLASS-departures ===============*/
 
 #table-class-departures{
-    background: #add8e6;
+    background: #033226;
 }
 
 #table-class-departures td{
     padding-top: 1px;
     padding-bottom: 1px;
     padding-left: 12px;
+    color: #259378;
+    font-size: 13pt;
 }
 
 /*==========  ACCOUNT ===============*/
+
 #content-account{
     padding: 30px;
-    background: dodgerblue;
+    background: #033226;
 }
 #table-account{
-    background: #add8e6;
-    margin-top: 10px;
+    color: #259378;
+    background: #033226;
+    font-size: 13pt;
+    font-weight: bold;
 }
 #table-account th{
-    color: indigo;
+    color: #033226;
+    background: #259378;
+    font-size: 13pt;
+    padding: 4px;
+}
+
+#table-account td{
+    color: #259378;
+    background: #033226;
+    font-size: 13pt;
+    padding: 4px;
+}
+
+#table-account tr:hover td{
+    color: #033226;
+    background: #ff6633;
     font-size: 13pt;
     padding: 4px;
 }
@@ -376,14 +553,31 @@ footer{
 /*==========  ACCOUNTS ===============*/
 #content-accounts{
     padding: 30px;
-    background: dodgerblue;
+    background: #033226;
 }
 #table-accounts{
-    background: #add8e6;
-    margin-top: 10px;
+    color: #259378;
+    background: #033226;
+    font-size: 13pt;
+    font-weight: bold;
 }
 #table-accounts th{
-    color: indigo;
+    color: #033226;
+    background: #259378;
+    font-size: 13pt;
+    padding: 4px;
+}
+
+#table-accounts td{
+    color: #259378;
+    background: #033226;
+    font-size: 13pt;
+    padding: 4px;
+}
+
+#table-accounts tr:hover td{
+    color: #033226;
+    background: #ff6633;
     font-size: 13pt;
     padding: 4px;
 }
@@ -391,111 +585,203 @@ footer{
 /*==========  NEW ROUTE ===============*/
 #content-new-route{
     padding: 30px;
-    background: dodgerblue;
+    background: #033226;
 }
+
 #table-new-route{
-    background: #add8e6;
-    margin-top: 10px;
+    color: #259378;
+    background: #033226;
+    font-size: 13pt;
+    font-weight: bold;
 }
 #table-new-route th{
-    color: indigo;
+    color: #033226;
+    background: #259378;
     font-size: 13pt;
     padding: 4px;
 }
 
+#table-new-route td{
+    color: #259378;
+    background: #033226;
+    font-size: 13pt;
+    padding: 4px;
+}
+
+#table-new-route tr:hover td{
+    color: #033226;
+    background: #ff6633;
+    font-size: 13pt;
+    padding: 4px;
+}
 /*==========  NEW ROUTE : ATTACH TRAIN ===============*/
 #content-attach-train{
     padding: 30px;
-    background: dodgerblue;
+    background: #033226;
 }
+
 #table-attach-train{
-    background: #add8e6;
-    margin-top: 10px;
+    color: #259378;
+    background: #033226;
+    font-size: 13pt;
+    font-weight: bold;
 }
 #table-attach-train th{
-    color: indigo;
+    color: #033226;
+    background: #259378;
+    font-size: 13pt;
+    padding: 4px;
+}
+
+#table-attach-train td{
+    color: #259378;
+    background: #033226;
+    font-size: 13pt;
+    padding: 4px;
+}
+
+#table-attach-train tr:hover td{
+    color: #033226;
+    background: #ff6633;
     font-size: 13pt;
     padding: 4px;
 }
 
 /* =====  TIME TABLE ===============*/
+
+
 #content-table-timetable{
     padding: 30px;
-    background: dodgerblue;
-}
-#table-timetable-departure{
-    background: #add8e6;
-}
-#table-timetable-departure th{
-    padding: 2px;
-    color: green;
-    font-size: 13pt;
-}
-#table-timetable-departure td{
-    padding: 5px;
-}
-#table-timetable-arrival{
-    background: #add8e6;
-}
-#table-timetable-arrival th{
-    padding: 3px;
-    color: green;
-    font-size: 13pt;
-}
-#table-timetable-arrival td{
-    padding: 5px;
+    background: #033226;
 }
 
-#table-timetable-arr-dep{
-
-}
-#table-timetable-arr-dep th{
-    color: indigo;
-    font-size: 13pt;
+#table-timetable-arr-dep {
+    color: #259378;
+    font-size: 15pt;
     padding: 4px;
 }
 #table-timetable-arr-dep td{
     vertical-align: top;
 }
 
+#table-timetable-departure{
+    color: #259378;
+    background: #033226;
+    font-size: 13pt;
+    font-weight: bold;
+}
+
+#table-timetable-departure th{
+    color: #033226;
+    background: #259378;
+    font-size: 13pt;
+    padding: 4px;
+}
+#table-timetable-departure td{
+    color: #259378;
+    background: #033226;
+    font-size: 13pt;
+    padding: 4px;
+}
+
+#table-timetable-departure tr:hover td{
+    color: #033226;
+    background: #ff6633;
+    font-size: 13pt;
+    padding: 4px;
+}
+
+#table-timetable-arrival{
+    color: #259378;
+    background: #033226;
+    font-size: 13pt;
+    font-weight: bold;
+}
+#table-timetable-arrival th{
+    color: #033226;
+    background: #259378;
+    font-size: 13pt;
+    padding: 4px;
+}
+#table-timetable-arrival td{
+    color: #259378;
+    background: #033226;
+    font-size: 13pt;
+    padding: 4px;
+}
+
+#table-timetable-arrival tr:hover td{
+    color: #033226;
+    background: #ff6633;
+    font-size: 13pt;
+    padding: 4px;
+}
+
+
 /*======================= ADD USER ============================*/
+
+::placeholder {
+    color: #033226;
+    opacity: 0.85;
+    font-size: 12pt;
+    font-family: "Courier New";
+}
 
 #content-add-user{
     padding:20px 50px;
-    background: dodgerblue;
+    background: #033226;
 }
 
 .form-element{
-    margin: 12px 0;
+     margin: 12px 0;
+}
+
+.form-element select{
+    background: #259378;
+    color: #033226;
+    font-size: 13pt;
+    font-family: "Courier New";
+    font-weight: bold;
+
+    padding: 3px;
 }
 
 .form-element input{
-    font-size: 10pt;
-    color: indigo;
+    background: #259378;
+    color: #033226;
+    font-size: 13pt;
+    font-family: "Courier New";
+    font-weight: bold;
 
+    padding: 3px;
 }
 .form-element input:focus{
-    color: red;
-    font-size: 11pt;
+    color: #033226;
+    background: #ff6633;
 }
 
 .form-element .error-message{
-    color: darkred;
+    color: #ff6633;
     font-size: 13pt;
 
 }
 
 input[type="submit"]{
-    background: cornflowerblue;
-    color: indigo;
-    border: 2px solid indigo;
+    background: #033226;
+    color: #259378;
+    border: 2px solid #259378;
     padding: 5px 12px;
     margin-top: 10px;
-    font-size: 12pt;
+    font-size: 15pt;
+
+    font-family: "Courier New";
+    font-weight: bold;
 }
 input[type="submit"]:hover{
     cursor:pointer;
-    border: 2px dashed indigo;
+    background: #ff6633;
+    color: #033226;
+    border: 2px solid #033226;
 }
 
 /*===============  NAV MENU  ==================*/

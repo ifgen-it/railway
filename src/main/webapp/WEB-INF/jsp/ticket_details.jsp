@@ -41,45 +41,46 @@
 
             <div class="dark-text">Ticket details</div>
 
-            <table id="table-buy-ticket" border="2">
+            <table id="table-buy-ticket">
                 <tr>
 
-                    <th>Name</th>
-                    <th>Value</th>
+                    <th>Category</th>
+                    <th>Information</th>
                 </tr>
                 <tr>
-                    <td>Route name</td>
+                    <td>ROUTE ........</td>
                     <td>${sessionScope.ticketDetails.routeDTO.routeName}</td>
                 </tr>
                 <tr>
-                    <td>Train name</td>
+                    <td>TRAIN ........</td>
                     <td>${sessionScope.ticketDetails.routeDTO.train.trainName}</td>
                 </tr>
                 <tr>
-                    <td>From</td>
+                    <td>FROM .........</td>
                     <td>${sessionScope.ticketDetails.routeBeginStation.stationName}</td>
                 </tr>
                 <tr>
-                    <td>To</td>
+                    <td>TO ...........</td>
                     <td>${sessionScope.ticketDetails.routeEndStation.stationName}</td>
                 </tr>
                 <tr>
-                    <td>Departure</td>
+                    <td>DEPARTURE ....</td>
                     <fmt:parseDate value="${sessionScope.ticketDetails.routeDepartureTime}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
                     <td><fmt:formatDate pattern="dd-MM-yyyy HH:mm" value="${parsedDateTime}" /></td>
 
                 </tr>
                 <tr>
-                    <td>Arrival</td>
+                    <td>ARRIVAL ......</td>
                     <fmt:parseDate value="${sessionScope.ticketDetails.routeArrivalTime}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
                     <td><fmt:formatDate pattern="dd-MM-yyyy HH:mm" value="${parsedDateTime}" /></td>
 
                 </tr>
                 <tr>
-                    <td>Price, rub</td>
+                    <td>PRICE ........</td>
                     <td>${sessionScope.ticketDetails.routePrice}</td>
                 </tr>
             </table>
+            <br>
 
             <%--                IF THERE IS NO AVALIABLE SEATS --%>
             <c:if test="${sessionScope.freeSeatsAmount == 0}">

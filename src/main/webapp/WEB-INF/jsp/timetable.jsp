@@ -21,9 +21,20 @@
         <div class="dark-text">Select station to display timetable:</div>
         <form action="/timetable" method="post">
             <div class="form-element">
-                <select name="stationId" class="form-element">
+                <select name="stationId">
                     <c:forEach var="station" items="${stations}">
-                        <option value="${station.stationId}">${station.stationName}</option>
+                        <c:if test="${stationName != null}">
+                            <c:if test="${stationName != station.stationName}">
+                                <option value="${station.stationId}">${station.stationName}</option>
+                            </c:if>
+                            <c:if test="${stationName == station.stationName}">
+                                <option selected value="${station.stationId}">${station.stationName}</option>
+                            </c:if>
+
+                        </c:if>
+                        <c:if test="${stationName == null}">
+                            <option value="${station.stationId}">${station.stationName}</option>
+                        </c:if>
                     </c:forEach>
                 </select>
             </div>
@@ -47,9 +58,9 @@
                 <tr>
                         <%--                    Arrivals --%>
                     <td>
-                        <table id="table-timetable-arrival" border="2">
+                        <table id="table-timetable-arrival">
                             <tr>
-                                <th>Arrival time</th>
+                                <th>Arrival</th>
                                 <th>Route</th>
                                 <th>Train</th>
 
@@ -71,9 +82,9 @@
                     </td>
                         <%--    Departures --%>
                     <td>
-                        <table id="table-timetable-departure" border="2">
+                        <table id="table-timetable-departure">
                             <tr>
-                                <th>Departure time</th>
+                                <th>Departure</th>
                                 <th>Route</th>
                                 <th>Train</th>
 

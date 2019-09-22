@@ -50,13 +50,13 @@
             <br>
             <div class="dark-text-small">Tickets:</div>
 
-            <table id="table-account" border="2">
+            <table id="table-account">
                 <tr>
-                    <th>Ticket Id</th>
-                    <th>Route name</th>
+                    <th>Ticket</th>
+                    <th>Route</th>
                     <th>Route Id</th>
-                    <th>Train name</th>
-                    <th>Seat number</th>
+                    <th>Train</th>
+                    <th>Seat</th>
                     <th>Start station</th>
                     <th>Finish station</th>
                     <th>Start time</th>

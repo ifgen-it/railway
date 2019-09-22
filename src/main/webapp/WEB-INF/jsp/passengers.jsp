@@ -47,18 +47,18 @@
                 </div>
             </c:if>
 
-            <table id="table-passengers" border="2">
+            <table id="table-passengers">
                 <tr>
                     <th>Route Id</th>
-                    <th>Route name</th>
-                    <th>Train name</th>
-                    <th>Seat number</th>
+                    <th>Route</th>
+                    <th>Train</th>
+                    <th>Seat</th>
                     <th>Start station</th>
                     <th>Finish station</th>
                     <th>Start time</th>
                     <th>Finish time</th>
                     <th>Price</th>
-                    <th>Ticket Id</th>
+                    <th>Ticket</th>
                     <th>Passenger</th>
 
 
@@ -82,7 +82,7 @@
 
                         <td>${ticket.price}</td>
                         <td>${ticket.ticketId}</td>
-                        <td><a href="/accounts?id=${ticket.user.userId}">${ticket.user.lastName} ${ticket.user.firstName} ${ticket.user.email}</a></td>
+                        <td><a href="/accounts?id=${ticket.user.userId}">${ticket.user.lastName} ${ticket.user.firstName}</a></td>
 
                     </tr>
                 </c:forEach>

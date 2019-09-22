@@ -52,12 +52,12 @@
 
 
         <%--            SHOW ARCS --%>
-        <table id="table-arcs" border="2">
+        <table id="table-arcs">
             <tr>
                 <th>Id</th>
                 <th>Begin station</th>
                 <th>End station</th>
-                <th>Length, km</th>
+                <th>Length</th>
 
             </tr>
 

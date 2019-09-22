@@ -19,16 +19,16 @@
 
     <div id="content-table-routes">
         <div class="dark-text">Routes</div>
-        <table id="table-routes" border="2">
+        <table id="table-routes" >
             <tr>
                 <th>Id</th>
-                <th>Route name</th>
-                <th>Train name</th>
-                <th>Seats amount</th>
+                <th>Route</th>
+                <th>Train</th>
+                <th>Seats</th>
                 <th>Begin station</th>
-                <th>Departure time</th>
+                <th>Departure</th>
                 <th>End station</th>
-                <th>Arrival time</th>
+                <th>Arrival</th>
 
             </tr>
 

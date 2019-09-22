@@ -45,7 +45,7 @@
                     <table id="table-ticket-paper">
                         <caption><span class="ticket-paper-small">TRAINS AND RAILS</span></caption>
 
-                        <tr><td colspan="2"><span class="ticket-paper-small">------------------------------</span></td></tr>
+                        <tr><td align="center" colspan="2"><span class="ticket-paper-small">>><<</span></td></tr>
                         <tr>
                             <td><span class="ticket-paper-small">TICKET:</span></td>
                             <td><span class="ticket-paper-big">${ticket.ticketId}</span></td>

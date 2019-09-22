@@ -25,7 +25,7 @@
 
     <div id="content-table-users">
         <form action="/users" method="post">
-            <table id="table-users" border="2">
+            <table id="table-users">
                 <tr>
                     <th>Id</th>
                     <th>Role</th>
@@ -33,7 +33,7 @@
                     <th>Last name</th>
                     <th>Birthday</th>
                     <th>Email</th>
-                    <th>Password</th>
+<%--                    <th>Password</th>--%>
 
                     <th>Admin</th>
                     <th>User</th>
@@ -60,7 +60,7 @@
                         <td><fmt:formatDate pattern="dd-MM-yyyy" value="${parsedDateTime}" /></td>
 
                         <td>${user.email}</td>
-                        <td>${user.password}</td>
+<%--                        <td>${user.password}</td>--%>
 
                         <td align="center">
                             <input type="checkbox" name="make-admin" value=${user.userId}>

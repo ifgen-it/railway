@@ -17,7 +17,7 @@
     <div id="content-api">
         <div class="dark-text">API for developers</div>
 
-        <table id="table-api" border="2">
+        <table id="table-api">
             <tr>
                 <th>URL</th>
                 <th>Description</th>
@@ -72,6 +72,9 @@
                         <tr>
                             <td><i>String</i></td><td>trainName</td>
                         </tr>
+                        <tr>
+                            <td><i>Boolean</i></td><td>isArrival</td>
+                        </tr>
                     </table>
 
                 </td>
@@ -108,6 +111,9 @@
                         </tr>
                         <tr>
                             <td><i>String</i></td><td>trainName</td>
+                        </tr>
+                        <tr>
+                            <td><i>Boolean</i></td><td>isArrival</td>
                         </tr>
                     </table>
 

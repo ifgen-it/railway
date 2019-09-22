@@ -73,10 +73,10 @@
 
         <%--            USER NAME --%>
         <sec:authorize access="isAuthenticated()">
-            <li><sec:authentication property="principal.firstName"/></li>
+            <span class="user-logged-text">[<sec:authentication property="principal.firstName"/>]</span>
         </sec:authorize>
         <sec:authorize access="!isAuthenticated()">
-            <li>Guest</li>
+            <span class="user-logged-text">[Guest]</span>
         </sec:authorize>
 
     </ul>

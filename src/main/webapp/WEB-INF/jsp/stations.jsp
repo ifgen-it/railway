@@ -30,7 +30,7 @@
 
 
         <%--            SHOW STATIONS --%>
-        <table id="table-stations" border="2">
+        <table id="table-stations">
             <tr>
                 <th>Id</th>
                 <th>Station name</th>

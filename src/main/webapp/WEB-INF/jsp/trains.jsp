@@ -33,7 +33,7 @@
     </form>
 
 <%--            SHOW TRAINS --%>
-        <table id="table-trains" border="2">
+        <table id="table-trains">
             <tr>
                 <th>Id</th>
                 <th>Train name</th>

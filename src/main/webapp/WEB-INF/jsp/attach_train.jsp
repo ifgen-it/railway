@@ -56,7 +56,7 @@
             <c:if test="${sessionScope.firstArcAdded != null}">
                 <div class="dark-text">Added arcs:</div>
 
-                <table id="table-new-route" border="2">
+                <table id="table-new-route">
                     <tr>
                         <th>Arc</th>
                         <th>Begin station</th>
