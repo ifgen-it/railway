@@ -444,7 +444,7 @@ public class StationController {
             model.addAttribute("routeCreated", routeCreated);
 
             // UPDATE TIMETABLE FOR ALL STATIONS IN THE NEW ROUTE
-
+/*
             try {
 
                 List<String> stationsToUpdate = stationService.getStationNames(routeId);
@@ -457,7 +457,7 @@ public class StationController {
                 logger.warn("Message did not sent, error : " + e);
                 e.printStackTrace();
             }
-
+*/
 
         }
 

@@ -5,11 +5,13 @@ import com.evgen.dao.UserDAO;
 import com.evgen.dao.exception.BusySeatPurchaseException;
 import com.evgen.dto.station.RouteExtDTO;
 import com.evgen.dto.ticket.TicketDTO;
+import com.evgen.dto.user.UserDTO;
 import com.evgen.entity.station.RouteEntity;
 import com.evgen.entity.station.StationEntity;
 import com.evgen.entity.ticket.TicketEntity;
 import com.evgen.entity.user.UserEntity;
 import com.evgen.service.TicketService;
+import com.evgen.service.UserService;
 import com.evgen.service.exception.TimeLimitPurchaseException;
 import com.evgen.service.exception.TwinUserPurchaseException;
 import org.apache.log4j.Logger;
@@ -28,11 +30,14 @@ public class TicketServiceImpl implements TicketService {
 
     private static final Logger logger = Logger.getLogger(TicketServiceImpl.class);
 
-    @Autowired
     private TicketDAO ticketDAO;
 
-    @Autowired
-    private UserDAO userDAO;
+    private UserService userService;
+
+    public TicketServiceImpl(TicketDAO ticketDAO, UserService userService) {
+        this.ticketDAO = ticketDAO;
+        this.userService = userService;
+    }
 
     @Override
     public List<TicketDTO> getAllTickets() {
@@ -91,7 +96,9 @@ public class TicketServiceImpl implements TicketService {
         // CHECK HERE FOR A EXISTENCE TWIN USER ON THE TRAIN
         ModelMapper modelMapper = new ModelMapper();
 
-        UserEntity userEntity = userDAO.get(userId);
+        UserDTO userDTO = userService.getUser(userId);
+        UserEntity userEntity = modelMapper.map(userDTO, UserEntity.class);
+
         RouteEntity routeEntity = modelMapper.map(routeExtDTO.getRouteDTO(), RouteEntity.class);
 
         if(ticketDAO.getTicket(routeEntity,userEntity) != null){

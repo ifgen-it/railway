@@ -25,14 +25,17 @@ public class UserServiceImpl implements UserService {
 
     private static final Logger logger = Logger.getLogger(UserServiceImpl.class);
 
-    @Autowired
     private UserDAO userDAO;
 
-    @Autowired
     private RoleDAO roleDAO;
 
-    @Autowired
     private PasswordEncoder passwordEncoder;
+
+    public UserServiceImpl(UserDAO userDAO, RoleDAO roleDAO, PasswordEncoder passwordEncoder) {
+        this.userDAO = userDAO;
+        this.roleDAO = roleDAO;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public List<UserDTO> getAllUsers() {
