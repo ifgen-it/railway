@@ -4,8 +4,6 @@ import com.evgen.dao.TrainDAO;
 import com.evgen.dto.train.TrainDTO;
 import com.evgen.entity.train.TrainEntity;
 import com.evgen.service.TrainService;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,8 +15,11 @@ import java.util.List;
 @Transactional
 public class TrainServiceImpl implements TrainService {
 
-    @Autowired
     private TrainDAO trainDAO;
+
+    public TrainServiceImpl(TrainDAO trainDAO) {
+        this.trainDAO = trainDAO;
+    }
 
     @Override
     public List<TrainDTO> getAllTrains() {

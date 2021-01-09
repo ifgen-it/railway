@@ -3,7 +3,7 @@ package com.evgen.controller;
 import com.evgen.dto.train.TrainDTO;
 import com.evgen.service.TrainService;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +17,7 @@ public class TrainController {
 
     private TrainService trainService;
 
-    public TrainController(TrainService trainService) {
+    public TrainController(@Qualifier("trainServiceRestClient") TrainService trainService) {
         this.trainService = trainService;
     }
 

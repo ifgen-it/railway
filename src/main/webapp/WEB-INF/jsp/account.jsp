@@ -23,8 +23,10 @@
         <br>
         <div class="dark-text-small">Email: ${user.email}</div>
 
-        <fmt:parseDate value="${user.birthday}" pattern="yyyy-MM-dd HH:mm:ss.SSS" var="parsedDateTime" type="both" />
-        <div class="dark-text-small">Birthday: <fmt:formatDate pattern="dd-MM-yyyy" value="${parsedDateTime}" /></div>
+<%--        <fmt:parseDate value="${user.birthday}" pattern="yyyy-MM-dd HH:mm:ss.SSS" var="parsedDateTime" type="both" />--%>
+<%--        <div class="dark-text-small">Birthday: <fmt:formatDate pattern="dd-MM-yyyy" value="${parsedDateTime}" /></div>--%>
+
+        <div class="dark-text-small">Birthday: ${user.birthday}</div>
 
         <sec:authorize access="hasRole('ROLE_ADMIN')">
             <div class="dark-text-small">Role: Admin</div>

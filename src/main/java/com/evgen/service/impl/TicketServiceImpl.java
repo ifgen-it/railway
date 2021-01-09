@@ -1,7 +1,6 @@
 package com.evgen.service.impl;
 
 import com.evgen.dao.TicketDAO;
-import com.evgen.dao.UserDAO;
 import com.evgen.dao.exception.BusySeatPurchaseException;
 import com.evgen.dto.station.RouteDTO;
 import com.evgen.dto.station.RouteExtDTO;
@@ -17,8 +16,7 @@ import com.evgen.service.UserService;
 import com.evgen.service.exception.TimeLimitPurchaseException;
 import com.evgen.service.exception.TwinUserPurchaseException;
 import org.apache.log4j.Logger;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,7 +34,8 @@ public class TicketServiceImpl implements TicketService {
 
     private UserService userService;
 
-    public TicketServiceImpl(TicketDAO ticketDAO, UserService userService) {
+    public TicketServiceImpl(TicketDAO ticketDAO,
+                             @Qualifier("userServiceRestClient") UserService userService) {
         this.ticketDAO = ticketDAO;
         this.userService = userService;
     }

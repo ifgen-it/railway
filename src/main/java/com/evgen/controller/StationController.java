@@ -10,14 +10,13 @@ import com.evgen.service.StationService;
 import com.evgen.service.TrainService;
 import com.evgen.service.exception.UseReservedTrainException;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.jms.JMSException;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -30,15 +29,19 @@ public class StationController {
 
     private static final Logger logger = Logger.getLogger(StationController.class);
 
-    @Autowired
     private StationService stationService;
 
-    @Autowired
     private TrainService trainService;
 
-    @Autowired
     private MessageService messageService;
 
+    public StationController(@Qualifier("stationServiceRestClient") StationService stationService,
+                             @Qualifier("trainServiceRestClient") TrainService trainService,
+                             MessageService messageService) {
+        this.stationService = stationService;
+        this.trainService = trainService;
+        this.messageService = messageService;
+    }
 
     @GetMapping("/arcs")
     public String getArcs(Model model) {

@@ -10,7 +10,7 @@ import com.evgen.service.TicketService;
 import com.evgen.service.exception.TimeLimitPurchaseException;
 import com.evgen.service.exception.TwinUserPurchaseException;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,15 +30,19 @@ public class TicketController {
 
     private static final Logger logger = Logger.getLogger(TicketController.class);
 
-    @Autowired
     private StationService stationService;
 
-    @Autowired
     private TicketService ticketService;
 
-    @Autowired
     private SecurityService securityService;
 
+    public TicketController(@Qualifier("stationServiceRestClient") StationService stationService,
+                            @Qualifier("ticketServiceRestClient") TicketService ticketService,
+                            SecurityService securityService) {
+        this.stationService = stationService;
+        this.ticketService = ticketService;
+        this.securityService = securityService;
+    }
 
     @GetMapping("/ticket/details")
     public String getTicketDetails(@RequestParam(name = "routeId", required = false) String strRouteId,

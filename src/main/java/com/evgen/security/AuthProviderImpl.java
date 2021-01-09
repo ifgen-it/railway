@@ -4,6 +4,7 @@ import com.evgen.dto.user.UserDTO;
 import com.evgen.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,6 +25,7 @@ public class AuthProviderImpl implements AuthenticationProvider {
     private static final Logger logger = Logger.getLogger(AuthProviderImpl.class);
 
     @Autowired
+    @Qualifier("userServiceRestClient")
     private UserService userService;
 
     @Autowired

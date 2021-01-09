@@ -2,6 +2,7 @@ package com.evgen.rest;
 
 import com.evgen.dto.train.TrainDTO;
 import com.evgen.service.TrainService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,9 +13,10 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class TrainRestController {
 
+
     private TrainService trainService;
 
-    public TrainRestController(TrainService trainService) {
+    public TrainRestController(@Qualifier("trainServiceImpl") TrainService trainService) {
         this.trainService = trainService;
     }
 

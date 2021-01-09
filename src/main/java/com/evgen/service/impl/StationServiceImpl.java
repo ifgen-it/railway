@@ -12,9 +12,8 @@ import com.evgen.entity.station.StationEntity;
 import com.evgen.service.StationService;
 import com.evgen.service.TrainService;
 import com.evgen.service.exception.UseReservedTrainException;
-import org.modelmapper.ModelMapper;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,20 +28,27 @@ public class StationServiceImpl implements StationService {
 
     private static final Logger logger = Logger.getLogger(StationServiceImpl.class);
 
-    @Autowired
     private StationDAO stationDAO;
 
-    @Autowired
     private ArcDAO arcDAO;
 
-    @Autowired
     private RouteDAO routeDAO;
 
-    @Autowired
     private RoutePathDAO routePathDAO;
 
-    @Autowired
     private TrainService trainService;
+
+    public StationServiceImpl(StationDAO stationDAO,
+                              ArcDAO arcDAO,
+                              RouteDAO routeDAO,
+                              RoutePathDAO routePathDAO,
+                              @Qualifier("trainServiceRestClient") TrainService trainService) {
+        this.stationDAO = stationDAO;
+        this.arcDAO = arcDAO;
+        this.routeDAO = routeDAO;
+        this.routePathDAO = routePathDAO;
+        this.trainService = trainService;
+    }
 
     @Override
     public List<StationDTO> getAllStations() {

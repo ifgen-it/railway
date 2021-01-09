@@ -4,6 +4,7 @@ import com.evgen.service.MessageService;
 import com.evgen.service.StationService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,7 @@ public class MessageController {  // FOR TESTING - SEND MESSAGE TO JMS
     private MessageService messageService;
 
     @Autowired
+    @Qualifier("stationServiceImpl")
     private StationService stationService;
 
     @GetMapping("/send-message")

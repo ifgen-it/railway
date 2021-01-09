@@ -56,8 +56,10 @@
                         <td>${user.firstName}</td>
                         <td>${user.lastName}</td>
 
-                        <fmt:parseDate value="${user.birthday}" pattern="yyyy-MM-dd HH:mm:ss.SSS" var="parsedDateTime" type="both" />
-                        <td><fmt:formatDate pattern="dd-MM-yyyy" value="${parsedDateTime}" /></td>
+<%--                        <fmt:parseDate value="${user.birthday}" pattern="yyyy-MM-dd HH:mm:ss.SSS" var="parsedDateTime" type="both" />--%>
+<%--                        <td><fmt:formatDate pattern="dd-MM-yyyy" value="${parsedDateTime}" /></td>--%>
+
+                        <td>${user.birthday}</td>
 
                         <td>${user.email}</td>
 <%--                        <td>${user.password}</td>--%>

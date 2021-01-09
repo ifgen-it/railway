@@ -7,7 +7,7 @@ import com.evgen.service.SecurityService;
 import com.evgen.service.UserService;
 import com.evgen.util.UserValidator;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,17 +25,21 @@ public class UserController {
 
     private static final Logger logger = Logger.getLogger(UserController.class);
 
-    @Autowired
     private UserService userService;
 
-    @Autowired
     private UserValidator userValidator;
 
-    @Autowired
     private SecurityService securityService;
 
+    public UserController(@Qualifier("userServiceRestClient") UserService userService,
+                          UserValidator userValidator,
+                          SecurityService securityService) {
+        this.userService = userService;
+        this.userValidator = userValidator;
+        this.securityService = securityService;
+    }
 
-    @GetMapping("/users") //+
+    @GetMapping("/users")
     public String getUsers(Model model) {
 
         model.addAttribute("users", userService.getAllUsers());
