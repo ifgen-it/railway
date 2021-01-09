@@ -1,7 +1,9 @@
 package com.evgen.dto.station;
 
-import com.evgen.dto.ticket.TicketDTO;
+import com.evgen.entity.station.StationEntity;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class StationDTO implements Serializable {
@@ -10,15 +12,43 @@ public class StationDTO implements Serializable {
 
     private String stationName;
 
-    private List<ArcDTO> beginStationArcs;
+    private List<Integer> beginStationArcs;
 
-    private List<ArcDTO> endStationArcs;
+    private List<Integer> endStationArcs;
 
-    private List<TicketDTO> startStationTickets;
+    private List<Integer> startStationTickets;
 
-    private List<TicketDTO> finishStationTickets;
+    private List<Integer> finishStationTickets;
 
-    public StationDTO(String stationName) {
+    public static StationDTO entityToDTO(StationEntity entity){
+        StationDTO dto = new StationDTO(entity.getStationId(),
+                entity.getStationName());
+
+        List<Integer> beginStationArcs = new ArrayList<>();
+        entity.getBeginStationArcs().forEach(b -> beginStationArcs.add(b.getArcId()));
+        dto.setBeginStationArcs(beginStationArcs);
+
+        List<Integer> endStationArcs = new ArrayList<>();
+        entity.getEndStationArcs().forEach(e -> endStationArcs.add(e.getArcId()));
+        dto.setEndStationArcs(endStationArcs);
+
+        List<Integer> startStationTickets = new ArrayList<>();
+        entity.getStartStationTickets().forEach(t -> startStationTickets.add(t.getTicketId()));
+        dto.setStartStationTickets(startStationTickets);
+
+        List<Integer> finishStationTickets = new ArrayList<>();
+        entity.getFinishStationTickets().forEach(t -> finishStationTickets.add(t.getTicketId()));
+        dto.setFinishStationTickets(finishStationTickets);
+
+        return dto;
+    }
+    public static StationEntity dtoToEntity(StationDTO dto){
+        return new StationEntity(dto.getStationId(),
+                dto.getStationName());
+    }
+
+    public StationDTO(int stationId, String stationName) {
+        this.stationId = stationId;
         this.stationName = stationName;
     }
 
@@ -41,35 +71,35 @@ public class StationDTO implements Serializable {
         this.stationName = stationName;
     }
 
-    public List<ArcDTO> getBeginStationArcs() {
+    public List<Integer> getBeginStationArcs() {
         return beginStationArcs;
     }
 
-    public void setBeginStationArcs(List<ArcDTO> beginStationArcs) {
+    public void setBeginStationArcs(List<Integer> beginStationArcs) {
         this.beginStationArcs = beginStationArcs;
     }
 
-    public List<ArcDTO> getEndStationArcs() {
+    public List<Integer> getEndStationArcs() {
         return endStationArcs;
     }
 
-    public void setEndStationArcs(List<ArcDTO> endStationArcs) {
+    public void setEndStationArcs(List<Integer> endStationArcs) {
         this.endStationArcs = endStationArcs;
     }
 
-    public List<TicketDTO> getStartStationTickets() {
+    public List<Integer> getStartStationTickets() {
         return startStationTickets;
     }
 
-    public void setStartStationTickets(List<TicketDTO> startStationTickets) {
+    public void setStartStationTickets(List<Integer> startStationTickets) {
         this.startStationTickets = startStationTickets;
     }
 
-    public List<TicketDTO> getFinishStationTickets() {
+    public List<Integer> getFinishStationTickets() {
         return finishStationTickets;
     }
 
-    public void setFinishStationTickets(List<TicketDTO> finishStationTickets) {
+    public void setFinishStationTickets(List<Integer> finishStationTickets) {
         this.finishStationTickets = finishStationTickets;
     }
 

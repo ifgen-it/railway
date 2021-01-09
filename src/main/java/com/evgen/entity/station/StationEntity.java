@@ -35,7 +35,8 @@ public class StationEntity implements Serializable {
     public StationEntity() {
     }
 
-    public StationEntity(String stationName) {
+    public StationEntity(int stationId, String stationName) {
+        this.stationId = stationId;
         this.stationName = stationName;
     }
 

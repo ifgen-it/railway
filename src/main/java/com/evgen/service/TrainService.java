@@ -7,15 +7,15 @@ import java.util.List;
 
 public interface TrainService {
 
-    List<TrainDTO> getAllTrains();
+    List<TrainDTO> getAllTrains(); //++
 
-    int addTrain(TrainDTO train);
+    int addTrain(TrainDTO train); //++
 
-    TrainDTO getTrain(int trainId);
+    TrainDTO getTrain(int trainId); //++
 
-    TrainDTO getByName(String trainName);
+    TrainDTO getByName(String trainName); //++
 
-    List<Integer> getFreeTrains(LocalDateTime startTime, LocalDateTime finishTime);
+    List<Integer> getFreeTrains(LocalDateTime startTime, LocalDateTime finishTime); //++
 
 
 }

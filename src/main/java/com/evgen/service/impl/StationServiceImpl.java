@@ -48,8 +48,7 @@ public class StationServiceImpl implements StationService {
     public List<StationDTO> getAllStations() {
 
         List<StationDTO> dtos = new ArrayList<>();
-        ModelMapper modelMapper = new ModelMapper();
-        stationDAO.getAll().forEach(item -> dtos.add(modelMapper.map(item, StationDTO.class)));
+        stationDAO.getAll().forEach(item -> dtos.add(StationDTO.entityToDTO(item)));
 
         return dtos;
     }
@@ -58,8 +57,7 @@ public class StationServiceImpl implements StationService {
     public List<ArcDTO> getAllArcs() {
 
         List<ArcDTO> dtos = new ArrayList<>();
-        ModelMapper modelMapper = new ModelMapper();
-        arcDAO.getAll().forEach(item -> dtos.add(modelMapper.map(item, ArcDTO.class)));
+        arcDAO.getAll().forEach(item -> dtos.add(ArcDTO.entityToDTO(item)));
 
         return dtos;
     }
@@ -68,8 +66,7 @@ public class StationServiceImpl implements StationService {
     public List<RouteDTO> getAllRoutes() {
 
         List<RouteDTO> dtos = new ArrayList<>();
-        ModelMapper modelMapper = new ModelMapper();
-        routeDAO.getAll().forEach(item -> dtos.add(modelMapper.map(item, RouteDTO.class)));
+        routeDAO.getAll().forEach(item -> dtos.add(RouteDTO.entityToDTO(item)));
 
         return dtos;
     }
@@ -77,33 +74,29 @@ public class StationServiceImpl implements StationService {
     @Override
     public StationDTO getStation(int stationId) {
 
-        ModelMapper modelMapper = new ModelMapper();
         StationEntity stationEntity = stationDAO.get(stationId);
         if (stationEntity == null){
             return null;
         }
-        return modelMapper.map(stationEntity, StationDTO.class);
+        return StationDTO.entityToDTO(stationEntity);
     }
 
     @Override
     public ArcDTO getArc(int arcId) {
 
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(arcDAO.get(arcId), ArcDTO.class);
+        return ArcDTO.entityToDTO(arcDAO.get(arcId));
     }
 
     @Override
     public RouteDTO getRoute(int routeId) {
 
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(routeDAO.get(routeId), RouteDTO.class);
+        return RouteDTO.entityToDTO(routeDAO.get(routeId));
     }
 
     @Override
     public int addStation(StationDTO station) {
 
-        ModelMapper modelMapper = new ModelMapper();
-        StationEntity stationEntity = modelMapper.map(station, StationEntity.class);
+        StationEntity stationEntity = StationDTO.dtoToEntity(station);
 
         return stationDAO.add(stationEntity);
     }
@@ -111,8 +104,7 @@ public class StationServiceImpl implements StationService {
     @Override
     public int addRoute(RouteDTO route) {
 
-        ModelMapper modelMapper = new ModelMapper();
-        RouteEntity routeEntity = modelMapper.map(route, RouteEntity.class);
+        RouteEntity routeEntity = RouteDTO.dtoToEntity(route);
 
         return routeDAO.add(routeEntity);
     }
@@ -120,8 +112,7 @@ public class StationServiceImpl implements StationService {
     @Override
     public int addArc(ArcDTO arc) {
 
-        ModelMapper modelMapper = new ModelMapper();
-        ArcEntity arcEntity = modelMapper.map(arc, ArcEntity.class);
+        ArcEntity arcEntity = ArcDTO.dtoToEntity(arc);
 
         return arcDAO.add(arcEntity);
     }
@@ -129,8 +120,7 @@ public class StationServiceImpl implements StationService {
     @Override
     public int addRoutePath(RoutePathDTO routePath) {
 
-        ModelMapper modelMapper = new ModelMapper();
-        RoutePathEntity routePathEntity = modelMapper.map(routePath, RoutePathEntity.class);
+        RoutePathEntity routePathEntity = RoutePathDTO.dtoToEntity(routePath);
 
         return routePathDAO.add(routePathEntity);
     }
@@ -138,22 +128,21 @@ public class StationServiceImpl implements StationService {
     @Override
     public List<RoutePathDTO> getArrivals(int stationId) {
 
-        ModelMapper modelMapper = new ModelMapper();
         List<RoutePathDTO> dtos = new ArrayList<>();
 
         List<RoutePathEntity> entities = routePathDAO.getArrivals(stationId);
-        entities.forEach(item -> dtos.add(modelMapper.map(item, RoutePathDTO.class)));
+        entities.forEach(item -> dtos.add(RoutePathDTO.entityToDTO(item)));
 
         return dtos;
     }
 
     @Override
     public List<RoutePathDTO> getDepartures(int stationId) {
-        ModelMapper modelMapper = new ModelMapper();
+
         List<RoutePathDTO> dtos = new ArrayList<>();
 
         List<RoutePathEntity> entities = routePathDAO.getDepartures(stationId);
-        entities.forEach(item -> dtos.add(modelMapper.map(item, RoutePathDTO.class)));
+        entities.forEach(item -> dtos.add(RoutePathDTO.entityToDTO(item)));
 
         return dtos;
     }
@@ -162,12 +151,11 @@ public class StationServiceImpl implements StationService {
     public StationDTO getByName(String stationName) {
 
         StationEntity stationEntity = stationDAO.getByName(stationName);
-        ModelMapper modelMapper = new ModelMapper();
 
         if (stationEntity == null)
             return null;
 
-        StationDTO stationDTO = modelMapper.map(stationEntity, StationDTO.class);
+        StationDTO stationDTO = StationDTO.entityToDTO(stationEntity);
         return stationDTO;
     }
 
@@ -175,12 +163,11 @@ public class StationServiceImpl implements StationService {
     public ArcDTO getArcByStations(int beginStationId, int endStationId) {
 
         ArcEntity arcEntity = arcDAO.getByStations(beginStationId, endStationId);
-        ModelMapper modelMapper = new ModelMapper();
 
         if (arcEntity == null)
             return null;
 
-        ArcDTO arcDTO = modelMapper.map(arcEntity, ArcDTO.class);
+        ArcDTO arcDTO = ArcDTO.entityToDTO(arcEntity);
         return arcDTO;
     }
 
@@ -188,12 +175,11 @@ public class StationServiceImpl implements StationService {
     public RoutePathDTO getFirstArc(int routeId) {
 
         RoutePathEntity entity = routePathDAO.getFirstArc(routeId);
-        ModelMapper modelMapper = new ModelMapper();
 
         if (entity == null)
             return null;
 
-        RoutePathDTO dto = modelMapper.map(entity, RoutePathDTO.class);
+        RoutePathDTO dto = RoutePathDTO.entityToDTO(entity);
         return dto;
     }
 
@@ -201,12 +187,11 @@ public class StationServiceImpl implements StationService {
     public RoutePathDTO getLastArc(int routeId) {
 
         RoutePathEntity entity = routePathDAO.getLastArc(routeId);
-        ModelMapper modelMapper = new ModelMapper();
 
         if (entity == null)
             return null;
 
-        RoutePathDTO dto = modelMapper.map(entity, RoutePathDTO.class);
+        RoutePathDTO dto = RoutePathDTO.entityToDTO(entity);
         return dto;
     }
 
@@ -214,19 +199,18 @@ public class StationServiceImpl implements StationService {
     public List<RouteExtDTO> getAllRoutesExt() {
 
         List<RouteExtDTO> dtosExt = new ArrayList<>();
-        ModelMapper modelMapper = new ModelMapper();
 
         routeDAO.getAll().forEach(item -> {
 
-            RouteDTO routeDTO = modelMapper.map(item, RouteDTO.class);
+            RouteDTO routeDTO = RouteDTO.entityToDTO(item);
             RouteExtDTO routeExtDTO = new RouteExtDTO();
 
             routeExtDTO.setRouteDTO(routeDTO);
 
             RoutePathEntity firstArcEntity = routePathDAO.getFirstArc(routeDTO.getRouteId());
             RoutePathEntity lastArcEntity = routePathDAO.getLastArc(routeDTO.getRouteId());
-            RoutePathDTO firstArc = modelMapper.map(firstArcEntity, RoutePathDTO.class);
-            RoutePathDTO lastArc = modelMapper.map(lastArcEntity, RoutePathDTO.class);
+            RoutePathDTO firstArc = RoutePathDTO.entityToDTO(firstArcEntity);
+            RoutePathDTO lastArc = RoutePathDTO.entityToDTO(lastArcEntity);
 
             routeExtDTO.setRouteDepartureTime(firstArc.getDepartureTime());
             routeExtDTO.setRouteArrivalTime(lastArc.getArrivalTime());
@@ -254,7 +238,6 @@ public class StationServiceImpl implements StationService {
     @Override
     public RouteExtDTO getRouteExt(int routeId) {
 
-        ModelMapper modelMapper = new ModelMapper();
 
         RouteExtDTO routeExtDTO = new RouteExtDTO();
         routeExtDTO.setRouteDTO(getRoute(routeId));
@@ -263,17 +246,12 @@ public class StationServiceImpl implements StationService {
         routeExtDTO.setRouteArrivalTime(routePathDAO.getLastArc(routeId).getArrivalTime());
 
         routeExtDTO.setRouteBeginStation(
-                modelMapper.map(
-                        routePathDAO.getFirstArc(routeId).getArc().getBeginStation(),
-                        StationDTO.class
-                )
+                StationDTO.entityToDTO(routePathDAO.getFirstArc(routeId).getArc().getBeginStation())
+
         );
 
         routeExtDTO.setRouteEndStation(
-                modelMapper.map(
-                        routePathDAO.getLastArc(routeId).getArc().getEndStation(),
-                        StationDTO.class
-                )
+                StationDTO.entityToDTO(routePathDAO.getLastArc(routeId).getArc().getEndStation())
         );
 
         return routeExtDTO;
@@ -297,11 +275,10 @@ public class StationServiceImpl implements StationService {
     @Override
     public List<ArcDTO> getOutArcs(int stationId) {
 
-        ModelMapper modelMapper = new ModelMapper();
         List<ArcDTO> dtos = new ArrayList<>();
 
         List<ArcEntity> entities = arcDAO.getOutArcs(stationId);
-        entities.forEach(item -> dtos.add(modelMapper.map(item, ArcDTO.class)));
+        entities.forEach(item -> dtos.add(ArcDTO.entityToDTO(item)));
 
         return dtos;
     }
@@ -309,8 +286,7 @@ public class StationServiceImpl implements StationService {
     @Override
     public int createRoute(RouteDTO routeDTO, List<RoutePathDTO> routePathDTOS) throws UseReservedTrainException {
 
-        ModelMapper modelMapper = new ModelMapper();
-        RouteEntity routeEntity = modelMapper.map(routeDTO, RouteEntity.class);
+        RouteEntity routeEntity = RouteDTO.dtoToEntity(routeDTO);
 
         // BEFORE CREATION ROUTE WITH SELECTED TRAIN ID
         // NEED TO CHECK THIS TRAIN ID - IF SOME MANAGER USED IT
@@ -339,12 +315,12 @@ public class StationServiceImpl implements StationService {
 
         int routeId = routeDAO.add(routeEntity);
         RouteEntity realRouteEntity = routeDAO.get(routeId);
-        RouteDTO realRouteDTO = modelMapper.map(realRouteEntity, RouteDTO.class);
+        RouteDTO realRouteDTO = RouteDTO.entityToDTO(realRouteEntity);
 
         routePathDTOS.forEach(item -> item.setRoute(realRouteDTO));
 
         List<RoutePathEntity> routePathEntities = new ArrayList<>();
-        routePathDTOS.forEach(item ->routePathEntities.add(modelMapper.map(item, RoutePathEntity.class)));
+        routePathDTOS.forEach(item ->routePathEntities.add(RoutePathDTO.dtoToEntity(item)));
 
         routePathEntities.forEach(item -> routePathDAO.add(item));
 

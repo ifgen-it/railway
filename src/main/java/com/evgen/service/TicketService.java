@@ -11,19 +11,19 @@ import java.util.List;
 
 public interface TicketService {
 
-    List<TicketDTO> getAllTickets();
+    List<TicketDTO> getAllTickets(); //++
 
-    int addTicket(TicketDTO ticket);
+    int addTicket(TicketDTO ticket); //-
 
-    List<Integer> getBusySeats(int routeId, LocalDateTime startTime, LocalDateTime finishTime);
+    List<Integer> getBusySeats(int routeId, LocalDateTime startTime, LocalDateTime finishTime); //++
 
-    int buyTicket(RouteExtDTO routeExtDTO, int seatNumber, int userId)
+    int buyTicket(RouteExtDTO routeExtDTO, int seatNumber, int userId) //++
             throws TimeLimitPurchaseException,
             TwinUserPurchaseException,
             BusySeatPurchaseException;
 
-    List<TicketDTO> getTickets(int routeId);
+    List<TicketDTO> getTickets(int routeId); //++
 
-    TicketDTO get(int ticketId);
+    TicketDTO get(int ticketId); //++
 
 }

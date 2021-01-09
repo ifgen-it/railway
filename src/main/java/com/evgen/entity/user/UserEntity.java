@@ -43,6 +43,15 @@ public class UserEntity implements Serializable {
     public UserEntity() {
     }
 
+    public UserEntity(int userId, RoleEntity role, String firstName, String lastName, Date birthday, String email, String password) {
+        this.userId = userId;
+        this.role = role;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthday = birthday;
+        this.email = email;
+        this.password = password;
+    }
 
     public int getUserId() {
         return userId;
@@ -100,14 +109,7 @@ public class UserEntity implements Serializable {
         this.password = password;
     }
 
-    public UserEntity(RoleEntity role, String firstName, String lastName, Date birthday, String email, String password) {
-        this.role = role;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthday = birthday;
-        this.email = email;
-        this.password = password;
-    }
+
 
     @Override
     public String toString() {

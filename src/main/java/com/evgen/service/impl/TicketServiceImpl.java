@@ -3,7 +3,9 @@ package com.evgen.service.impl;
 import com.evgen.dao.TicketDAO;
 import com.evgen.dao.UserDAO;
 import com.evgen.dao.exception.BusySeatPurchaseException;
+import com.evgen.dto.station.RouteDTO;
 import com.evgen.dto.station.RouteExtDTO;
+import com.evgen.dto.station.StationDTO;
 import com.evgen.dto.ticket.TicketDTO;
 import com.evgen.dto.user.UserDTO;
 import com.evgen.entity.station.RouteEntity;
@@ -43,8 +45,7 @@ public class TicketServiceImpl implements TicketService {
     public List<TicketDTO> getAllTickets() {
 
         List<TicketDTO> dtos = new ArrayList<>();
-        ModelMapper modelMapper = new ModelMapper();
-        ticketDAO.getAll().forEach(item -> dtos.add(modelMapper.map(item, TicketDTO.class)));
+        ticketDAO.getAll().forEach(item -> dtos.add(TicketDTO.entityToDTO(item)));
 
         return dtos;
     }
@@ -52,8 +53,7 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public int addTicket(TicketDTO ticket) {
 
-        ModelMapper modelMapper = new ModelMapper();
-        TicketEntity ticketEntity = modelMapper.map(ticket, TicketEntity.class);
+        TicketEntity ticketEntity = TicketDTO.dtoToEntity(ticket);
 
         return ticketDAO.add(ticketEntity);
     }
@@ -94,12 +94,11 @@ public class TicketServiceImpl implements TicketService {
 
         boolean twinUserOnTheTrain = false;
         // CHECK HERE FOR A EXISTENCE TWIN USER ON THE TRAIN
-        ModelMapper modelMapper = new ModelMapper();
 
         UserDTO userDTO = userService.getUser(userId);
-        UserEntity userEntity = modelMapper.map(userDTO, UserEntity.class);
+        UserEntity userEntity = UserDTO.dtoToEntity(userDTO);
 
-        RouteEntity routeEntity = modelMapper.map(routeExtDTO.getRouteDTO(), RouteEntity.class);
+        RouteEntity routeEntity = RouteDTO.dtoToEntity(routeExtDTO.getRouteDTO());
 
         if(ticketDAO.getTicket(routeEntity,userEntity) != null){
             twinUserOnTheTrain = true;
@@ -114,9 +113,9 @@ public class TicketServiceImpl implements TicketService {
 
 
         // CONTINUE TO BUY TICKET
+        StationEntity startStationEntity = StationDTO.dtoToEntity(routeExtDTO.getRouteBeginStation());
+        StationEntity finishStationEntity = StationDTO.dtoToEntity(routeExtDTO.getRouteEndStation());
 
-        StationEntity startStationEntity = modelMapper.map(routeExtDTO.getRouteBeginStation(), StationEntity.class);
-        StationEntity finishStationEntity = modelMapper.map(routeExtDTO.getRouteEndStation(), StationEntity.class);
         LocalDateTime startTime = routeExtDTO.getRouteDepartureTime();
         LocalDateTime finishTime = routeExtDTO.getRouteArrivalTime();
         float price = routeExtDTO.getRoutePrice();
@@ -138,9 +137,8 @@ public class TicketServiceImpl implements TicketService {
     public List<TicketDTO> getTickets(int routeId) {
 
         List<TicketDTO> dtos = new ArrayList<>();
-        ModelMapper modelMapper = new ModelMapper();
 
-        ticketDAO.getTickets(routeId).forEach(item -> dtos.add(modelMapper.map(item, TicketDTO.class)));
+        ticketDAO.getTickets(routeId).forEach(item -> dtos.add(TicketDTO.entityToDTO(item)));
 
         return dtos;
     }
@@ -149,13 +147,12 @@ public class TicketServiceImpl implements TicketService {
     public TicketDTO get(int ticketId) {
 
         TicketEntity ticketEntity = ticketDAO.get(ticketId);
-        ModelMapper modelMapper = new ModelMapper();
 
         if (ticketEntity == null){
             return null;
         }
         else {
-            return modelMapper.map(ticketEntity, TicketDTO.class);
+            return TicketDTO.entityToDTO(ticketEntity);
         }
     }
 }

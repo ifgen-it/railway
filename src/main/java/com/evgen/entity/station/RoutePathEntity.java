@@ -30,7 +30,8 @@ public class RoutePathEntity implements Serializable {
     public RoutePathEntity() {
     }
 
-    public RoutePathEntity(LocalDateTime departureTime, LocalDateTime arrivalTime, RouteEntity route, ArcEntity arc) {
+    public RoutePathEntity(int routePathId, LocalDateTime departureTime, LocalDateTime arrivalTime, RouteEntity route, ArcEntity arc) {
+        this.routePathId = routePathId;
         this.departureTime = departureTime;
         this.arrivalTime = arrivalTime;
         this.route = route;

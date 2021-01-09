@@ -3,6 +3,13 @@ package com.evgen.dto.ticket;
 import com.evgen.dto.station.RouteDTO;
 import com.evgen.dto.station.StationDTO;
 import com.evgen.dto.user.UserDTO;
+import com.evgen.entity.ticket.TicketEntity;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -10,8 +17,14 @@ public class TicketDTO implements Serializable {
 
     private int ticketId;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime startTime;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime finishTime;
 
     private int seatNumber;
@@ -26,10 +39,35 @@ public class TicketDTO implements Serializable {
 
     private StationDTO finishStation;
 
+    public static TicketDTO entityToDTO(TicketEntity entity){
+        return new TicketDTO(entity.getTicketId(),
+                entity.getStartTime(),
+                entity.getFinishTime(),
+                entity.getSeatNumber(),
+                entity.getPrice(),
+                RouteDTO.entityToDTO(entity.getTicketRoute()),
+                UserDTO.entityToDTO(entity.getUser()),
+                StationDTO.entityToDTO(entity.getStartStation()),
+                StationDTO.entityToDTO(entity.getFinishStation()));
+    }
+    public static TicketEntity dtoToEntity(TicketDTO dto){
+        return new TicketEntity(dto.getTicketId(),
+                dto.getStartTime(),
+                dto.getFinishTime(),
+                dto.getSeatNumber(),
+                dto.getPrice(),
+                RouteDTO.dtoToEntity(dto.getTicketRoute()),
+                UserDTO.dtoToEntity(dto.getUser()),
+                StationDTO.dtoToEntity(dto.getStartStation()),
+                StationDTO.dtoToEntity(dto.getFinishStation()));
+    }
+
     public TicketDTO() {
     }
 
-    public TicketDTO(LocalDateTime startTime, LocalDateTime finishTime, int seatNumber, float price, RouteDTO ticketRoute, UserDTO user, StationDTO startStation, StationDTO finishStation) {
+    public TicketDTO(int ticketId, LocalDateTime startTime, LocalDateTime finishTime, int seatNumber, float price,
+                     RouteDTO ticketRoute, UserDTO user, StationDTO startStation, StationDTO finishStation) {
+        this.ticketId = ticketId;
         this.startTime = startTime;
         this.finishTime = finishTime;
         this.seatNumber = seatNumber;

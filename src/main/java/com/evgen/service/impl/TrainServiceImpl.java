@@ -24,8 +24,7 @@ public class TrainServiceImpl implements TrainService {
     public List<TrainDTO> getAllTrains() {
 
         List<TrainDTO> dtos = new ArrayList<>();
-        ModelMapper modelMapper = new ModelMapper();
-        trainDAO.getAll().forEach(item -> dtos.add(modelMapper.map(item, TrainDTO.class)));
+        trainDAO.getAll().forEach(item -> dtos.add(TrainDTO.entityToDTO(item)));
 
         return dtos;
     }
@@ -33,8 +32,7 @@ public class TrainServiceImpl implements TrainService {
     @Override
     public int addTrain(TrainDTO train) {
 
-        ModelMapper modelMapper = new ModelMapper();
-        TrainEntity trainEntity = modelMapper.map(train, TrainEntity.class);
+        TrainEntity trainEntity = TrainDTO.dtoToEntity(train);
 
         return trainDAO.add(trainEntity);
     }
@@ -42,19 +40,18 @@ public class TrainServiceImpl implements TrainService {
     @Override
     public TrainDTO getTrain(int trainId) {
 
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(trainDAO.get(trainId), TrainDTO.class);
+        return TrainDTO.entityToDTO(trainDAO.get(trainId));
     }
 
     @Override
     public TrainDTO getByName(String trainName) {
+
         TrainEntity trainEntity =  trainDAO.getByName(trainName);
-        ModelMapper modelMapper = new ModelMapper();
 
         if (trainEntity == null)
             return  null;
 
-        TrainDTO trainDTO = modelMapper.map(trainEntity, TrainDTO.class);
+        TrainDTO trainDTO = TrainDTO.entityToDTO(trainEntity);
         return trainDTO;
     }
 

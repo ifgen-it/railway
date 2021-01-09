@@ -35,7 +35,7 @@ public class UserController {
     private SecurityService securityService;
 
 
-    @GetMapping("/users")
+    @GetMapping("/users") //+
     public String getUsers(Model model) {
 
         model.addAttribute("users", userService.getAllUsers());

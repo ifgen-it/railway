@@ -112,7 +112,7 @@ public class TicketDAOImpl implements TicketDAO {
         }
 
         // MAKE TICKET
-        TicketEntity ticketEntity = new TicketEntity(startTime, finishTime,
+        TicketEntity ticketEntity = new TicketEntity(0,startTime, finishTime,
                 seatNumber, price, ticketRoute, user,
                 startStation, finishStation);
         int ticketId = add(ticketEntity);

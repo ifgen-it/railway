@@ -23,6 +23,10 @@ public class RoleEntity implements Serializable {
     public RoleEntity() {
     }
 
+    public RoleEntity(int roleId, String roleName) {
+        this.roleId = roleId;
+        this.roleName = roleName;
+    }
 
     public int getRoleId() {
         return roleId;

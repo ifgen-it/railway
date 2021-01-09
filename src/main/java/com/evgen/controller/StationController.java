@@ -108,7 +108,7 @@ public class StationController {
         StationDTO beginStationDTO = stationService.getStation(beginStationId);
         StationDTO endStationDTO = stationService.getStation(endStationId);
 
-        ArcDTO arcDTO = new ArcDTO(beginStationDTO, endStationDTO, length);
+        ArcDTO arcDTO = new ArcDTO(0, beginStationDTO, endStationDTO, length);
         stationService.addArc(arcDTO);
 
         logger.info("Arc must be added");

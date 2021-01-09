@@ -42,10 +42,9 @@ public class UserServiceImpl implements UserService {
 
         List<UserEntity> entities = userDAO.getAll();
         List<UserDTO> dtos = new ArrayList<>();
-        ModelMapper modelMapper = new ModelMapper();
 
         for (UserEntity user : entities ) {
-            UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+            UserDTO userDTO = UserDTO.entityToDTO(user);
             dtos.add(userDTO);
         }
 
@@ -56,12 +55,11 @@ public class UserServiceImpl implements UserService {
     public UserDTO getByEmail(String email) {
 
         UserEntity userEntity =  userDAO.getByEmail(email);
-        ModelMapper modelMapper = new ModelMapper();
 
         if (userEntity == null)
             return  null;
 
-        UserDTO userDTO = modelMapper.map(userEntity, UserDTO.class);
+        UserDTO userDTO = UserDTO.entityToDTO(userEntity);
         return userDTO;
     }
 
@@ -69,8 +67,7 @@ public class UserServiceImpl implements UserService {
     public int addUser(UserDTO user) {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        ModelMapper modelMapper = new ModelMapper();
-        UserEntity userEntity = modelMapper.map(user, UserEntity.class);
+        UserEntity userEntity = UserDTO.dtoToEntity(user);
 
         return userDAO.add(userEntity);
     }
@@ -85,9 +82,8 @@ public class UserServiceImpl implements UserService {
 
         List<RoleEntity> entities = roleDAO.getAll();
         List<RoleDTO> dtos = new ArrayList<>();
-        ModelMapper modelMapper = new ModelMapper();
 
-        entities.forEach(item -> dtos.add(modelMapper.map(item, RoleDTO.class)));
+        entities.forEach(item -> dtos.add(RoleDTO.entityToDTO(item)));
 
         return dtos;
     }
@@ -95,28 +91,25 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO getUser(int userId) {
 
-        ModelMapper modelMapper = new ModelMapper();
         UserEntity userEntity = userDAO.get(userId);
 
         if (userEntity == null){
             return null;
         } else {
-            return modelMapper.map(userEntity, UserDTO.class);
+            return UserDTO.entityToDTO(userEntity);
         }
     }
 
     @Override
     public RoleDTO getRole(int roleId) {
 
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(roleDAO.get(roleId), RoleDTO.class);
+        return RoleDTO.entityToDTO(roleDAO.get(roleId));
     }
 
     @Override
     public RoleDTO getRoleByName(String roleName) {
 
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(roleDAO.getRoleByName(roleName), RoleDTO.class);
+        return RoleDTO.entityToDTO(roleDAO.getRoleByName(roleName));
     }
 
     @Override
@@ -125,8 +118,7 @@ public class UserServiceImpl implements UserService {
         List<TicketEntity>  ticketEntities = userDAO.get(userId).getTickets();
 
         List<TicketDTO> dtos = new ArrayList<>();
-        ModelMapper modelMapper = new ModelMapper();
-        ticketEntities.forEach(item -> dtos.add(modelMapper.map(item, TicketDTO.class)));
+        ticketEntities.forEach(item -> dtos.add(TicketDTO.entityToDTO(item)));
 
         return dtos;
     }

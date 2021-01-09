@@ -15,9 +15,11 @@ public class TrainController {
 
     private static final Logger logger = Logger.getLogger(TrainController.class);
 
-    @Autowired
     private TrainService trainService;
 
+    public TrainController(TrainService trainService) {
+        this.trainService = trainService;
+    }
 
     @GetMapping("/trains")
     public String getTrains(Model model) {

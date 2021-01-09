@@ -8,24 +8,24 @@ import java.util.List;
 
 public interface UserService {
 
-    List<UserDTO> getAllUsers();
+    List<UserDTO> getAllUsers(); //++
 
-    UserDTO getByEmail(String email);
+    UserDTO getByEmail(String email); //++
 
-    int addUser(UserDTO user);
+    int addUser(UserDTO user); //++
 
-    void removeWith(int id);
+    void removeWith(int id); //++
 
-    List<RoleDTO> getAllRoles();
+    List<RoleDTO> getAllRoles(); //-
 
-    UserDTO getUser(int userId);
+    UserDTO getUser(int userId); //++
 
-    RoleDTO getRole(int roleId);
+    RoleDTO getRole(int roleId); //-
 
-    RoleDTO getRoleByName(String roleName);
+    RoleDTO getRoleByName(String roleName); //++
 
-    List<TicketDTO> getTickets(int userId);
+    List<TicketDTO> getTickets(int userId); //++
 
-    void changeRole(int userId, String roleName);
+    void changeRole(int userId, String roleName); //++
 
 }

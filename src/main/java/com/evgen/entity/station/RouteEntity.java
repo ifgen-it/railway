@@ -34,7 +34,8 @@ public class RouteEntity implements Serializable {
     public RouteEntity() {
     }
 
-    public RouteEntity(String routeName, TrainEntity train) {
+    public RouteEntity(int routeId, String routeName, TrainEntity train) {
+        this.routeId = routeId;
         this.routeName = routeName;
         this.train = train;
     }

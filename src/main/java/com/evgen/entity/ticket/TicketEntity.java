@@ -49,7 +49,9 @@ public class TicketEntity implements Serializable {
     public TicketEntity() {
     }
 
-    public TicketEntity(LocalDateTime startTime, LocalDateTime finishTime, int seatNumber, float price, RouteEntity ticketRoute, UserEntity user, StationEntity startStation, StationEntity finishStation) {
+    public TicketEntity(int ticketId, LocalDateTime startTime, LocalDateTime finishTime, int seatNumber, float price,
+                        RouteEntity ticketRoute, UserEntity user, StationEntity startStation, StationEntity finishStation) {
+        this.ticketId = ticketId;
         this.startTime = startTime;
         this.finishTime = finishTime;
         this.seatNumber = seatNumber;

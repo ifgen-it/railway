@@ -31,7 +31,8 @@ public class TrainEntity implements Serializable {
     public TrainEntity() {
     }
 
-    public TrainEntity(String trainName, int seatsAmount) {
+    public TrainEntity(int trainId, String trainName, int seatsAmount) {
+        this.trainId = trainId;
         this.trainName = trainName;
         this.seatsAmount = seatsAmount;
     }

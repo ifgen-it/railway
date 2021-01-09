@@ -1,9 +1,14 @@
 package com.evgen.dto.user;
 
-
-import com.evgen.dto.ticket.TicketDTO;
+import com.evgen.entity.user.UserEntity;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
+import com.fasterxml.jackson.databind.ser.std.DateSerializer;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,13 +22,41 @@ public class UserDTO implements Serializable {
 
     private String lastName;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonSerialize(using = DateSerializer.class)
+    @JsonDeserialize(using = DateDeserializers.DateDeserializer.class)
     private Date birthday;
 
     private String email;
 
     private String password;
 
-    private List<TicketDTO> tickets;
+    private List<Integer> tickets;
+
+
+    public static UserDTO entityToDTO(UserEntity entity){
+        UserDTO dto = new UserDTO(entity.getUserId(),
+                RoleDTO.entityToDTO(entity.getRole()),
+                entity.getFirstName(),
+                entity.getLastName(),
+                entity.getBirthday(),
+                entity.getEmail(),
+                entity.getPassword());
+
+        List<Integer> tickets = new ArrayList<>();
+        entity.getTickets().forEach(t -> tickets.add(t.getTicketId()));
+        dto.setTickets(tickets);
+        return dto;
+    }
+    public static UserEntity dtoToEntity(UserDTO dto){
+        return new UserEntity(dto.getUserId(),
+                RoleDTO.dtoToEntity(dto.getRole()),
+                dto.getFirstName(),
+                dto.getLastName(),
+                dto.getBirthday(),
+                dto.getEmail(),
+                dto.getPassword());
+    }
 
     public UserDTO(int userId, RoleDTO role, String firstName, String lastName, Date birthday, String email, String password) {
         this.userId = userId;
@@ -37,6 +70,14 @@ public class UserDTO implements Serializable {
 
     public UserDTO() {
 
+    }
+
+    public List<Integer> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<Integer> tickets) {
+        this.tickets = tickets;
     }
 
     public int getUserId() {

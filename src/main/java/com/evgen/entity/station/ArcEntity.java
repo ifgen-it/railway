@@ -31,7 +31,8 @@ public class ArcEntity implements Serializable {
     public ArcEntity() {
     }
 
-    public ArcEntity(StationEntity beginStation, StationEntity endStation, int length) {
+    public ArcEntity(int arcId, StationEntity beginStation, StationEntity endStation, int length) {
+        this.arcId = arcId;
         this.beginStation = beginStation;
         this.endStation = endStation;
         this.length = length;

@@ -1,6 +1,9 @@
 package com.evgen.dto.station;
 
+import com.evgen.entity.station.ArcEntity;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ArcDTO implements Serializable {
@@ -13,13 +16,32 @@ public class ArcDTO implements Serializable {
 
     private int length;
 
-    private List<RoutePathDTO> routePaths;
+    private List<Integer> routePaths;
+
+    public static ArcDTO entityToDTO(ArcEntity entity) {
+        ArcDTO dto = new ArcDTO(entity.getArcId(),
+                StationDTO.entityToDTO(entity.getBeginStation()),
+                StationDTO.entityToDTO(entity.getEndStation()),
+                entity.getLength());
+
+        List<Integer> routePaths = new ArrayList<>();
+        entity.getRoutePaths().forEach(r -> routePaths.add(r.getRoutePathId()));
+        dto.setRoutePaths(routePaths);
+        return dto;
+    }
+
+    public static ArcEntity dtoToEntity(ArcDTO dto) {
+        return new ArcEntity(dto.getArcId(),
+                StationDTO.dtoToEntity(dto.getBeginStation()),
+                StationDTO.dtoToEntity(dto.getEndStation()),
+                dto.getLength());
+    }
 
     public ArcDTO() {
     }
 
-    public ArcDTO(StationDTO beginStation, StationDTO endStation, int length) {
-
+    public ArcDTO(int arcId, StationDTO beginStation, StationDTO endStation, int length) {
+        this.arcId = arcId;
         this.beginStation = beginStation;
         this.endStation = endStation;
         this.length = length;
@@ -57,11 +79,11 @@ public class ArcDTO implements Serializable {
         this.length = length;
     }
 
-    public List<RoutePathDTO> getRoutePaths() {
+    public List<Integer> getRoutePaths() {
         return routePaths;
     }
 
-    public void setRoutePaths(List<RoutePathDTO> routePaths) {
+    public void setRoutePaths(List<Integer> routePaths) {
         this.routePaths = routePaths;
     }
 
@@ -69,8 +91,8 @@ public class ArcDTO implements Serializable {
     public String toString() {
         return "ArcDTO{" +
                 "arcId=" + arcId +
-                ", beginStation=" + beginStation +
-                ", endStation=" + endStation +
+                ", beginStation=" + beginStation.getStationName() +
+                ", endStation=" + endStation.getStationName() +
                 ", length=" + length +
                 '}';
     }
